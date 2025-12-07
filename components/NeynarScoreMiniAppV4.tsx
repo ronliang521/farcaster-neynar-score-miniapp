@@ -591,7 +591,7 @@ export default function NeynarScoreMiniAppV4() {
         <div style={{ textAlign: 'center', marginBottom: '20px', flexShrink: 0 }}>
           <h2 style={{
             marginBottom: '8px',
-            fontSize: '30px',
+            fontSize: '28px',
             fontWeight: '700',
             textAlign: 'center',
             marginTop: 0,
@@ -605,7 +605,7 @@ export default function NeynarScoreMiniAppV4() {
             marginBottom: '12px',
             textAlign: 'center',
             opacity: 0.9,
-            fontSize: '17px',
+            fontSize: '15px',
             fontWeight: '400',
             color: 'rgba(255, 255, 255, 0.9)',
             lineHeight: '1.5'
@@ -650,7 +650,7 @@ export default function NeynarScoreMiniAppV4() {
               backgroundColor: 'rgba(255, 255, 255, 0.12)',
               backdropFilter: 'blur(10px)',
               color: '#fff',
-              fontSize: '16px',
+              fontSize: '14px',
               outline: 'none',
               boxSizing: 'border-box',
               transition: 'all 0.3s ease',
@@ -680,7 +680,7 @@ export default function NeynarScoreMiniAppV4() {
               border: 'none',
               background: checkLoading ? 'rgba(255, 255, 255, 0.3)' : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
               color: '#fff',
-              fontSize: '17px',
+              fontSize: '15px',
               fontWeight: '600',
               cursor: checkLoading || !input.trim() ? 'not-allowed' : 'pointer',
               marginTop: '14px',
@@ -720,7 +720,7 @@ export default function NeynarScoreMiniAppV4() {
                 border: '1px solid rgba(239, 68, 68, 0.5)',
                 marginBottom: '18px',
                 color: '#fee2e2',
-                fontSize: '16px',
+                fontSize: '14px',
                 lineHeight: '1.6'
               }}
             >
@@ -750,7 +750,7 @@ export default function NeynarScoreMiniAppV4() {
           >
             <div style={{ flex: 1 }}>
               <div style={{
-                fontSize: '17px',
+                fontSize: '15px',
                 fontWeight: '600',
                 background: 'linear-gradient(135deg, #fff 0%, #ffe0cc 100%)',
                 WebkitBackgroundClip: 'text',
@@ -898,7 +898,7 @@ export default function NeynarScoreMiniAppV4() {
                           rel="noopener noreferrer"
                           style={{
                             color: 'rgba(255, 255, 255, 0.9)',
-                            fontSize: '17px',
+                            fontSize: '15px',
                             textDecoration: 'none',
                             lineHeight: '1.5'
                           }}
@@ -921,7 +921,7 @@ export default function NeynarScoreMiniAppV4() {
                     flexShrink: 0
                   }}>
                     <div style={{
-                      fontSize: '17px',
+                      fontSize: '15px',
                       fontWeight: '600',
                       color: 'rgba(255, 255, 255, 0.9)',
                       marginBottom: '8px',
@@ -1001,7 +1001,7 @@ export default function NeynarScoreMiniAppV4() {
                           border: 'none',
                           borderRadius: '16px',
                           fontWeight: '700',
-                          fontSize: '17px',
+                          fontSize: '15px',
                           cursor: isSharing ? 'not-allowed' : 'pointer',
                           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                           boxShadow: isSharing 
@@ -1085,7 +1085,7 @@ export default function NeynarScoreMiniAppV4() {
                           rel="noopener noreferrer"
                           style={{
                             color: 'rgba(255, 255, 255, 0.9)',
-                            fontSize: '17px',
+                            fontSize: '15px',
                             textDecoration: 'none',
                             lineHeight: '1.4'
                           }}
@@ -1150,7 +1150,7 @@ export default function NeynarScoreMiniAppV4() {
                               marginBottom: '6px',
                               backgroundColor: 'rgba(255, 255, 255, 0.1)',
                               borderRadius: '8px',
-                              fontSize: '17px',
+                              fontSize: '15px',
                               lineHeight: '1.5'
                             }}
                           >
@@ -1267,7 +1267,7 @@ export default function NeynarScoreMiniAppV4() {
                     color: '#fff',
                     textDecoration: 'none',
                     borderRadius: '14px',
-                    fontSize: '17px',
+                    fontSize: '15px',
                     fontWeight: '600',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     border: '2px solid rgba(255, 255, 255, 0.3)',
@@ -1287,7 +1287,7 @@ export default function NeynarScoreMiniAppV4() {
                     fontWeight: '600'
                   }}>Follow Creator @ron521520</span>
                   <span style={{ 
-                    fontSize: '16px',
+                    fontSize: '14px',
                     opacity: 0.9
                   }}>→</span>
                 </motion.a>
