@@ -10,7 +10,12 @@ export default function Home() {
         <meta name="keywords" content="Neynar, Farcaster, Score, Reputation, Social Graph, Web3" />
         <meta name="author" content="Neynar" />
         <link rel="icon" href="/icon.png" />
+        <link rel="manifest" href="/manifest.json" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#764ba2" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Neynar Score" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />

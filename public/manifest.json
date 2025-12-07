@@ -1,0 +1,19 @@
+{
+  "name": "Neynar Score",
+  "short_name": "Neynar Score",
+  "description": "Check your Neynar Score and Farcaster reputation",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#764ba2",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

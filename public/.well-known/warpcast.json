@@ -1,5 +1,10 @@
 {
-  "name": "Farcaster Neynar Score Mini App",
-  "description": "A mini app to check Neynar Scores",
+  "name": "Neynar Score",
+  "description": "Check your Neynar Score and Farcaster reputation. Discover your influence and engagement metrics on the Farcaster network.",
+  "imageUrl": "/icon.png",
+  "action": {
+    "type": "link",
+    "url": "https://your-domain.com"
+  },
   "version": "1.0.0"
 }
