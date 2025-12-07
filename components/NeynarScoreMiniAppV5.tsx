@@ -633,11 +633,11 @@ export default function NeynarScoreMiniAppV5() {
         transition={{ duration: 0.5 }}
         style={{ position: 'relative', zIndex: 1 }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '12px' }}>
           <h2
             style={{
-              marginBottom: '10px',
-              fontSize: '36px',
+              marginBottom: '6px',
+              fontSize: '24px',
               fontWeight: '700',
               textAlign: 'center',
               marginTop: 0,
@@ -652,10 +652,10 @@ export default function NeynarScoreMiniAppV5() {
           </h2>
           <p
             style={{
-              marginBottom: '28px',
+              marginBottom: '16px',
               textAlign: 'center',
               opacity: 0.95,
-              fontSize: '15px',
+              fontSize: '12px',
               fontWeight: '400',
             }}
           >
@@ -693,14 +693,14 @@ export default function NeynarScoreMiniAppV5() {
             onKeyPress={handleKeyPress}
             disabled={loading}
             style={{
-              padding: '16px 18px',
+              padding: '12px 14px',
               width: '100%',
-              borderRadius: '14px',
+              borderRadius: '12px',
               border: '2px solid rgba(255, 255, 255, 0.3)',
               backgroundColor: 'rgba(255, 255, 255, 0.12)',
               backdropFilter: 'blur(10px)',
               color: '#fff',
-              fontSize: '16px',
+              fontSize: '14px',
               outline: 'none',
               boxSizing: 'border-box',
               transition: 'all 0.3s ease',
@@ -801,20 +801,20 @@ export default function NeynarScoreMiniAppV5() {
             <div style={{ flex: 1 }}>
               <div
                 style={{
-                  fontSize: '18px',
+                  fontSize: '14px',
                   fontWeight: '600',
                   background: 'linear-gradient(135deg, #fff 0%, #ffe0cc 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  marginBottom: '12px',
+                  marginBottom: '8px',
                 }}
               >
                 Neynar Score
               </div>
               <div
                 style={{
-                  fontSize: '56px',
+                  fontSize: '36px',
                   fontWeight: '700',
                   color: '#fff',
                   lineHeight: '1',
@@ -876,14 +876,14 @@ export default function NeynarScoreMiniAppV5() {
                 )}
                 
                 {!farcasterConnected && !loading && (
-                  <div style={{ textAlign: 'center', padding: '40px 0' }}>
-                    <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔗</div>
-                    <div style={{ fontSize: '18px', fontWeight: '600', color: '#fff', marginBottom: '8px' }}>
-                      未连接 Farcaster
-                    </div>
-                    <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)', marginBottom: '20px' }}>
-                      请在 Farcaster 客户端中打开此页面
-                    </div>
+            <div style={{ textAlign: 'center', padding: '24px 0' }}>
+              <div style={{ fontSize: '32px', marginBottom: '12px' }}>🔗</div>
+              <div style={{ fontSize: '15px', fontWeight: '600', color: '#fff', marginBottom: '6px' }}>
+                未连接 Farcaster
+              </div>
+              <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.7)', marginBottom: '16px' }}>
+                请在 Farcaster 客户端中打开此页面
+              </div>
                     <button
                       onClick={connectFarcaster}
                       style={{
@@ -907,142 +907,142 @@ export default function NeynarScoreMiniAppV5() {
                   <div>
                     {/* 用户头像和基本信息 */}
                     <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px',
+                marginBottom: '16px',
+                paddingBottom: '16px',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+              }}
+                    >
+                {currentAvatarUrl && (
+                  <img
+                    src={currentAvatarUrl}
+                    alt={currentDisplayName || currentUsername || 'User avatar'}
+                    style={{
+                      width: '56px',
+                      height: '56px',
+                      borderRadius: '50%',
+                      border: '2px solid rgba(255, 255, 255, 0.3)',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                      objectFit: 'cover',
+                    }}
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                )}
+                <div style={{ flex: 1 }}>
+                  {currentDisplayName && (
+                    <div
                       style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '20px',
-                        marginBottom: '24px',
-                        paddingBottom: '24px',
-                        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                        color: '#fff',
+                        marginBottom: '4px',
                       }}
                     >
-                      {currentAvatarUrl && (
-                        <img
-                          src={currentAvatarUrl}
-                          alt={currentDisplayName || currentUsername || 'User avatar'}
-                          style={{
-                            width: '80px',
-                            height: '80px',
-                            borderRadius: '50%',
-                            border: '3px solid rgba(255, 255, 255, 0.3)',
-                            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-                            objectFit: 'cover',
-                          }}
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
-                      )}
-                      <div style={{ flex: 1 }}>
-                        {currentDisplayName && (
-                          <div
-                            style={{
-                              fontSize: '20px',
-                              fontWeight: '600',
-                              color: '#fff',
-                              marginBottom: '8px',
-                            }}
-                          >
-                            {currentDisplayName}
-                          </div>
-                        )}
-                        {currentUsername && (
-                          <a
-                            href={`https://warpcast.com/${currentUsername}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{
-                              color: 'rgba(255, 255, 255, 0.9)',
-                              fontSize: '16px',
-                              textDecoration: 'none',
-                            }}
-                          >
-                            @{currentUsername}
-                          </a>
-                        )}
-                      </div>
+                      {currentDisplayName}
+                    </div>
+                  )}
+                  {currentUsername && (
+                    <a
+                      href={`https://warpcast.com/${currentUsername}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: 'rgba(255, 255, 255, 0.9)',
+                        fontSize: '13px',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      @{currentUsername}
+                    </a>
+                  )}
+                </div>
                     </div>
 
                     {/* 积分显示 */}
-                    <div
-                      style={{
-                        background: 'linear-gradient(135deg, #ff6b35 0%, #764ba2 100%)',
-                        borderRadius: '20px',
-                        padding: '32px',
-                        textAlign: 'center',
-                        marginBottom: '24px',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontSize: '18px',
-                          fontWeight: '600',
-                          color: 'rgba(255, 255, 255, 0.9)',
-                          marginBottom: '12px',
-                        }}
-                      >
-                        Neynar Score
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '64px',
-                          fontWeight: '700',
-                          color: '#fff',
-                          lineHeight: '1',
-                          marginBottom: '12px',
-                        }}
-                      >
-                        {currentUserScore > 1 ? (currentUserScore / 100).toFixed(2) : currentUserScore.toFixed(2)}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '14px',
-                          color: 'rgba(255, 255, 255, 0.8)',
-                          padding: '8px 16px',
-                          background: 'rgba(255, 255, 255, 0.2)',
-                          borderRadius: '20px',
-                          display: 'inline-block',
-                        }}
-                      >
-                        {getScoreLabel(currentUserScore)}
-                      </div>
-                    </div>
+              <div
+                style={{
+                  background: 'linear-gradient(135deg, #ff6b35 0%, #764ba2 100%)',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  textAlign: 'center',
+                  marginBottom: '16px',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Neynar Score
+                </div>
+                <div
+                  style={{
+                    fontSize: '42px',
+                    fontWeight: '700',
+                    color: '#fff',
+                    lineHeight: '1',
+                    marginBottom: '8px',
+                  }}
+                >
+                  {currentUserScore > 1 ? (currentUserScore / 100).toFixed(2) : currentUserScore.toFixed(2)}
+                </div>
+                <div
+                  style={{
+                    fontSize: '11px',
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    padding: '6px 12px',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '16px',
+                    display: 'inline-block',
+                  }}
+                >
+                  {getScoreLabel(currentUserScore)}
+                </div>
+              </div>
 
                     {/* 关注数据 */}
                     {(currentFollowerCount !== null || currentFollowingCount !== null) && (
-                      <div
-                        style={{
-                          display: 'flex',
-                          gap: '24px',
-                          justifyContent: 'center',
-                          padding: '20px',
-                          background: 'rgba(255, 255, 255, 0.1)',
-                          borderRadius: '16px',
-                        }}
-                      >
-                        {currentFollowerCount !== null && (
-                          <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '24px', fontWeight: '700', color: '#fff' }}>
-                              {currentFollowerCount.toLocaleString()}
-                            </div>
-                            <div style={{ fontSize: '12px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)' }}>
-                              关注者
-                            </div>
-                          </div>
-                        )}
-                        {currentFollowingCount !== null && (
-                          <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '24px', fontWeight: '700', color: '#fff' }}>
-                              {currentFollowingCount.toLocaleString()}
-                            </div>
-                            <div style={{ fontSize: '12px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)' }}>
-                              正在关注
-                            </div>
-                          </div>
-                        )}
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: '16px',
+                    justifyContent: 'center',
+                    padding: '14px',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: '12px',
+                  }}
+                >
+                  {currentFollowerCount !== null && (
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: '18px', fontWeight: '700', color: '#fff' }}>
+                        {currentFollowerCount.toLocaleString()}
                       </div>
+                      <div style={{ fontSize: '11px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)' }}>
+                        关注者
+                      </div>
+                    </div>
+                  )}
+                  {currentFollowingCount !== null && (
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: '18px', fontWeight: '700', color: '#fff' }}>
+                        {currentFollowingCount.toLocaleString()}
+                      </div>
+                      <div style={{ fontSize: '11px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)' }}>
+                        正在关注
+                      </div>
+                    </div>
+                  )}
+                </div>
                     )}
 
                     {/* Share 按钮 */}
@@ -1202,7 +1202,7 @@ export default function NeynarScoreMiniAppV5() {
                           backdropFilter: 'blur(10px)',
                         }}
                       >
-                        <h4 style={{ marginTop: 0, marginBottom: '16px', fontSize: '18px', fontWeight: '600' }}>
+                        <h4 style={{ marginTop: 0, marginBottom: '12px', fontSize: '15px', fontWeight: '600' }}>
                           👥 关注者 ({followers.length})
                         </h4>
                         <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
