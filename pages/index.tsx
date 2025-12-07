@@ -17,6 +17,10 @@ export default function Home() {
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Neynar Score" />
         
+        {/* Farcaster Mini App Meta Tags */}
+        <meta name="farcaster:app" content="https://farcaster-neynar-score-miniapp.vercel.app" />
+        <meta name="farcaster:domain" content="farcaster-neynar-score-miniapp.vercel.app" />
+        
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://farcaster-neynar-score-miniapp.vercel.app" />

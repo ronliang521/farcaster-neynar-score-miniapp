@@ -21,6 +21,20 @@ const nextConfig = {
           },
         ],
       },
+      {
+        // 允许在 Farcaster 中嵌入
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'ALLOWALL',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors *",
+          },
+        ],
+      },
     ];
   },
 };

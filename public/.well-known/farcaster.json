@@ -14,6 +14,6 @@
       }
     }
   },
-  "webhookUrl": "https://api.neynar.com/f/app/5f8bb7cf-17f6-410b-b9b8-21622b553803/event"
+  "webhookUrl": "https://api.neynar.com/f/app/5f8bb7cf-17f6-410b-b9b8-21622b553803/event",
+  "appUrl": "https://farcaster-neynar-score-miniapp.vercel.app"
 }
-
