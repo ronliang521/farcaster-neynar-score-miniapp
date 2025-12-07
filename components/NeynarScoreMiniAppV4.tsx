@@ -1293,14 +1293,14 @@ export default function NeynarScoreMiniAppV4() {
                 overflow: 'hidden'
               }}
             >
-              <div style={{ fontSize: '18px', fontWeight: '600', color: '#fff', marginBottom: '10px', flexShrink: 0 }}>
+              <div style={{ fontSize: '16px', fontWeight: '600', color: '#fff', marginBottom: '8px', flexShrink: 0, lineHeight: '1.3' }}>
                 💝 Tip Creator
               </div>
               <div style={{
-                fontSize: '12px',
+                fontSize: '11px',
                 color: 'rgba(255, 255, 255, 0.8)',
-                lineHeight: '1.5',
-                marginBottom: '14px',
+                lineHeight: '1.4',
+                marginBottom: '10px',
                 flexShrink: 0
               }}>
                 Your support is the greatest encouragement to the creator!
@@ -1310,46 +1310,49 @@ export default function NeynarScoreMiniAppV4() {
 
               {isConnected && !walletAddress && (
                 <div style={{
-                  fontSize: '10px',
+                  fontSize: '9px',
                   color: 'rgba(255, 255, 255, 0.7)',
-                  marginBottom: '12px',
-                  padding: '8px',
+                  marginBottom: '10px',
+                  padding: '6px',
                   background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '6px',
+                  borderRadius: '5px',
                   textAlign: 'center',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  lineHeight: '1.4'
                 }}>
-                  <div style={{ marginBottom: '4px' }}>🔗 Connecting to Farcaster wallet...</div>
-                  <div style={{ fontSize: '9px', opacity: 0.8 }}>Please wait while we connect your wallet</div>
+                  <div style={{ marginBottom: '3px' }}>🔗 Connecting to Farcaster wallet...</div>
+                  <div style={{ fontSize: '8px', opacity: 0.8, lineHeight: '1.3' }}>Please wait while we connect your wallet</div>
                 </div>
               )}
 
               {isConnected && walletAddress && (
                 <div style={{
-                  fontSize: '10px',
+                  fontSize: '9px',
                   color: 'rgba(255, 255, 255, 0.6)',
-                  marginBottom: '12px',
-                  padding: '6px',
+                  marginBottom: '10px',
+                  padding: '5px',
                   background: 'rgba(255, 255, 255, 0.05)',
-                  borderRadius: '6px',
+                  borderRadius: '5px',
                   wordBreak: 'break-all',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  lineHeight: '1.4'
                 }}>
                   ✅ Connected: {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
                 </div>
               )}
 
-              <div style={{ marginBottom: '12px', textAlign: 'left', flexShrink: 0 }}>
+              <div style={{ marginBottom: '10px', textAlign: 'left', flexShrink: 0 }}>
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '10px',
-                  borderRadius: '8px',
+                  padding: '8px',
+                  borderRadius: '6px',
                   background: 'rgba(255, 255, 255, 0.05)',
-                  fontSize: '13px',
+                  fontSize: '12px',
                   color: 'rgba(255, 255, 255, 0.8)',
-                  marginBottom: '6px'
+                  marginBottom: '5px',
+                  lineHeight: '1.4'
                 }}>
                   <span>Payment</span>
                   <span style={{ fontWeight: '600', color: '#fff' }}>
@@ -1360,17 +1363,18 @@ export default function NeynarScoreMiniAppV4() {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '10px',
-                  borderRadius: '8px',
+                  padding: '8px',
+                  borderRadius: '6px',
                   background: 'rgba(255, 255, 255, 0.05)',
-                  fontSize: '13px',
-                  color: 'rgba(255, 255, 255, 0.8)'
+                  fontSize: '12px',
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  lineHeight: '1.4'
                 }}>
                   <span>Network</span>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '600', color: '#fff' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontWeight: '600', color: '#fff' }}>
                     <span style={{
-                      width: '12px',
-                      height: '12px',
+                      width: '10px',
+                      height: '10px',
                       borderRadius: '50%',
                       background: '#0052ff'
                     }} />
@@ -1379,8 +1383,8 @@ export default function NeynarScoreMiniAppV4() {
                 </div>
               </div>
 
-              <div style={{ marginBottom: '12px', textAlign: 'left', flexShrink: 0 }}>
-                <div style={{ display: 'flex', gap: '6px', marginBottom: '8px' }}>
+              <div style={{ marginBottom: '10px', textAlign: 'left', flexShrink: 0 }}>
+                <div style={{ display: 'flex', gap: '5px', marginBottom: '6px' }}>
                   {['2', '4', '6'].map((amount) => (
                     <button
                       key={amount}
@@ -1391,16 +1395,17 @@ export default function NeynarScoreMiniAppV4() {
                       }}
                       style={{
                         flex: 1,
-                        padding: '10px 12px',
-                        borderRadius: '6px',
+                        padding: '6px 8px',
+                        borderRadius: '5px',
                         border: `2px solid ${tipType === amount ? 'rgba(255, 107, 53, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
                         background: tipType === amount ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.1)',
                         color: '#fff',
-                        fontSize: '13px',
+                        fontSize: '12px',
                         fontWeight: '600',
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
-                        minWidth: '0'
+                        minWidth: '0',
+                        lineHeight: '1.4'
                       }}
                       onMouseEnter={(e) => {
                         if (tipType !== amount) {
