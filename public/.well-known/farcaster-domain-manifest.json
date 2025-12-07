@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "name": "Neynar Score",
+  "icon": "https://farcaster-neynar-score-miniapp.vercel.app/icon.png",
+  "homeUrl": "https://farcaster-neynar-score-miniapp.vercel.app",
+  "webhookUrl": "https://api.neynar.com/f/app/5f8bb7cf-17f6-410b-b9b8-21622b553803/event",
+  "permissions": [
+    "user:read",
+    "cast:read",
+    "cast:write"
+  ]
+}
+
