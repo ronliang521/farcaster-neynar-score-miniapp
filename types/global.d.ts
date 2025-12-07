@@ -8,7 +8,7 @@ interface Window {
     };
     cast?: (options: { text: string }) => Promise<void>;
     publishCast?: (options: { text: string }) => Promise<void>;
-    openCastComposer?: (options: { text: string }) => void;
+    openCastComposer?: (options: { text?: string; embeds?: Array<{ url: string }> }) => void;
   };
   ethereum?: {
     request: (options: { method: string; params?: any[] }) => Promise<any>;

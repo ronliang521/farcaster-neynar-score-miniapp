@@ -432,32 +432,58 @@ export default function NeynarScoreMiniAppV4() {
     setError(null);
 
     try {
-      if (!window.farcaster) throw new Error('Farcaster SDK not available');
-
-      const farcaster = window.farcaster;
       const scoreText = myScore > 1 ? (myScore / 100).toFixed(2) : myScore.toFixed(2);
-      const shareText = `🎯 My Neynar Score: ${scoreText}\n\n` +
-        `Come test your Farcaster score!\n🔗 Click the link to check your score:\n` +
-        `${window.location.origin}`;
+      const appUrl = window.location.origin;
+      const displayName = myDisplayName || myUsername || 'User';
+      
+      // Format share text with app link
+      const shareText = `My Neynar Score is ${scoreText}. Check your score! ${appUrl}`;
 
-      if (farcaster.cast) {
-        await farcaster.cast({ text: shareText });
-        alert('✅ Share successful! Your score has been shared to Farcaster');
-      } else if (farcaster.publishCast) {
-        await farcaster.publishCast({ text: shareText });
-        alert('✅ Share successful! Your score has been shared to Farcaster');
-      } else if (farcaster.openCastComposer) {
-        farcaster.openCastComposer({ text: shareText });
-      } else if (typeof navigator !== 'undefined') {
+      // Priority 1: Use Farcaster openCastComposer to open cast page
+      if (window.farcaster) {
+        const farcaster = window.farcaster;
+        
+        if (farcaster.openCastComposer) {
+          // Open cast composer with pre-filled text and embed URL
+          farcaster.openCastComposer({ 
+            text: shareText,
+            embeds: [{
+              url: appUrl
+            }]
+          });
+          setIsSharing(false);
+          return;
+        }
+        
+        // Fallback: Try cast or publishCast (but prefer composer)
+        if (farcaster.cast) {
+          await farcaster.cast({ text: shareText });
+          alert('✅ Share successful! Your score has been shared to Farcaster');
+          setIsSharing(false);
+          return;
+        } else if (farcaster.publishCast) {
+          await farcaster.publishCast({ text: shareText });
+          alert('✅ Share successful! Your score has been shared to Farcaster');
+          setIsSharing(false);
+          return;
+        }
+      }
+
+      // Fallback: Use Web Share API or clipboard
+      if (typeof navigator !== 'undefined') {
         if (navigator.share) {
           await navigator.share({
-            title: 'My Neynar Score',
+            title: `${displayName}'s Neynar Score`,
             text: shareText,
-            url: window.location.href
+            url: appUrl
           });
+          setIsSharing(false);
+          return;
         } else if (navigator.clipboard) {
           await navigator.clipboard.writeText(shareText);
           alert('✅ Share content copied to clipboard! You can paste it in Farcaster to share');
+          setIsSharing(false);
+          return;
         } else {
           const textarea = document.createElement('textarea');
           textarea.value = shareText;
@@ -472,45 +498,16 @@ export default function NeynarScoreMiniAppV4() {
             setError('Unable to copy to clipboard, please copy manually');
           }
           document.body.removeChild(textarea);
+          setIsSharing(false);
+          return;
         }
-      } else {
-        setError('Browser environment not available');
       }
 
+      setError('Farcaster SDK not available. Please open this app in Farcaster client.');
       setIsSharing(false);
     } catch (err) {
       console.error('Share error:', err);
-      try {
-        const scoreText = myScore! > 1 ? (myScore! / 100).toFixed(2) : myScore!.toFixed(2);
-        const shareText = `🎯 My Neynar Score: ${scoreText}\n\n` +
-          `Come test your Farcaster score!\n🔗 Click the link to check your score:\n` +
-          `${window.location.origin}`;
-
-        if (typeof navigator !== 'undefined') {
-          if (navigator.clipboard) {
-            await navigator.clipboard.writeText(shareText);
-            alert('✅ Share content copied to clipboard! You can paste it in Farcaster to share');
-          } else {
-            const textarea = document.createElement('textarea');
-            textarea.value = shareText;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-              document.execCommand('copy');
-              alert('✅ Share content copied to clipboard! You can paste it in Farcaster to share');
-            } catch (err) {
-              setError('Unable to copy to clipboard, please copy manually');
-            }
-            document.body.removeChild(textarea);
-          }
-        } else {
-          setError('Share failed, please try again later');
-        }
-      } catch (err) {
-        setError('Share failed, please try again later');
-      }
+      setError('Share failed, please try again later');
       setIsSharing(false);
     }
   };
