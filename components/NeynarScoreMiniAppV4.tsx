@@ -551,7 +551,7 @@ export default function NeynarScoreMiniAppV4() {
       padding: '0',
       color: '#fff',
       position: 'relative',
-      overflow: 'hidden',
+      overflow: 'auto',
       height: '100vh',
       boxSizing: 'border-box',
       display: 'flex',
@@ -577,15 +577,15 @@ export default function NeynarScoreMiniAppV4() {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'hidden',
-          padding: '8px 8px 0 8px',
+          overflow: 'auto',
+          padding: '10px 8px 80px 8px',
           minHeight: 0
         }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '6px', flexShrink: 0 }}>
+        <div style={{ textAlign: 'center', marginBottom: '8px', flexShrink: 0 }}>
           <h2 style={{
-            marginBottom: '3px',
-            fontSize: '20px',
+            marginBottom: '4px',
+            fontSize: '22px',
             fontWeight: '700',
             textAlign: 'center',
             marginTop: 0,
@@ -596,10 +596,10 @@ export default function NeynarScoreMiniAppV4() {
             Neynar Score
           </h2>
           <p style={{
-            marginBottom: '4px',
+            marginBottom: '6px',
             textAlign: 'center',
             opacity: 0.9,
-            fontSize: '10px',
+            fontSize: '11px',
             fontWeight: '400',
             color: 'rgba(255, 255, 255, 0.9)',
             lineHeight: '1.3'
@@ -612,11 +612,10 @@ export default function NeynarScoreMiniAppV4() {
             rel="noopener noreferrer"
             style={{
               color: 'rgba(255, 255, 255, 0.7)',
-              fontSize: '9px',
+              fontSize: '10px',
               textDecoration: 'none',
               display: 'inline-block',
-              transition: 'opacity 0.3s ease',
-              lineHeight: '1.2'
+              transition: 'opacity 0.3s ease'
             }}
             onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
             onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
@@ -650,7 +649,7 @@ export default function NeynarScoreMiniAppV4() {
               boxSizing: 'border-box',
               transition: 'all 0.3s ease',
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-              lineHeight: '1.3'
+              lineHeight: '1.4'
             }}
             onFocus={(e) => {
               e.target.style.borderColor = 'rgba(255, 255, 255, 0.6)';
@@ -670,8 +669,8 @@ export default function NeynarScoreMiniAppV4() {
             whileTap={loading || !input.trim() ? {} : { scale: 0.98 }}
             style={{
               width: '100%',
-              padding: '8px',
-              borderRadius: '8px',
+              padding: '10px',
+              borderRadius: '10px',
               border: 'none',
               background: loading ? 'rgba(255, 255, 255, 0.3)' : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
               color: '#fff',
@@ -682,15 +681,15 @@ export default function NeynarScoreMiniAppV4() {
               boxShadow: loading || !input.trim() ? '0 4px 15px rgba(0, 0, 0, 0.1)' : '0 6px 25px rgba(245, 87, 108, 0.4)',
               opacity: loading || !input.trim() ? 0.6 : 1,
               transition: 'all 0.3s ease',
-              lineHeight: '1.3'
+              lineHeight: '1.4'
             }}
           >
             {loading ? (
-              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                 <motion.span
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                  style={{ display: 'inline-block', fontSize: '14px' }}
+                  style={{ display: 'inline-block', fontSize: '16px' }}
                 >
                   ⏳
                 </motion.span>
@@ -716,7 +715,7 @@ export default function NeynarScoreMiniAppV4() {
                 marginBottom: '10px',
                 color: '#fee2e2',
                 fontSize: '12px',
-                lineHeight: '1.3'
+                lineHeight: '1.4'
               }}
             >
               ⚠️ {error}
@@ -751,7 +750,7 @@ export default function NeynarScoreMiniAppV4() {
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 marginBottom: '4px',
-                lineHeight: '1.2'
+                lineHeight: '1.3'
               }}>
                 Neynar Score
               </div>
@@ -759,7 +758,7 @@ export default function NeynarScoreMiniAppV4() {
                 fontSize: '28px',
                 fontWeight: '700',
                 color: '#fff',
-                lineHeight: '1'
+                lineHeight: '1.1'
               }}>
                 {score !== null ? score > 1 ? (score / 100).toFixed(2) : score.toFixed(2) : '0.00'}
               </div>
@@ -786,7 +785,7 @@ export default function NeynarScoreMiniAppV4() {
 
         <div style={{ 
           flex: 1, 
-          overflow: 'hidden',
+          overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',
           minHeight: 0
@@ -826,10 +825,10 @@ export default function NeynarScoreMiniAppV4() {
               {!isConnected && !loading && (
                 <div style={{ textAlign: 'center', padding: '12px 0', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <div style={{ fontSize: '24px', marginBottom: '8px' }}>🔗</div>
-                  <div style={{ fontSize: '12px', fontWeight: '600', color: '#fff', marginBottom: '4px', lineHeight: '1.3' }}>
+                  <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff', marginBottom: '4px', lineHeight: '1.3' }}>
                     Not connected to Farcaster
                   </div>
-                  <div style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.7)', marginBottom: '10px', lineHeight: '1.3' }}>
+                  <div style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.7)', marginBottom: '12px', lineHeight: '1.4' }}>
                     Please open this page in the Farcaster client
                   </div>
                   <button
@@ -845,7 +844,7 @@ export default function NeynarScoreMiniAppV4() {
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
                       boxShadow: '0 4px 15px rgba(245, 87, 108, 0.3)',
-                      lineHeight: '1.3'
+                      lineHeight: '1.4'
                     }}
                   >
                     Reconnect
@@ -854,7 +853,7 @@ export default function NeynarScoreMiniAppV4() {
               )}
 
               {isConnected && myScore !== null && (
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -881,7 +880,7 @@ export default function NeynarScoreMiniAppV4() {
                     )}
                     <div style={{ flex: 1 }}>
                       {myDisplayName && (
-                        <div style={{ fontSize: '12px', fontWeight: '600', color: '#fff', marginBottom: '2px', lineHeight: '1.2' }}>
+                        <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff', marginBottom: '2px', lineHeight: '1.3' }}>
                           {myDisplayName}
                         </div>
                       )}
@@ -894,7 +893,7 @@ export default function NeynarScoreMiniAppV4() {
                             color: 'rgba(255, 255, 255, 0.9)',
                             fontSize: '11px',
                             textDecoration: 'none',
-                            lineHeight: '1.2'
+                            lineHeight: '1.3'
                           }}
                         >
                           @{myUsername}
@@ -919,7 +918,7 @@ export default function NeynarScoreMiniAppV4() {
                       fontWeight: '600',
                       color: 'rgba(255, 255, 255, 0.9)',
                       marginBottom: '3px',
-                      lineHeight: '1.2'
+                      lineHeight: '1.3'
                     }}>
                       Neynar Score
                     </div>
@@ -927,7 +926,7 @@ export default function NeynarScoreMiniAppV4() {
                       fontSize: '28px',
                       fontWeight: '700',
                       color: '#fff',
-                      lineHeight: '1',
+                      lineHeight: '1.1',
                       marginBottom: '3px'
                     }}>
                       {myScore > 1 ? (myScore / 100).toFixed(2) : myScore.toFixed(2)}
@@ -961,7 +960,7 @@ export default function NeynarScoreMiniAppV4() {
                           <div style={{ fontSize: '13px', fontWeight: '700', color: '#fff', lineHeight: '1.2' }}>
                             {myFollowerCount.toLocaleString()}
                           </div>
-                          <div style={{ fontSize: '8px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.2' }}>
+                          <div style={{ fontSize: '8px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.3' }}>
                             Followers
                           </div>
                         </div>
@@ -971,7 +970,7 @@ export default function NeynarScoreMiniAppV4() {
                           <div style={{ fontSize: '13px', fontWeight: '700', color: '#fff', lineHeight: '1.2' }}>
                             {myFollowingCount.toLocaleString()}
                           </div>
-                          <div style={{ fontSize: '8px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.2' }}>
+                          <div style={{ fontSize: '8px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.3' }}>
                             Following
                           </div>
                         </div>
@@ -1002,7 +1001,7 @@ export default function NeynarScoreMiniAppV4() {
                           justifyContent: 'center',
                           gap: '4px',
                           margin: '0 auto',
-                          lineHeight: '1.3'
+                          lineHeight: '1.4'
                         }}
                         onMouseEnter={(e) => {
                           if (!isSharing) {
@@ -1020,8 +1019,8 @@ export default function NeynarScoreMiniAppV4() {
                         {isSharing ? (
                           <>
                             <span style={{
-                              width: '12px',
-                              height: '12px',
+                              width: '16px',
+                              height: '16px',
                               border: '2px solid rgba(255, 255, 255, 0.3)',
                               borderTopColor: '#fff',
                               borderRadius: '50%',
@@ -1058,14 +1057,14 @@ export default function NeynarScoreMiniAppV4() {
                   {username && (
                     <div style={{
                       background: 'rgba(255, 255, 255, 0.1)',
-                      borderRadius: '10px',
-                      padding: '10px',
-                      marginBottom: '8px',
+                      borderRadius: '12px',
+                      padding: '12px',
+                      marginBottom: '10px',
                       backdropFilter: 'blur(10px)',
                       flexShrink: 0
                     }}>
                       {displayName && (
-                        <div style={{ fontSize: '15px', fontWeight: '600', color: '#fff', marginBottom: '4px', lineHeight: '1.2' }}>
+                        <div style={{ fontSize: '16px', fontWeight: '600', color: '#fff', marginBottom: '4px', lineHeight: '1.3' }}>
                           {displayName}
                         </div>
                       )}
@@ -1078,7 +1077,7 @@ export default function NeynarScoreMiniAppV4() {
                             color: 'rgba(255, 255, 255, 0.9)',
                             fontSize: '12px',
                             textDecoration: 'none',
-                            lineHeight: '1.2'
+                            lineHeight: '1.3'
                           }}
                         >
                           @{username}
@@ -1097,7 +1096,7 @@ export default function NeynarScoreMiniAppV4() {
                               <div style={{ fontSize: '14px', fontWeight: '700', color: '#fff', lineHeight: '1.2' }}>
                                 {followerCount.toLocaleString()}
                               </div>
-                              <div style={{ fontSize: '10px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.2' }}>
+                              <div style={{ fontSize: '9px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.3' }}>
                                 Followers
                               </div>
                             </div>
@@ -1107,7 +1106,7 @@ export default function NeynarScoreMiniAppV4() {
                               <div style={{ fontSize: '14px', fontWeight: '700', color: '#fff', lineHeight: '1.2' }}>
                                 {followingCount.toLocaleString()}
                               </div>
-                              <div style={{ fontSize: '10px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.2' }}>
+                              <div style={{ fontSize: '9px', opacity: 0.8, color: 'rgba(255, 255, 255, 0.9)', lineHeight: '1.3' }}>
                                 Following
                               </div>
                             </div>
@@ -1120,8 +1119,8 @@ export default function NeynarScoreMiniAppV4() {
                   {followers.length > 0 && (
                     <div style={{
                       background: 'rgba(255, 255, 255, 0.1)',
-                      borderRadius: '10px',
-                      padding: '10px',
+                      borderRadius: '12px',
+                      padding: '12px',
                       backdropFilter: 'blur(10px)',
                       flex: 1,
                       display: 'flex',
@@ -1129,7 +1128,7 @@ export default function NeynarScoreMiniAppV4() {
                       minHeight: 0,
                       overflow: 'hidden'
                     }}>
-                      <h4 style={{ marginTop: 0, marginBottom: '6px', fontSize: '11px', fontWeight: '600', flexShrink: 0, lineHeight: '1.2' }}>
+                      <h4 style={{ marginTop: 0, marginBottom: '6px', fontSize: '11px', fontWeight: '600', flexShrink: 0, lineHeight: '1.3' }}>
                         👥 Followers ({followers.length})
                       </h4>
                       <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
@@ -1142,7 +1141,7 @@ export default function NeynarScoreMiniAppV4() {
                               backgroundColor: 'rgba(255, 255, 255, 0.1)',
                               borderRadius: '5px',
                               fontSize: '12px',
-                              lineHeight: '1.3'
+                              lineHeight: '1.4'
                             }}
                           >
                             <a
@@ -1182,47 +1181,47 @@ export default function NeynarScoreMiniAppV4() {
               exit={{ opacity: 0, y: -10 }}
               style={{
                 background: 'rgba(255, 255, 255, 0.1)',
-                borderRadius: '10px',
-                padding: '10px',
+                borderRadius: '12px',
+                padding: '12px',
                 backdropFilter: 'blur(10px)',
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
                 minHeight: 0,
-                overflow: 'auto'
+                overflow: 'hidden'
               }}
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <div style={{ fontSize: '16px', fontWeight: '600', color: '#fff', marginBottom: '8px', lineHeight: '1.2' }}>
-                  Improve Score
-                </div>
-                <div style={{
+              <div style={{ fontSize: '16px', fontWeight: '600', color: '#fff', marginBottom: '8px', lineHeight: '1.3' }}>
+                Improve Score
+              </div>
+              <div style={{
+                fontSize: '11px',
+                color: 'rgba(255, 255, 255, 0.8)',
+                lineHeight: '1.4',
+                marginBottom: '12px'
+              }}>
+                Visit Start on Farcaster to learn more ways to improve your score
+              </div>
+              <a
+                href="https://startonfarcaster.xyz/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-block',
+                  padding: '6px 12px',
+                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                  color: '#fff',
+                  textDecoration: 'none',
+                  borderRadius: '6px',
+                  fontWeight: '600',
                   fontSize: '11px',
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  lineHeight: '1.4',
-                  marginBottom: '12px'
-                }}>
-                  Visit Start on Farcaster to learn more ways to improve your score
-                </div>
-                <a
-                  href="https://startonfarcaster.xyz/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-block',
-                    padding: '6px 12px',
-                    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                    color: '#fff',
-                    textDecoration: 'none',
-                    borderRadius: '6px',
-                    fontWeight: '600',
-                    fontSize: '11px',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 15px rgba(245, 87, 108, 0.3)',
-                    marginBottom: '10px',
-                    lineHeight: '1.3'
-                  }}
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 15px rgba(245, 87, 108, 0.3)',
+                  marginBottom: '10px',
+                  lineHeight: '1.4'
+                }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
                     e.currentTarget.style.boxShadow = '0 6px 20px rgba(245, 87, 108, 0.4)';
@@ -1258,7 +1257,7 @@ export default function NeynarScoreMiniAppV4() {
                     fontWeight: '500',
                     transition: 'all 0.3s ease',
                     border: '1px solid rgba(255, 255, 255, 0.2)',
-                    lineHeight: '1.3'
+                    lineHeight: '1.4'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
@@ -1424,16 +1423,17 @@ export default function NeynarScoreMiniAppV4() {
                     }}
                     style={{
                       flex: 1,
-                      padding: '8px 10px',
-                      borderRadius: '6px',
+                      padding: '6px 8px',
+                      borderRadius: '5px',
                       border: `2px solid ${tipType === 'custom' ? 'rgba(255, 107, 53, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
                       background: tipType === 'custom' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.1)',
                       color: '#fff',
-                      fontSize: '13px',
+                      fontSize: '12px',
                       fontWeight: '600',
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
-                      minWidth: '0'
+                      minWidth: '0',
+                      lineHeight: '1.4'
                     }}
                     onMouseEnter={(e) => {
                       if (tipType !== 'custom') {
@@ -1451,7 +1451,7 @@ export default function NeynarScoreMiniAppV4() {
                 </div>
 
                 {tipType === 'custom' && (
-                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginTop: '6px' }}>
+                  <div style={{ display: 'flex', gap: '5px', alignItems: 'center', marginTop: '5px' }}>
                     <input
                       type="number"
                       value={customTipAmount}
@@ -1463,16 +1463,17 @@ export default function NeynarScoreMiniAppV4() {
                       placeholder="Enter custom amount"
                       style={{
                         flex: 1,
-                        padding: '8px',
-                        borderRadius: '6px',
+                        padding: '6px',
+                        borderRadius: '5px',
                         border: '2px solid rgba(255, 255, 255, 0.3)',
                         background: 'rgba(255, 255, 255, 0.1)',
                         color: '#fff',
-                        fontSize: '12px',
-                        outline: 'none'
+                        fontSize: '11px',
+                        outline: 'none',
+                        lineHeight: '1.4'
                       }}
                     />
-                    <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.8)', fontWeight: '600' }}>
+                    <div style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.8)', fontWeight: '600', lineHeight: '1.4' }}>
                       {USDC_TOKEN.symbol}
                     </div>
                   </div>
@@ -1483,15 +1484,15 @@ export default function NeynarScoreMiniAppV4() {
                 onClick={handleTip}
                 disabled={isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)}
                 style={{
-                  padding: '10px 20px',
+                  padding: '8px 16px',
                   background: (tipType === 'custom' && customTipAmount && parseFloat(customTipAmount) > 0) || (tipType !== 'custom' && tipAmount && parseFloat(tipAmount) > 0)
                     ? 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
                     : 'rgba(255, 255, 255, 0.1)',
                   color: '#fff',
                   border: 'none',
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   fontWeight: '600',
-                  fontSize: '12px',
+                  fontSize: '11px',
                   cursor: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
                     ? 'not-allowed'
                     : 'pointer',
@@ -1500,9 +1501,10 @@ export default function NeynarScoreMiniAppV4() {
                   opacity: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
                     ? 0.7
                     : 1,
-                  minWidth: '140px',
+                  minWidth: '120px',
                   width: '100%',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  lineHeight: '1.4'
                 }}
                 onMouseEnter={(e) => {
                   const isValid = tipType === 'custom' ? customTipAmount && parseFloat(customTipAmount) > 0 : tipAmount && parseFloat(tipAmount) > 0;
@@ -1520,10 +1522,10 @@ export default function NeynarScoreMiniAppV4() {
                 }}
               >
                 {isTipping ? (
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                     <span style={{
-                      width: '12px',
-                      height: '12px',
+                      width: '16px',
+                      height: '16px',
                       border: '2px solid rgba(255, 255, 255, 0.3)',
                       borderTopColor: '#fff',
                       borderRadius: '50%',
@@ -1558,7 +1560,7 @@ export default function NeynarScoreMiniAppV4() {
           borderTop: '1px solid rgba(255, 255, 255, 0.1)',
           display: 'flex',
           justifyContent: 'space-around',
-          padding: '6px 0',
+          padding: '8px 0',
           zIndex: 1000,
           flexShrink: 0
         }}>
@@ -1572,22 +1574,22 @@ export default function NeynarScoreMiniAppV4() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '3px',
-              padding: '6px 10px',
+              gap: '4px',
+              padding: '8px 12px',
               transition: 'all 0.3s ease'
             }}
           >
             <div style={{ fontSize: '18px' }}>👤</div>
-            <div style={{ fontSize: '9px', fontWeight: activeTab === 'myself' ? '600' : '400', lineHeight: '1.2' }}>
+            <div style={{ fontSize: '9px', fontWeight: activeTab === 'myself' ? '600' : '400', lineHeight: '1.3' }}>
               Myself
             </div>
             {activeTab === 'myself' && (
               <div style={{
-                width: '20px',
-                height: '2px',
+                width: '24px',
+                height: '3px',
                 background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                 borderRadius: '2px',
-                marginTop: '1px'
+                marginTop: '2px'
               }} />
             )}
           </button>
@@ -1602,22 +1604,22 @@ export default function NeynarScoreMiniAppV4() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '3px',
-              padding: '6px 10px',
+              gap: '4px',
+              padding: '8px 12px',
               transition: 'all 0.3s ease'
             }}
           >
             <div style={{ fontSize: '18px' }}>📊</div>
-            <div style={{ fontSize: '9px', fontWeight: activeTab === 'check' ? '600' : '400', lineHeight: '1.2' }}>
+            <div style={{ fontSize: '9px', fontWeight: activeTab === 'check' ? '600' : '400', lineHeight: '1.3' }}>
               Check
             </div>
             {activeTab === 'check' && (
               <div style={{
-                width: '20px',
-                height: '2px',
+                width: '24px',
+                height: '3px',
                 background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                 borderRadius: '2px',
-                marginTop: '1px'
+                marginTop: '2px'
               }} />
             )}
           </button>
@@ -1632,22 +1634,22 @@ export default function NeynarScoreMiniAppV4() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '3px',
-              padding: '6px 10px',
+              gap: '4px',
+              padding: '8px 12px',
               transition: 'all 0.3s ease'
             }}
           >
             <div style={{ fontSize: '18px' }}>📈</div>
-            <div style={{ fontSize: '9px', fontWeight: activeTab === 'improve' ? '600' : '400', lineHeight: '1.2' }}>
+            <div style={{ fontSize: '9px', fontWeight: activeTab === 'improve' ? '600' : '400', lineHeight: '1.3' }}>
               Improve
             </div>
             {activeTab === 'improve' && (
               <div style={{
-                width: '20px',
-                height: '2px',
+                width: '24px',
+                height: '3px',
                 background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                 borderRadius: '2px',
-                marginTop: '1px'
+                marginTop: '2px'
               }} />
             )}
           </button>
@@ -1662,22 +1664,22 @@ export default function NeynarScoreMiniAppV4() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '3px',
-              padding: '6px 10px',
+              gap: '4px',
+              padding: '8px 12px',
               transition: 'all 0.3s ease'
             }}
           >
             <div style={{ fontSize: '18px' }}>💝</div>
-            <div style={{ fontSize: '9px', fontWeight: activeTab === 'tip' ? '600' : '400', lineHeight: '1.2' }}>
+            <div style={{ fontSize: '9px', fontWeight: activeTab === 'tip' ? '600' : '400', lineHeight: '1.3' }}>
               Tip
             </div>
             {activeTab === 'tip' && (
               <div style={{
-                width: '20px',
-                height: '2px',
+                width: '24px',
+                height: '3px',
                 background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                 borderRadius: '2px',
-                marginTop: '1px'
+                marginTop: '2px'
               }} />
             )}
           </button>
@@ -1686,3 +1688,4 @@ export default function NeynarScoreMiniAppV4() {
     </div>
   );
 }
+
