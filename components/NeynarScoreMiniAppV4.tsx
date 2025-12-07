@@ -986,59 +986,62 @@ export default function NeynarScoreMiniAppV4() {
                   )}
 
                   {isConnected && myScore !== null && (
-                    <div style={{ marginTop: 'auto', textAlign: 'center', flexShrink: 0, paddingTop: '8px' }}>
-                      <button
+                    <div style={{ marginTop: 'auto', textAlign: 'center', flexShrink: 0, paddingTop: '10px' }}>
+                      <motion.button
                         onClick={handleShare}
                         disabled={isSharing}
+                        whileHover={!isSharing ? { scale: 1.05, y: -2 } : {}}
+                        whileTap={!isSharing ? { scale: 0.98 } : {}}
                         style={{
-                          padding: '6px 12px',
-                          background: isSharing ? 'rgba(255, 255, 255, 0.3)' : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                          padding: '10px 20px',
+                          background: isSharing 
+                            ? 'rgba(255, 255, 255, 0.3)' 
+                            : 'linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)',
                           color: '#fff',
                           border: 'none',
-                          borderRadius: '6px',
-                          fontWeight: '600',
-                          fontSize: '11px',
+                          borderRadius: '12px',
+                          fontWeight: '700',
+                          fontSize: '13px',
                           cursor: isSharing ? 'not-allowed' : 'pointer',
-                          transition: 'all 0.3s ease',
-                          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          boxShadow: isSharing 
+                            ? '0 4px 15px rgba(0, 0, 0, 0.2)' 
+                            : '0 6px 25px rgba(16, 185, 129, 0.4), 0 2px 10px rgba(16, 185, 129, 0.2)',
                           opacity: isSharing ? 0.7 : 1,
-                          minWidth: '120px',
+                          minWidth: '160px',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '4px',
+                          gap: '8px',
                           margin: '0 auto',
-                          lineHeight: '1.4'
-                        }}
-                        onMouseEnter={(e) => {
-                          if (!isSharing) {
-                            e.currentTarget.style.transform = 'translateY(-2px)';
-                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!isSharing) {
-                            e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
-                          }
+                          lineHeight: '1.4',
+                          position: 'relative',
+                          overflow: 'hidden'
                         }}
                       >
                         {isSharing ? (
                           <>
-                            <span style={{
-                              width: '16px',
-                              height: '16px',
-                              border: '2px solid rgba(255, 255, 255, 0.3)',
-                              borderTopColor: '#fff',
-                              borderRadius: '50%',
-                              animation: 'spin 0.8s linear infinite'
-                            }} />
-                            Sharing...
+                            <motion.span
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                              style={{
+                                width: '18px',
+                                height: '18px',
+                                border: '2px solid rgba(255, 255, 255, 0.3)',
+                                borderTopColor: '#fff',
+                                borderRadius: '50%',
+                                display: 'inline-block'
+                              }}
+                            />
+                            <span>Sharing...</span>
                           </>
                         ) : (
-                          '📤 Share to Farcaster'
+                          <>
+                            <span style={{ fontSize: '16px', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))' }}>📤</span>
+                            <span style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)' }}>Share to Farcaster</span>
+                          </>
                         )}
-                      </button>
+                      </motion.button>
                     </div>
                   )}
                 </div>
@@ -1243,41 +1246,51 @@ export default function NeynarScoreMiniAppV4() {
               </div>
               <div style={{
                 marginTop: 'auto',
-                paddingTop: '10px',
+                paddingTop: '12px',
                 borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                flexShrink: 0
+                flexShrink: 0,
+                textAlign: 'center'
               }}>
-                <a
+                <motion.a
                   href="https://warpcast.com/ron521520"
                   target="_blank"
                   rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '5px',
-                    padding: '6px 12px',
-                    background: 'rgba(255, 255, 255, 0.1)',
+                    gap: '8px',
+                    padding: '10px 18px',
+                    background: 'linear-gradient(135deg, rgba(240, 147, 251, 0.3) 0%, rgba(245, 87, 108, 0.3) 100%)',
+                    backdropFilter: 'blur(10px)',
                     color: '#fff',
                     textDecoration: 'none',
-                    borderRadius: '6px',
-                    fontSize: '11px',
-                    fontWeight: '500',
-                    transition: 'all 0.3s ease',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    lineHeight: '1.4'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-                    e.currentTarget.style.transform = 'translateY(0)';
+                    borderRadius: '12px',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    lineHeight: '1.4',
+                    boxShadow: '0 4px 20px rgba(245, 87, 108, 0.3), 0 2px 8px rgba(240, 147, 251, 0.2)',
+                    position: 'relative',
+                    overflow: 'hidden'
                   }}
                 >
-                  <span>👤</span>
-                  <span>Follow the mini app author @ron521520</span>
-                </a>
+                  <span style={{ 
+                    fontSize: '18px', 
+                    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))',
+                    display: 'inline-block'
+                  }}>👤</span>
+                  <span style={{ 
+                    textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+                    fontWeight: '600'
+                  }}>Follow Creator @ron521520</span>
+                  <span style={{ 
+                    fontSize: '14px',
+                    opacity: 0.9
+                  }}>→</span>
+                </motion.a>
               </div>
             </motion.div>
           )}
