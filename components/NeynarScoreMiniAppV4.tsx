@@ -88,8 +88,43 @@ export default function NeynarScoreMiniAppV4() {
     }
   };
 
+  const connectFarcasterWallet = async () => {
+    try {
+      if (window.farcaster) {
+        const farcaster = window.farcaster;
+        if (farcaster && farcaster.connectWallet) {
+          try {
+            const wallet = await farcaster.connectWallet();
+            if (wallet) {
+              console.log('✅ Connected to Farcaster embedded wallet:', wallet);
+              setWalletAddress(wallet);
+              setIsConnected(true);
+              return true;
+            }
+          } catch (err: any) {
+            if (err?.message?.includes('disconnected port') || err?.message?.includes('Extension context')) {
+              console.warn('Extension connection error (ignored):', err.message);
+            } else {
+              console.warn('Farcaster wallet connection error:', err.message);
+            }
+          }
+        }
+      }
+      return false;
+    } catch (err: any) {
+      console.warn('Failed to connect Farcaster wallet:', err);
+      return false;
+    }
+  };
+
   const connectWallet = async () => {
     try {
+      // First try Farcaster embedded wallet
+      const farcasterWalletConnected = await connectFarcasterWallet();
+      if (farcasterWalletConnected) {
+        return;
+      }
+
       if (window.farcaster) {
         try {
           const farcaster = window.farcaster;
@@ -279,6 +314,12 @@ export default function NeynarScoreMiniAppV4() {
             setMyFid(fid);
             setIsConnected(true);
             await fetchUserScore(fid);
+            // Auto-connect Farcaster embedded wallet
+            setTimeout(() => {
+              connectFarcasterWallet().catch(err => {
+                console.log('Auto wallet connection skipped:', err);
+              });
+            }, 1000);
             setLoading(false);
             return;
           }
@@ -298,6 +339,12 @@ export default function NeynarScoreMiniAppV4() {
               setMyFid(fid);
               setIsConnected(true);
               await fetchUserScore(fid);
+              // Auto-connect Farcaster embedded wallet
+              setTimeout(() => {
+                connectFarcasterWallet().catch(err => {
+                  console.log('Auto wallet connection skipped:', err);
+                });
+              }, 1000);
               setLoading(false);
               return;
             }
@@ -309,6 +356,12 @@ export default function NeynarScoreMiniAppV4() {
               setMyFid(user.fid);
               setIsConnected(true);
               await fetchUserScore(user.fid);
+              // Auto-connect Farcaster embedded wallet
+              setTimeout(() => {
+                connectFarcasterWallet().catch(err => {
+                  console.log('Auto wallet connection skipped:', err);
+                });
+              }, 1000);
               setLoading(false);
               return;
             }
@@ -471,6 +524,20 @@ export default function NeynarScoreMiniAppV4() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Auto-connect wallet when switching to Tip tab and Farcaster is connected
+  useEffect(() => {
+    if (activeTab === 'tip' && isConnected && myFid !== null && !walletAddress) {
+      // Wait a bit for the tab to render, then auto-connect wallet
+      const timer = setTimeout(() => {
+        console.log('🔄 Auto-connecting Farcaster wallet in Tip tab...');
+        connectFarcasterWallet().catch((err) => {
+          console.log('Auto wallet connection skipped:', err);
+        });
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [activeTab, isConnected, myFid, walletAddress]);
 
   const getScoreRating = (score: number) => {
     if (score >= 80) return 'Excellent';
@@ -1172,6 +1239,21 @@ export default function NeynarScoreMiniAppV4() {
                 Tip will be sent to @ron521520
               </div>
 
+              {isConnected && !walletAddress && (
+                <div style={{
+                  fontSize: '12px',
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  marginBottom: '20px',
+                  padding: '12px',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  borderRadius: '8px',
+                  textAlign: 'center'
+                }}>
+                  <div style={{ marginBottom: '8px' }}>🔗 Connecting to Farcaster wallet...</div>
+                  <div style={{ fontSize: '11px', opacity: 0.8 }}>Please wait while we connect your wallet</div>
+                </div>
+              )}
+
               {isConnected && walletAddress && (
                 <div style={{
                   fontSize: '12px',
@@ -1182,7 +1264,7 @@ export default function NeynarScoreMiniAppV4() {
                   borderRadius: '8px',
                   wordBreak: 'break-all'
                 }}>
-                  Connected: {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+                  ✅ Connected: {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
                 </div>
               )}
 
