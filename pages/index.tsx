@@ -17,16 +17,23 @@ export default function Home() {
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Neynar Score" />
         
+        {/* Farcaster Frame Meta Tags - Required for Frame recognition */}
+        <meta property="fc:frame" content="vNext" />
+        <meta property="fc:frame:image" content="https://farcaster-neynar-score-miniapp.vercel.app/icon.png" />
+        <meta property="fc:frame:image:aspect_ratio" content="1:1" />
+        
         {/* Farcaster Mini App Meta Tags */}
         <meta name="farcaster:app" content="https://farcaster-neynar-score-miniapp.vercel.app" />
         <meta name="farcaster:domain" content="farcaster-neynar-score-miniapp.vercel.app" />
         
-        {/* Open Graph / Facebook */}
+        {/* Open Graph / Facebook - Required for Frame */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://farcaster-neynar-score-miniapp.vercel.app" />
         <meta property="og:title" content="Neynar Score - Check Your Farcaster Reputation" />
         <meta property="og:description" content="Check your Neynar Score and Farcaster reputation. Discover your influence and engagement metrics." />
         <meta property="og:image" content="https://farcaster-neynar-score-miniapp.vercel.app/icon.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="1200" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
