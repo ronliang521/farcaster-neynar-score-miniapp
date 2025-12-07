@@ -17,6 +17,7 @@ export default function NeynarScoreMiniAppV4() {
   const [followerCount, setFollowerCount] = useState<number | null>(null);
   const [followingCount, setFollowingCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [checkLoading, setCheckLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('myself');
   const [isConnected, setIsConnected] = useState(false);
@@ -52,8 +53,10 @@ export default function NeynarScoreMiniAppV4() {
       setError('Please enter FID or username');
       return;
     }
-    setLoading(true);
+    // Use separate loading state for check to avoid conflicts with Myself panel
+    setCheckLoading(true);
     setError(null);
+    // Only clear Check panel states, never touch Myself panel states
     setScore(null);
     setFollowers([]);
     setUsername(null);
@@ -71,6 +74,7 @@ export default function NeynarScoreMiniAppV4() {
       if (data.error) {
         setError(data.error);
       } else {
+        // Only update Check panel states, never update Myself panel states
         setScore(data.score ?? null);
         setFollowers(data.followers ?? []);
         setUsername(data.username ?? null);
@@ -79,12 +83,14 @@ export default function NeynarScoreMiniAppV4() {
         setDisplayName(data.displayName ?? null);
         setFollowerCount(data.followerCount ?? null);
         setFollowingCount(data.followingCount ?? null);
+        // Explicitly ensure Myself panel states are not affected
+        // Do not update myScore, myAvatarUrl, myDisplayName, myUsername, etc.
       }
     } catch (err) {
       console.error(err);
       setError('Request failed, please try again later');
     } finally {
-      setLoading(false);
+      setCheckLoading(false);
     }
   };
 
@@ -631,11 +637,11 @@ export default function NeynarScoreMiniAppV4() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => {
-              if (e.key === 'Enter' && !loading) {
+              if (e.key === 'Enter' && !checkLoading) {
                 handleCheckScore();
               }
             }}
-            disabled={loading}
+            disabled={checkLoading}
             style={{
               padding: '8px 10px',
               width: '100%',
@@ -664,27 +670,27 @@ export default function NeynarScoreMiniAppV4() {
           />
           <motion.button
             onClick={handleCheckScore}
-            disabled={loading || !input.trim()}
-            whileHover={loading || !input.trim() ? {} : { scale: 1.02, y: -2 }}
-            whileTap={loading || !input.trim() ? {} : { scale: 0.98 }}
+            disabled={checkLoading || !input.trim()}
+            whileHover={checkLoading || !input.trim() ? {} : { scale: 1.02, y: -2 }}
+            whileTap={checkLoading || !input.trim() ? {} : { scale: 0.98 }}
             style={{
               width: '100%',
               padding: '10px',
               borderRadius: '10px',
               border: 'none',
-              background: loading ? 'rgba(255, 255, 255, 0.3)' : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+              background: checkLoading ? 'rgba(255, 255, 255, 0.3)' : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
               color: '#fff',
               fontSize: '13px',
               fontWeight: '600',
-              cursor: loading || !input.trim() ? 'not-allowed' : 'pointer',
+              cursor: checkLoading || !input.trim() ? 'not-allowed' : 'pointer',
               marginTop: '8px',
-              boxShadow: loading || !input.trim() ? '0 4px 15px rgba(0, 0, 0, 0.1)' : '0 6px 25px rgba(245, 87, 108, 0.4)',
-              opacity: loading || !input.trim() ? 0.6 : 1,
+              boxShadow: checkLoading || !input.trim() ? '0 4px 15px rgba(0, 0, 0, 0.1)' : '0 6px 25px rgba(245, 87, 108, 0.4)',
+              opacity: checkLoading || !input.trim() ? 0.6 : 1,
               transition: 'all 0.3s ease',
               lineHeight: '1.4'
             }}
           >
-            {loading ? (
+            {checkLoading ? (
               <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                 <motion.span
                   animate={{ rotate: 360 }}
