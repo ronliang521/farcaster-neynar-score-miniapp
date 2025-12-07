@@ -551,9 +551,10 @@ export default function NeynarScoreMiniAppV4() {
       padding: '20px 16px 100px 16px',
       color: '#fff',
       position: 'relative',
-      overflow: 'hidden',
-      minHeight: '100vh',
-      boxSizing: 'border-box'
+      overflow: 'auto',
+      height: '100vh',
+      boxSizing: 'border-box',
+      WebkitOverflowScrolling: 'touch'
     }}>
       <div style={{
         position: 'absolute',
