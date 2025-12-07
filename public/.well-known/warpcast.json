@@ -1,10 +1,10 @@
 {
   "name": "Neynar Score",
   "description": "Check your Neynar Score and Farcaster reputation. Discover your influence and engagement metrics on the Farcaster network.",
-  "imageUrl": "/icon.png",
+  "imageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/icon.png",
   "action": {
     "type": "link",
-    "url": "https://your-domain.com"
+    "url": "https://farcaster-neynar-score-miniapp.vercel.app"
   },
   "version": "1.0.0"
 }

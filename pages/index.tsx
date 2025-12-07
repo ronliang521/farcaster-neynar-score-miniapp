@@ -19,15 +19,17 @@ export default function Home() {
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://neynar.com/score" />
+        <meta property="og:url" content="https://farcaster-neynar-score-miniapp.vercel.app" />
         <meta property="og:title" content="Neynar Score - Check Your Farcaster Reputation" />
         <meta property="og:description" content="Check your Neynar Score and Farcaster reputation. Discover your influence and engagement metrics." />
+        <meta property="og:image" content="https://farcaster-neynar-score-miniapp.vercel.app/icon.png" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://neynar.com/score" />
+        <meta property="twitter:url" content="https://farcaster-neynar-score-miniapp.vercel.app" />
         <meta property="twitter:title" content="Neynar Score - Check Your Farcaster Reputation" />
         <meta property="twitter:description" content="Check your Neynar Score and Farcaster reputation. Discover your influence and engagement metrics." />
+        <meta property="twitter:image" content="https://farcaster-neynar-score-miniapp.vercel.app/icon.png" />
       </Head>
 
       <main
