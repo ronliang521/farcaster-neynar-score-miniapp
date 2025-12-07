@@ -996,7 +996,7 @@ export default function NeynarScoreMiniAppV4() {
                           padding: '10px 20px',
                           background: isSharing 
                             ? 'rgba(255, 255, 255, 0.3)' 
-                            : 'linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)',
+                            : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                           color: '#fff',
                           border: 'none',
                           borderRadius: '12px',
@@ -1006,7 +1006,7 @@ export default function NeynarScoreMiniAppV4() {
                           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                           boxShadow: isSharing 
                             ? '0 4px 15px rgba(0, 0, 0, 0.2)' 
-                            : '0 6px 25px rgba(16, 185, 129, 0.4), 0 2px 10px rgba(16, 185, 129, 0.2)',
+                            : '0 6px 25px rgba(245, 87, 108, 0.4), 0 2px 10px rgba(240, 147, 251, 0.3)',
                           opacity: isSharing ? 0.7 : 1,
                           minWidth: '160px',
                           display: 'flex',
@@ -1262,7 +1262,7 @@ export default function NeynarScoreMiniAppV4() {
                     alignItems: 'center',
                     gap: '8px',
                     padding: '10px 18px',
-                    background: 'linear-gradient(135deg, rgba(240, 147, 251, 0.3) 0%, rgba(245, 87, 108, 0.3) 100%)',
+                    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                     backdropFilter: 'blur(10px)',
                     color: '#fff',
                     textDecoration: 'none',
@@ -1272,7 +1272,7 @@ export default function NeynarScoreMiniAppV4() {
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     border: '2px solid rgba(255, 255, 255, 0.3)',
                     lineHeight: '1.4',
-                    boxShadow: '0 4px 20px rgba(245, 87, 108, 0.3), 0 2px 8px rgba(240, 147, 251, 0.2)',
+                    boxShadow: '0 6px 25px rgba(245, 87, 108, 0.4), 0 2px 10px rgba(240, 147, 251, 0.3)',
                     position: 'relative',
                     overflow: 'hidden'
                   }}
