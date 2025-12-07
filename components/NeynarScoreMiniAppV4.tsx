@@ -986,7 +986,7 @@ export default function NeynarScoreMiniAppV4() {
                   )}
 
                   {isConnected && myScore !== null && (
-                    <div style={{ marginTop: 'auto', textAlign: 'center', flexShrink: 0, paddingTop: '0px', marginTop: '-8px' }}>
+                    <div style={{ marginTop: 'auto', textAlign: 'center', flexShrink: 0, paddingTop: '0px', marginTop: '-16px' }}>
                       <motion.button
                         onClick={handleShare}
                         disabled={isSharing}
