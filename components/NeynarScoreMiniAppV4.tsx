@@ -481,15 +481,15 @@ export default function NeynarScoreMiniAppV4() {
 
   return (
     <div style={{
-      maxWidth: '520px',
-      margin: '0 auto',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      borderRadius: '24px',
-      padding: '36px',
-      boxShadow: '0 25px 70px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+      width: '100%',
+      maxWidth: '100%',
+      margin: '0',
+      padding: '20px 16px 100px 16px',
       color: '#fff',
       position: 'relative',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      minHeight: '100vh',
+      boxSizing: 'border-box'
     }}>
       <div style={{
         position: 'absolute',
@@ -507,27 +507,25 @@ export default function NeynarScoreMiniAppV4() {
         transition={{ duration: 0.5 }}
         style={{ position: 'relative', zIndex: 1 }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '12px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <h2 style={{
-            marginBottom: '6px',
-            fontSize: '24px',
+            marginBottom: '8px',
+            fontSize: '28px',
             fontWeight: '700',
             textAlign: 'center',
             marginTop: 0,
-            background: 'linear-gradient(135deg, #fff 0%, #e0e7ff 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            textShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
+            color: '#fff',
+            textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)'
           }}>
             Neynar Score
           </h2>
           <p style={{
-            marginBottom: '16px',
+            marginBottom: '12px',
             textAlign: 'center',
-            opacity: 0.95,
-            fontSize: '12px',
-            fontWeight: '400'
+            opacity: 0.9,
+            fontSize: '13px',
+            fontWeight: '400',
+            color: 'rgba(255, 255, 255, 0.9)'
           }}>
             Check your Farcaster reputation score powered by Neynar
           </p>
@@ -536,15 +534,14 @@ export default function NeynarScoreMiniAppV4() {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              color: 'rgba(255, 255, 255, 0.8)',
-              fontSize: '12px',
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: '11px',
               textDecoration: 'none',
               display: 'inline-block',
-              marginTop: '8px',
               transition: 'opacity 0.3s ease'
             }}
             onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.8'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
           >
             Powered by Neynar →
           </a>
@@ -652,7 +649,8 @@ export default function NeynarScoreMiniAppV4() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             style={{
-              background: 'linear-gradient(135deg, #ff6b35 0%, #764ba2 100%)',
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(10px)',
               borderRadius: '20px',
               padding: '28px',
               marginBottom: '24px',
@@ -745,14 +743,15 @@ export default function NeynarScoreMiniAppV4() {
                     onClick={connectFarcaster}
                     style={{
                       padding: '12px 24px',
-                      background: 'linear-gradient(135deg, #ff6b35 0%, #f5576c 100%)',
+                      background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                       color: '#fff',
                       border: 'none',
                       borderRadius: '12px',
                       fontWeight: '600',
                       fontSize: '16px',
                       cursor: 'pointer',
-                      transition: 'all 0.3s ease'
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 4px 15px rgba(245, 87, 108, 0.3)'
                     }}
                   >
                     Reconnect
@@ -809,7 +808,8 @@ export default function NeynarScoreMiniAppV4() {
                   </div>
 
                   <div style={{
-                    background: 'linear-gradient(135deg, #ff6b35 0%, #764ba2 100%)',
+                    background: 'rgba(255, 255, 255, 0.15)',
+                    backdropFilter: 'blur(10px)',
                     borderRadius: '16px',
                     padding: '20px',
                     textAlign: 'center',
@@ -1085,22 +1085,22 @@ export default function NeynarScoreMiniAppV4() {
                   style={{
                     display: 'inline-block',
                     padding: '12px 24px',
-                    background: 'linear-gradient(135deg, #ff6b35 0%, #764ba2 100%)',
+                    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                     color: '#fff',
                     textDecoration: 'none',
                     borderRadius: '12px',
                     fontWeight: '600',
                     fontSize: '16px',
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
+                    boxShadow: '0 4px 15px rgba(245, 87, 108, 0.3)'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(245, 87, 108, 0.4)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(245, 87, 108, 0.3)';
                   }}
                 >
                   Visit Start on Farcaster →
@@ -1331,7 +1331,7 @@ export default function NeynarScoreMiniAppV4() {
                 style={{
                   padding: '14px 32px',
                   background: (tipType === 'custom' && customTipAmount && parseFloat(customTipAmount) > 0) || (tipType !== 'custom' && tipAmount && parseFloat(tipAmount) > 0)
-                    ? 'linear-gradient(135deg, #ff6b35 0%, #f5576c 100%)'
+                    ? 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
                     : 'rgba(255, 255, 255, 0.1)',
                   color: '#fff',
                   border: 'none',
@@ -1395,17 +1395,15 @@ export default function NeynarScoreMiniAppV4() {
         <div style={{
           position: 'fixed',
           bottom: 0,
-          left: '50%',
-          transform: 'translateX(-50%)',
+          left: 0,
+          right: 0,
           width: '100%',
-          maxWidth: '520px',
           background: 'rgba(30, 30, 30, 0.95)',
           backdropFilter: 'blur(20px)',
           borderTop: '1px solid rgba(255, 255, 255, 0.1)',
           display: 'flex',
           justifyContent: 'space-around',
           padding: '12px 0',
-          borderRadius: '20px 20px 0 0',
           zIndex: 1000
         }}>
           <button
@@ -1431,7 +1429,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #ff6b35 0%, #f5576c 100%)',
+                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
@@ -1461,7 +1459,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #ff6b35 0%, #f5576c 100%)',
+                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
@@ -1491,7 +1489,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #ff6b35 0%, #f5576c 100%)',
+                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
@@ -1521,7 +1519,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #ff6b35 0%, #f5576c 100%)',
+                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
