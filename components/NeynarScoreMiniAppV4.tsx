@@ -1247,7 +1247,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 marginTop: 'auto',
                 paddingTop: '0px',
-                marginTop: '-8px',
+                marginTop: '-16px',
                 borderTop: '1px solid rgba(255, 255, 255, 0.2)',
                 flexShrink: 0,
                 textAlign: 'center'
