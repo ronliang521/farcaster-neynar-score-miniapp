@@ -1,18 +1,8 @@
 {
-  "../components/NeynarScoreMiniAppV5.tsx -> @farcaster/miniapp-sdk": {
-    "id": 2783,
+  "../components/NeynarScoreMiniAppV4.tsx -> @farcaster/miniapp-sdk": {
+    "id": "../components/NeynarScoreMiniAppV4.tsx -> @farcaster/miniapp-sdk",
     "files": [
-      "static/chunks/8015bd09.0efc67b6b8762989.js",
-      "static/chunks/386.fcbb521ca86e99b7.js",
-      "static/chunks/601.6dac09bcbef5036f.js"
-    ]
-  },
-  "_app.tsx -> @farcaster/miniapp-sdk": {
-    "id": 2783,
-    "files": [
-      "static/chunks/8015bd09.0efc67b6b8762989.js",
-      "static/chunks/386.fcbb521ca86e99b7.js",
-      "static/chunks/601.6dac09bcbef5036f.js"
+      "static/chunks/node_modules_farcaster_miniapp-sdk_dist_index_js.js"
     ]
   }
 }

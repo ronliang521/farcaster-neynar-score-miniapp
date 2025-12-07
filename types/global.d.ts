@@ -17,3 +17,4 @@ interface Window {
     connect?: () => Promise<{ publicKey: { toString: () => string } }>;
   };
 }
+
