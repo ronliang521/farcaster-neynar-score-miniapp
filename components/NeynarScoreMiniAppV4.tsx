@@ -887,7 +887,7 @@ export default function NeynarScoreMiniAppV4() {
                     )}
                     <div style={{ flex: 1 }}>
                       {myDisplayName && (
-                        <div style={{ fontSize: '15px', fontWeight: '600', color: '#fff', marginBottom: '6px', lineHeight: '1.5' }}>
+                        <div style={{ fontSize: '14px', fontWeight: '600', color: '#fff', marginBottom: '6px', lineHeight: '1.5' }}>
                           {myDisplayName}
                         </div>
                       )}
@@ -939,7 +939,7 @@ export default function NeynarScoreMiniAppV4() {
                       {myScore > 1 ? (myScore / 100).toFixed(2) : myScore.toFixed(2)}
                     </div>
                     <div style={{
-                      fontSize: '12px',
+                      fontSize: '10px',
                       color: 'rgba(255, 255, 255, 0.8)',
                       padding: '5px 10px',
                       background: 'rgba(255, 255, 255, 0.2)',
@@ -1278,7 +1278,7 @@ export default function NeynarScoreMiniAppV4() {
                   }}
                 >
                   <span style={{ 
-                    fontSize: '20px', 
+                    fontSize: '18px', 
                     filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))',
                     display: 'inline-block'
                   }}>👤</span>
@@ -1317,7 +1317,7 @@ export default function NeynarScoreMiniAppV4() {
                 💝 Tip Creator
               </div>
               <div style={{
-                fontSize: '13px',
+                fontSize: '11px',
                 color: 'rgba(255, 255, 255, 0.8)',
                 lineHeight: '1.4',
                 marginBottom: '12px',
@@ -1493,7 +1493,7 @@ export default function NeynarScoreMiniAppV4() {
                         border: '2px solid rgba(255, 255, 255, 0.3)',
                         background: 'rgba(255, 255, 255, 0.1)',
                         color: '#fff',
-                        fontSize: '13px',
+                        fontSize: '11px',
                         outline: 'none',
                         lineHeight: '1.4'
                       }}
@@ -1517,7 +1517,7 @@ export default function NeynarScoreMiniAppV4() {
                   border: 'none',
                   borderRadius: '6px',
                   fontWeight: '600',
-                  fontSize: '13px',
+                  fontSize: '11px',
                   cursor: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
                     ? 'not-allowed'
                     : 'pointer',
