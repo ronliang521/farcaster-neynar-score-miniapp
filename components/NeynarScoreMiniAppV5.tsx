@@ -338,7 +338,40 @@ export default function NeynarScoreMiniAppV5() {
     try {
       if (typeof window === 'undefined') return;
 
-      // 方法1: 检查 Farcaster SDK
+      setLoading(true);
+
+      // 方法1: 使用 Farcaster Mini App SDK (推荐方法)
+      try {
+        const { sdk } = await import('@farcaster/miniapp-sdk');
+        
+        // 获取当前上下文（包含用户信息）
+        const context = await sdk.context;
+        
+        if (context && context.user) {
+          const user = context.user;
+          const userFid = user.fid;
+          
+          if (userFid) {
+            console.log('✅ 通过 SDK 获取到用户信息:', userFid);
+            setCurrentUserFid(userFid);
+            setFarcasterConnected(true);
+            
+            // 保存用户信息到 state（如果有）
+            // 注意：SDK 的 UserContext 可能不包含所有字段，我们通过 API 获取完整信息
+            // 这里只保存 FID，完整信息通过 fetchUserScore 获取
+            
+            // 获取用户积分
+            await fetchUserScore(userFid);
+            setLoading(false);
+            return;
+          }
+        }
+      } catch (sdkErr: any) {
+        // SDK 可能不可用（例如在普通浏览器中）
+        console.log('ℹ️ SDK context not available, trying alternative methods:', sdkErr.message);
+      }
+
+      // 方法2: 检查 window.farcaster (旧版 SDK 或扩展)
       if ((window as any).farcaster) {
         try {
           const farcaster = (window as any).farcaster;
@@ -346,19 +379,22 @@ export default function NeynarScoreMiniAppV5() {
             const user = farcaster.user;
             const userFid = user.fid || user.fidNumber;
             if (userFid) {
+              console.log('✅ 通过 window.farcaster 获取到用户信息:', userFid);
               setCurrentUserFid(userFid);
               setFarcasterConnected(true);
-              // 获取用户积分
               await fetchUserScore(userFid);
+              setLoading(false);
               return;
             }
           }
           if (farcaster && farcaster.connectUser) {
             const user = await farcaster.connectUser();
             if (user && user.fid) {
+              console.log('✅ 通过 connectUser 获取到用户信息:', user.fid);
               setCurrentUserFid(user.fid);
               setFarcasterConnected(true);
               await fetchUserScore(user.fid);
+              setLoading(false);
               return;
             }
           }
@@ -367,12 +403,12 @@ export default function NeynarScoreMiniAppV5() {
           if (err?.message?.includes('disconnected port') || err?.message?.includes('Extension context')) {
             console.warn('Extension connection error (ignored):', err.message);
           } else {
-            throw err;
+            console.warn('window.farcaster error:', err.message);
           }
         }
       }
 
-      // 方法2: 从 URL 参数获取（Farcaster mini app 通常会传递用户信息）
+      // 方法3: 从 URL 参数获取（Farcaster mini app 通常会传递用户信息）
       try {
         if (typeof window !== 'undefined') {
           const urlParams = new URLSearchParams(window.location.search);
@@ -380,39 +416,42 @@ export default function NeynarScoreMiniAppV5() {
           if (fidParam) {
             const fidNumber = parseInt(fidParam, 10);
             if (!isNaN(fidNumber)) {
+              console.log('✅ 通过 URL 参数获取到 FID:', fidNumber);
               setCurrentUserFid(fidNumber);
               setFarcasterConnected(true);
               await fetchUserScore(fidNumber);
+              setLoading(false);
               return;
             }
           }
         }
       } catch (err: any) {
-        // 忽略 URL 解析错误
-        console.warn('URL parameter parsing error (ignored):', err.message);
+        console.warn('URL parameter parsing error:', err.message);
       }
 
-      // 方法3: 从 localStorage 获取（如果之前保存过）
+      // 方法4: 从 localStorage 获取（如果之前保存过）
       try {
         if (typeof window !== 'undefined' && window.localStorage) {
           const savedFid = localStorage.getItem('farcaster_fid');
           if (savedFid) {
             const fidNumber = parseInt(savedFid, 10);
             if (!isNaN(fidNumber)) {
+              console.log('✅ 通过 localStorage 获取到 FID:', fidNumber);
               setCurrentUserFid(fidNumber);
               setFarcasterConnected(true);
               await fetchUserScore(fidNumber);
+              setLoading(false);
               return;
             }
           }
         }
       } catch (err: any) {
-        // 忽略 localStorage 错误
-        console.warn('LocalStorage error (ignored):', err.message);
+        console.warn('LocalStorage error:', err.message);
       }
 
-      // 如果无法自动连接，显示提示
-      console.log('无法自动连接 Farcaster，请在 Farcaster 客户端中打开');
+      // 如果无法自动连接
+      console.log('⚠️ 无法自动连接 Farcaster，请在 Farcaster 客户端中打开此应用');
+      setLoading(false);
     } catch (err: any) {
       // 只记录非扩展相关的错误
       if (
@@ -421,6 +460,7 @@ export default function NeynarScoreMiniAppV5() {
       ) {
         console.error('Farcaster connection error:', err);
       }
+      setLoading(false);
     }
   };
 
@@ -550,16 +590,15 @@ export default function NeynarScoreMiniAppV5() {
 
   // 组件加载时自动连接 Farcaster
   useEffect(() => {
-    // 使用 try-catch 确保错误不会阻止组件渲染
-    try {
+    // 延迟一点时间，确保 SDK 已初始化（等待 _app.tsx 中的 SDK ready() 调用完成）
+    const timer = setTimeout(() => {
       connectFarcaster().catch((err) => {
         console.error('Failed to connect Farcaster:', err);
         // 不阻止应用继续运行
       });
-    } catch (err) {
-      console.error('Error in useEffect:', err);
-      // 不阻止应用继续运行
-    }
+    }, 500); // 等待 SDK ready() 调用完成后再连接
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
