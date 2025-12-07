@@ -1037,7 +1037,7 @@ export default function NeynarScoreMiniAppV4() {
                           </>
                         ) : (
                           <>
-                            <span style={{ fontSize: '16px', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))' }}>📤</span>
+                            <span style={{ fontSize: '16px', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))' }}>🚀</span>
                             <span style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)' }}>Share to Farcaster</span>
                           </>
                         )}
