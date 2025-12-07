@@ -557,7 +557,7 @@ export default function NeynarScoreMiniAppV4() {
       padding: '0',
       color: '#fff',
       position: 'relative',
-      overflow: 'auto',
+      overflow: 'hidden',
       height: '100vh',
       boxSizing: 'border-box',
       display: 'flex',
@@ -583,7 +583,7 @@ export default function NeynarScoreMiniAppV4() {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'auto',
+          overflow: 'hidden',
           padding: '10px 8px 80px 8px',
           minHeight: 0
         }}
@@ -792,7 +792,7 @@ export default function NeynarScoreMiniAppV4() {
 
         <div style={{ 
           flex: 1, 
-          overflow: 'auto',
+          overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
           minHeight: 0
@@ -808,7 +808,7 @@ export default function NeynarScoreMiniAppV4() {
                 padding: '10px',
                 backdropFilter: 'blur(10px)',
                 flex: 1,
-                overflow: 'auto',
+                overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: 0
@@ -1053,7 +1053,7 @@ export default function NeynarScoreMiniAppV4() {
               exit={{ opacity: 0, y: -10 }}
               style={{
                 flex: 1,
-                overflow: 'auto',
+                overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: 0
@@ -1138,7 +1138,7 @@ export default function NeynarScoreMiniAppV4() {
                       <h4 style={{ marginTop: 0, marginBottom: '6px', fontSize: '11px', fontWeight: '600', flexShrink: 0, lineHeight: '1.3' }}>
                         👥 Followers ({followers.length})
                       </h4>
-                      <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+                      <div style={{ flex: 1, overflowY: 'hidden', minHeight: 0 }}>
                         {followers.map((f) => (
                           <div
                             key={f.fid}
