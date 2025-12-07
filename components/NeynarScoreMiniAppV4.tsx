@@ -729,7 +729,8 @@ export default function NeynarScoreMiniAppV4() {
           )}
         </AnimatePresence>
 
-        {score !== null && (
+        {/* Only show check result panel in Check tab, not in Myself tab */}
+        {activeTab === 'check' && score !== null && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
