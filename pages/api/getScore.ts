@@ -1,136 +1,108 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+const API_KEY = '21128ECB-A49A-489A-8FB7-7158E43931DE';
+const API_BASE = 'https://api.neynar.com/v2/farcaster';
+
 interface Follower {
   fid: string;
   username: string;
 }
 
-interface ApiResponse {
-  score?: number;
-  followers?: Follower[];
-  username?: string;
-  fid?: number;
-  avatarUrl?: string;
-  displayName?: string;
-  followerCount?: number;
-  followingCount?: number;
-  error?: string;
+interface UserData {
+  score: number;
+  followers: Follower[];
+  username: string;
+  fid: number;
+  avatarUrl: string;
+  displayName: string;
+  followerCount: number;
+  followingCount: number;
 }
 
-const NEYNAR_API_KEY = '21128ECB-A49A-489A-8FB7-7158E43931DE';
-const NEYNAR_API_BASE_URL = 'https://api.neynar.com/v2/farcaster';
+async function fetchUserByUsername(username: string) {
+  let res = await fetch(`${API_BASE}/user/by_username?username=${encodeURIComponent(username)}`, {
+    method: 'GET',
+    headers: {
+      api_key: API_KEY,
+      Accept: 'application/json'
+    }
+  });
 
-async function fetchNeynarUserByUsername(username: string) {
-  // 尝试使用 api_key header
-  let response = await fetch(
-    `${NEYNAR_API_BASE_URL}/user/by_username?username=${encodeURIComponent(username)}`,
-    {
+  if (!res.ok) {
+    res = await fetch(`${API_BASE}/user/by_username?username=${encodeURIComponent(username)}`, {
       method: 'GET',
       headers: {
-        'api_key': NEYNAR_API_KEY,
-        'Accept': 'application/json',
-      },
-    }
-  );
-
-  // 如果 api_key 不行，尝试 x-api-key
-  if (!response.ok) {
-    response = await fetch(
-      `${NEYNAR_API_BASE_URL}/user/by_username?username=${encodeURIComponent(username)}`,
-      {
-        method: 'GET',
-        headers: {
-          'x-api-key': NEYNAR_API_KEY,
-          'Accept': 'application/json',
-        },
+        'x-api-key': API_KEY,
+        Accept: 'application/json'
       }
-    );
+    });
   }
 
-  return response;
+  return res;
 }
 
-async function fetchNeynarUser(fidNumber: number) {
-  // 尝试使用 api_key header
-  let response = await fetch(
-    `${NEYNAR_API_BASE_URL}/user/bulk?fids=${fidNumber}`,
-    {
+async function fetchUserBulk(fids: number) {
+  let res = await fetch(`${API_BASE}/user/bulk?fids=${fids}`, {
+    method: 'GET',
+    headers: {
+      api_key: API_KEY,
+      Accept: 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    res = await fetch(`${API_BASE}/user/bulk?fids=${fids}`, {
       method: 'GET',
       headers: {
-        'api_key': NEYNAR_API_KEY,
-        'Accept': 'application/json',
-      },
-    }
-  );
-
-  // 如果 api_key 不行，尝试 x-api-key
-  if (!response.ok) {
-    response = await fetch(
-      `${NEYNAR_API_BASE_URL}/user/bulk?fids=${fidNumber}`,
-      {
-        method: 'GET',
-        headers: {
-          'x-api-key': NEYNAR_API_KEY,
-          'Accept': 'application/json',
-        },
+        'x-api-key': API_KEY,
+        Accept: 'application/json'
       }
-    );
+    });
   }
 
-  return response;
+  return res;
 }
 
-async function fetchNeynarFollowers(fidNumber: number): Promise<Follower[]> {
+async function fetchFollowers(fid: number): Promise<Follower[]> {
   const followers: Follower[] = [];
-  
   try {
-    // 尝试使用 api_key header
-    let response = await fetch(
-      `${NEYNAR_API_BASE_URL}/user/followers?fid=${fidNumber}&limit=10`,
-      {
+    let res = await fetch(`${API_BASE}/user/followers?fid=${fid}&limit=10`, {
+      method: 'GET',
+      headers: {
+        api_key: API_KEY,
+        Accept: 'application/json'
+      }
+    });
+
+    if (!res.ok) {
+      res = await fetch(`${API_BASE}/user/followers?fid=${fid}&limit=10`, {
         method: 'GET',
         headers: {
-          'api_key': NEYNAR_API_KEY,
-          'Accept': 'application/json',
-        },
-      }
-    );
-
-    // 如果 api_key 不行，尝试 x-api-key
-    if (!response.ok) {
-      response = await fetch(
-        `${NEYNAR_API_BASE_URL}/user/followers?fid=${fidNumber}&limit=10`,
-        {
-          method: 'GET',
-          headers: {
-            'x-api-key': NEYNAR_API_KEY,
-            'Accept': 'application/json',
-          },
+          'x-api-key': API_KEY,
+          Accept: 'application/json'
         }
-      );
+      });
     }
 
-    if (response.ok) {
-      const followersData = await response.json();
-      const followerUsers = followersData.result?.users || followersData.users || [];
-      followerUsers.forEach((f: any) => {
+    if (res.ok) {
+      const data = await res.json();
+      const users = data.result?.users || data.users || [];
+      users.forEach((user: any) => {
         followers.push({
-          fid: f.fid?.toString() || '',
-          username: f.username || `fid-${f.fid}`,
+          fid: user.fid?.toString() || '',
+          username: user.username || `fid-${user.fid}`
         });
       });
     }
-  } catch (error) {
-    console.error('Error fetching followers:', error);
-    // 如果获取关注者失败，不影响主流程
+  } catch (err) {
+    console.error('Error fetching followers:', err);
   }
-
   return followers;
 }
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ApiResponse>
+  res: NextApiResponse<UserData | { error: string }>
 ) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -142,116 +114,89 @@ export default async function handler(
     return res.status(400).json({ error: 'FID or username is required' });
   }
 
-  // 判断输入是 FID（数字）还是用户名（字符串）
-  const fidNumber = parseInt(fid, 10);
-  const isFid = !isNaN(fidNumber) && fidNumber.toString() === fid.trim();
+  const fidNum = parseInt(fid, 10);
+  const isNumericFid = !isNaN(fidNum) && fidNum.toString() === fid.trim();
 
   try {
-    let userResponse;
+    let userRes;
     let userData;
-    let user: any;
+    let user;
 
-    if (isFid) {
-      // 直接通过 FID 查询
-      userResponse = await fetchNeynarUser(fidNumber);
-
-      if (!userResponse.ok) {
-        const errorText = await userResponse.text();
+    if (isNumericFid) {
+      userRes = await fetchUserBulk(fidNum);
+      if (!userRes.ok) {
+        const errorText = await userRes.text();
         console.error('Neynar API error:', errorText);
-        return res.status(userResponse.status).json({
-          error: `Failed to fetch user data: ${userResponse.statusText}`,
+        return res.status(userRes.status).json({
+          error: `Failed to fetch user data: ${userRes.statusText}`
         });
       }
 
-      userData = await userResponse.json();
-      
-      // 处理不同的响应格式
+      userData = await userRes.json();
       const users = userData.result?.users || userData.users || [];
-      
       if (users.length === 0) {
         return res.status(404).json({ error: 'User not found' });
       }
-
       user = users[0];
     } else {
-      // 通过用户名查询，先获取 FID
       const username = fid.trim();
-      
-      // 移除 @ 符号（如果用户输入了）
       const cleanUsername = username.startsWith('@') ? username.slice(1) : username;
 
-      userResponse = await fetchNeynarUserByUsername(cleanUsername);
-
-      if (!userResponse.ok) {
-        const errorText = await userResponse.text();
+      userRes = await fetchUserByUsername(cleanUsername);
+      if (!userRes.ok) {
+        const errorText = await userRes.text();
         console.error('Neynar API error:', errorText);
-        return res.status(userResponse.status).json({
-          error: `Failed to fetch user data: ${userResponse.statusText}`,
+        return res.status(userRes.status).json({
+          error: `Failed to fetch user data: ${userRes.statusText}`
         });
       }
 
-      userData = await userResponse.json();
-      
-      // 处理不同的响应格式
+      userData = await userRes.json();
       user = userData.result?.user || userData.user;
-      
+
       if (!user || !user.fid) {
         return res.status(404).json({ error: 'User not found' });
       }
 
-      // 通过获取到的 FID 再次查询完整用户信息（包括 followers 等）
-      const fullUserResponse = await fetchNeynarUser(user.fid);
-      if (fullUserResponse.ok) {
-        const fullUserData = await fullUserResponse.json();
-        const users = fullUserData.result?.users || fullUserData.users || [];
+      const bulkRes = await fetchUserBulk(user.fid);
+      if (bulkRes.ok) {
+        const bulkData = await bulkRes.json();
+        const users = bulkData.result?.users || bulkData.users || [];
         if (users.length > 0) {
           user = users[0];
         }
       }
     }
 
-    // 尝试获取 Neynar 分数（如果存在）
     let score: number;
-    
     if (user.experimental?.neynar_user_score !== undefined) {
       score = user.experimental.neynar_user_score;
-      // 如果分数是0-1之间的小数，转换为0-100的整数
       if (score > 0 && score <= 1) {
-        score = score * 100;
+        score *= 100;
       }
     } else if (user.neynar_score !== undefined) {
       score = user.neynar_score;
-      // 如果分数是0-1之间的小数，转换为0-100的整数
       if (score > 0 && score <= 1) {
-        score = score * 100;
+        score *= 100;
       }
     } else {
-      // 如果没有直接的分数字段，基于用户的社交指标计算分数
       const followerCount = user.follower_count || 0;
       const followingCount = user.following_count || 0;
-      const verificationCount = user.verifications?.length || 0;
-      
-      // 计算综合分数（0-100）
-      // 使用对数增长来避免分数过高
-      const engagementScore = Math.min(60, Math.log10(followerCount + 1) * 20);
-      const activityScore = Math.min(30, Math.log10(followingCount + 1) * 10);
-      const verificationScore = Math.min(10, verificationCount * 5);
-      
-      score = Math.round(engagementScore + activityScore + verificationScore);
-      score = Math.min(100, Math.max(0, score)); // 确保在 0-100 范围内
+      const verifications = user.verifications?.length || 0;
+
+      score = Math.round(
+        Math.min(60, 20 * Math.log10(followerCount + 1)) +
+        Math.min(30, 10 * Math.log10(followingCount + 1)) +
+        Math.min(10, 5 * verifications)
+      );
+      score = Math.min(100, Math.max(0, score));
     }
-    
-    // 确保分数在0-100范围内，并四舍五入到整数
+
     score = Math.round(Math.min(100, Math.max(0, score)));
-    
-    // 调试日志：输出分数值
     console.log('Calculated score:', score, 'Type:', typeof score);
 
-    // 获取关注者列表
     const userFid = user.fid;
-    const followers = await fetchNeynarFollowers(userFid);
-
-    // 获取用户信息
+    const followers = await fetchFollowers(userFid);
     const username = user.username || '';
     const avatarUrl = user.pfp_url || user.pfp?.url || user.avatar_url || '';
     const displayName = user.display_name || user.displayName || username;
@@ -266,12 +211,12 @@ export default async function handler(
       avatarUrl,
       displayName,
       followerCount,
-      followingCount,
+      followingCount
     });
-  } catch (error) {
-    console.error('Error fetching score:', error);
+  } catch (err) {
+    console.error('Error fetching score:', err);
     return res.status(500).json({
-      error: error instanceof Error ? error.message : 'Failed to fetch score',
+      error: err instanceof Error ? err.message : 'Failed to fetch score'
     });
   }
 }
