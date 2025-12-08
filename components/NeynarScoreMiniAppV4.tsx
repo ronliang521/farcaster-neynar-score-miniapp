@@ -48,7 +48,7 @@ export default function NeynarScoreMiniAppV4() {
     symbol: 'USDC'
   };
 
-  // 统一设计系统
+  // 统一设计系统 - 暖色调
   const designSystem = {
     spacing: {
       xs: '4px',
@@ -59,21 +59,36 @@ export default function NeynarScoreMiniAppV4() {
       xxl: '24px'
     },
     borderRadius: {
-      sm: '8px',
-      md: '12px',
-      lg: '16px'
+      sm: '10px',
+      md: '14px',
+      lg: '18px'
     },
     button: {
-      padding: '12px 20px',
-      fontSize: '14px',
+      padding: '14px 24px',
+      fontSize: '15px',
       fontWeight: '600',
-      borderRadius: '12px',
-      minWidth: '140px'
+      borderRadius: '14px',
+      minWidth: '150px'
     },
     card: {
-      padding: '16px',
-      borderRadius: '12px',
+      padding: '20px',
+      borderRadius: '16px',
       marginBottom: '16px'
+    },
+    colors: {
+      primary: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa726 100%)',
+      primaryHover: 'linear-gradient(135deg, #ff5252 0%, #ff7043 50%, #ff9800 100%)',
+      secondary: 'linear-gradient(135deg, #ff9800 0%, #ff6b35 100%)',
+      background: 'linear-gradient(135deg, #ff9a56 0%, #ff6a88 25%, #ff8a80 50%, #ffab40 75%, #ffcc02 100%)',
+      cardBg: 'rgba(255, 255, 255, 0.15)',
+      cardBgHover: 'rgba(255, 255, 255, 0.25)',
+      text: '#fff',
+      textSecondary: 'rgba(255, 255, 255, 0.9)',
+      textMuted: 'rgba(255, 255, 255, 0.7)',
+      border: 'rgba(255, 255, 255, 0.3)',
+      borderHover: 'rgba(255, 255, 255, 0.5)',
+      shadow: '0 8px 32px rgba(255, 107, 107, 0.3)',
+      shadowHover: '0 12px 40px rgba(255, 107, 107, 0.4)'
     }
   };
 
@@ -598,7 +613,7 @@ export default function NeynarScoreMiniAppV4() {
         right: '-50%',
         width: '200%',
         height: '200%',
-        background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(255, 200, 150, 0.15) 0%, transparent 70%)',
         pointerEvents: 'none'
       }} />
 
@@ -625,7 +640,7 @@ export default function NeynarScoreMiniAppV4() {
             textAlign: 'center',
             marginTop: 0,
             color: '#fff',
-            textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+            textShadow: '0 2px 10px rgba(255, 107, 107, 0.3)',
             lineHeight: '1.3'
           }}>
             Neynar Score
@@ -674,9 +689,9 @@ export default function NeynarScoreMiniAppV4() {
             style={{
               padding: '12px 16px',
               width: '100%',
-              borderRadius: '12px',
-              border: '2px solid rgba(255, 255, 255, 0.3)',
-              backgroundColor: 'rgba(255, 255, 255, 0.12)',
+              borderRadius: designSystem.borderRadius.md,
+              border: '2px solid ' + designSystem.colors.border,
+              backgroundColor: designSystem.colors.cardBg,
               backdropFilter: 'blur(10px)',
               color: '#fff',
               fontSize: '14px',
@@ -687,13 +702,13 @@ export default function NeynarScoreMiniAppV4() {
               lineHeight: '1.6'
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = 'rgba(255, 255, 255, 0.6)';
-              e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.18)';
+              e.target.style.borderColor = designSystem.colors.borderHover;
+              e.target.style.backgroundColor = designSystem.colors.cardBgHover;
               e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.15)';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-              e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+              e.target.style.borderColor = designSystem.colors.border;
+              e.target.style.backgroundColor = designSystem.colors.cardBg;
               e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
             }}
           />
@@ -707,13 +722,13 @@ export default function NeynarScoreMiniAppV4() {
               padding: designSystem.button.padding,
               borderRadius: designSystem.button.borderRadius,
               border: 'none',
-              background: checkLoading ? 'rgba(255, 255, 255, 0.3)' : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+              background: checkLoading ? 'rgba(255, 255, 255, 0.3)' : designSystem.colors.primary,
               color: '#fff',
               fontSize: designSystem.button.fontSize,
               fontWeight: designSystem.button.fontWeight,
               cursor: checkLoading || !input.trim() ? 'not-allowed' : 'pointer',
               marginTop: designSystem.spacing.md,
-              boxShadow: checkLoading || !input.trim() ? '0 4px 15px rgba(0, 0, 0, 0.1)' : '0 6px 25px rgba(245, 87, 108, 0.4)',
+              boxShadow: checkLoading || !input.trim() ? '0 4px 15px rgba(0, 0, 0, 0.1)' : designSystem.colors.shadow,
               opacity: checkLoading || !input.trim() ? 0.6 : 1,
               transition: 'all 0.3s ease',
               lineHeight: '1.5'
@@ -765,7 +780,7 @@ export default function NeynarScoreMiniAppV4() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             style={{
-              background: 'rgba(255, 255, 255, 0.15)',
+              background: designSystem.colors.cardBg,
               backdropFilter: 'blur(10px)',
               borderRadius: '16px',
               padding: '16px',
@@ -832,7 +847,7 @@ export default function NeynarScoreMiniAppV4() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: designSystem.colors.cardBg,
                 borderRadius: designSystem.borderRadius.md,
                 padding: designSystem.card.padding,
                 backdropFilter: 'blur(10px)',
@@ -871,7 +886,7 @@ export default function NeynarScoreMiniAppV4() {
                     onClick={connectFarcaster}
                     style={{
                       padding: designSystem.button.padding,
-                      background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                      background: designSystem.colors.primary,
                       color: '#fff',
                       border: 'none',
                       borderRadius: designSystem.button.borderRadius,
@@ -879,7 +894,7 @@ export default function NeynarScoreMiniAppV4() {
                       fontSize: designSystem.button.fontSize,
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
-                      boxShadow: '0 4px 15px rgba(245, 87, 108, 0.3)',
+                      boxShadow: designSystem.colors.shadow,
                       lineHeight: '1.5',
                       minWidth: designSystem.button.minWidth
                     }}
@@ -940,14 +955,14 @@ export default function NeynarScoreMiniAppV4() {
                   </div>
 
                   <div style={{
-                    background: 'rgba(255, 255, 255, 0.15)',
+                    background: designSystem.colors.cardBg,
                     backdropFilter: 'blur(10px)',
                     borderRadius: designSystem.borderRadius.md,
                     padding: designSystem.spacing.md,
                     textAlign: 'center',
                     marginBottom: designSystem.spacing.sm,
                     border: '1px solid rgba(255, 255, 255, 0.2)',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                    boxShadow: designSystem.colors.shadow,
                     flexShrink: 0
                   }}>
                     <div style={{
@@ -987,7 +1002,7 @@ export default function NeynarScoreMiniAppV4() {
                       gap: designSystem.spacing.sm,
                       justifyContent: 'center',
                       padding: designSystem.spacing.sm,
-                      background: 'rgba(255, 255, 255, 0.1)',
+                      background: designSystem.colors.cardBg,
                       borderRadius: designSystem.borderRadius.sm,
                       marginBottom: designSystem.spacing.sm,
                       flexShrink: 0
@@ -1026,7 +1041,7 @@ export default function NeynarScoreMiniAppV4() {
                           padding: designSystem.button.padding,
                           background: isSharing 
                             ? 'rgba(255, 255, 255, 0.3)' 
-                            : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                            : designSystem.colors.primary,
                           color: '#fff',
                           border: 'none',
                           borderRadius: designSystem.button.borderRadius,
@@ -1036,7 +1051,7 @@ export default function NeynarScoreMiniAppV4() {
                           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                           boxShadow: isSharing 
                             ? '0 4px 15px rgba(0, 0, 0, 0.2)' 
-                            : '0 6px 25px rgba(245, 87, 108, 0.4), 0 2px 10px rgba(240, 147, 251, 0.3)',
+                            : designSystem.colors.shadowHover,
                           opacity: isSharing ? 0.7 : 1,
                           minWidth: designSystem.button.minWidth,
                           display: 'flex',
@@ -1096,7 +1111,7 @@ export default function NeynarScoreMiniAppV4() {
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
                   {username && (
                     <div                     style={{
-                      background: 'rgba(255, 255, 255, 0.1)',
+                      background: designSystem.colors.cardBg,
                       borderRadius: designSystem.borderRadius.sm,
                       padding: designSystem.spacing.md,
                       marginBottom: designSystem.spacing.sm,
@@ -1158,7 +1173,7 @@ export default function NeynarScoreMiniAppV4() {
 
                   {followers.length > 0 && (
                     <div style={{
-                      background: 'rgba(255, 255, 255, 0.1)',
+                      background: designSystem.colors.cardBg,
                       borderRadius: designSystem.borderRadius.sm,
                       padding: designSystem.spacing.md,
                       backdropFilter: 'blur(10px)',
@@ -1178,8 +1193,8 @@ export default function NeynarScoreMiniAppV4() {
                             style={{
                               padding: '4px',
                               marginBottom: '3px',
-                              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                              borderRadius: '6px',
+                              backgroundColor: designSystem.colors.cardBg,
+                              borderRadius: designSystem.borderRadius.sm,
                               fontSize: '12px',
                               lineHeight: '1.4'
                             }}
@@ -1220,109 +1235,183 @@ export default function NeynarScoreMiniAppV4() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                borderRadius: designSystem.borderRadius.md,
-                padding: designSystem.card.padding,
-                backdropFilter: 'blur(10px)',
+                background: designSystem.colors.cardBg,
+                borderRadius: designSystem.borderRadius.lg,
+                padding: designSystem.spacing.xl + ' ' + designSystem.card.padding,
+                backdropFilter: 'blur(15px)',
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1,
                 minHeight: 0,
-                overflow: 'auto'
+                overflow: 'auto',
+                border: '1px solid ' + designSystem.colors.border,
+                boxShadow: designSystem.colors.shadow
               }}
             >
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: designSystem.spacing.md + ' 0' }}>
-              <div style={{ fontSize: '18px', fontWeight: '600', color: '#fff', marginBottom: designSystem.spacing.sm, lineHeight: '1.3' }}>
-                Improve Score
-              </div>
-              <div style={{
-                fontSize: '14px',
-                color: 'rgba(255, 255, 255, 0.8)',
-                lineHeight: '1.5',
-                marginBottom: designSystem.spacing.md
+              <div style={{ 
+                flex: 1, 
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'flex-start', 
+                padding: `${designSystem.spacing.xxl} ${designSystem.spacing.lg}`,
+                gap: designSystem.spacing.xxl,
+                marginTop: '0',
+                width: '100%',
+                maxWidth: '400px',
+                margin: '0 auto'
               }}>
-                Visit Start on Farcaster to learn more ways to improve your score
-              </div>
-              <a
-                href="https://startonfarcaster.xyz/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-block',
-                  padding: designSystem.button.padding,
-                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                  color: '#fff',
-                  textDecoration: 'none',
-                  borderRadius: designSystem.button.borderRadius,
-                  fontWeight: designSystem.button.fontWeight,
-                  fontSize: designSystem.button.fontSize,
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 15px rgba(245, 87, 108, 0.3)',
-                  marginBottom: designSystem.spacing.md,
-                  lineHeight: '1.5',
-                  minWidth: designSystem.button.minWidth
-                }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(245, 87, 108, 0.4)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(245, 87, 108, 0.3)';
-                  }}
-                >
-                  Visit Start on Farcaster →
-                </a>
-              </div>
-              <div style={{
-                marginTop: designSystem.spacing.lg,
-                paddingTop: designSystem.spacing.md,
-                borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                flexShrink: 0,
-                textAlign: 'center'
-              }}>
-                <motion.a
-                  href="https://warpcast.com/ron521520"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  style={{
-                    display: 'inline-flex',
+                {/* 标题和描述区域 */}
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center',
+                  gap: designSystem.spacing.lg,
+                  textAlign: 'center',
+                  paddingTop: designSystem.spacing.xl
+                }}>
+                  <div style={{ 
+                    fontSize: '28px', 
+                    fontWeight: '700', 
+                    color: '#fff', 
+                    lineHeight: '1.2',
+                    textShadow: '0 2px 12px rgba(255, 107, 107, 0.4)',
+                    letterSpacing: '-0.5px',
+                    marginBottom: designSystem.spacing.xs
+                  }}>
+                    Improve Your Score
+                  </div>
+                  <div style={{
+                    fontSize: '16px',
+                    color: designSystem.colors.textSecondary,
+                    lineHeight: '1.7',
+                    maxWidth: '320px',
+                    fontWeight: '400',
+                    opacity: 0.95
+                  }}>
+                    Discover proven strategies to boost your Farcaster reputation and increase your Neynar Score
+                  </div>
+                </div>
+
+                {/* 主要按钮区域 */}
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: designSystem.spacing.lg,
+                  width: '100%',
+                  alignItems: 'center',
+                  paddingTop: designSystem.spacing.md
+                }}>
+                  <motion.a
+                    href="https://startonfarcaster.xyz/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: designSystem.spacing.md,
+                      padding: '16px 32px',
+                      background: designSystem.colors.primary,
+                      color: '#fff',
+                      textDecoration: 'none',
+                      borderRadius: designSystem.button.borderRadius,
+                      fontWeight: '600',
+                      fontSize: '16px',
+                      transition: 'all 0.3s ease',
+                      boxShadow: designSystem.colors.shadow,
+                      lineHeight: '1.5',
+                      width: '100%',
+                      maxWidth: '320px',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    <span>Visit Start on Farcaster</span>
+                    <span style={{ fontSize: '16px', opacity: 0.9 }}>→</span>
+                  </motion.a>
+                </div>
+
+                {/* 分隔线和支持创作者区域 */}
+                <div style={{
+                  paddingTop: designSystem.spacing.xl,
+                  borderTop: '2px solid ' + designSystem.colors.border,
+                  flexShrink: 0,
+                  textAlign: 'center',
+                  position: 'relative',
+                  width: '100%',
+                  marginTop: designSystem.spacing.lg
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: '-2px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '80px',
+                    height: '3px',
+                    background: designSystem.colors.primary,
+                    borderRadius: '2px'
+                  }} />
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    gap: designSystem.spacing.sm,
-                    padding: designSystem.button.padding,
-                    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                    backdropFilter: 'blur(10px)',
-                    color: '#fff',
-                    textDecoration: 'none',
-                    borderRadius: designSystem.button.borderRadius,
-                    fontSize: designSystem.button.fontSize,
-                    fontWeight: designSystem.button.fontWeight,
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    border: '2px solid rgba(255, 255, 255, 0.3)',
-                    lineHeight: '1.5',
-                    boxShadow: '0 6px 25px rgba(245, 87, 108, 0.4), 0 2px 10px rgba(240, 147, 251, 0.3)',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    minWidth: designSystem.button.minWidth
-                  }}
-                >
-                  <span style={{ 
-                    fontSize: '16px', 
-                    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))',
-                    display: 'inline-block'
-                  }}>👤</span>
-                  <span style={{ 
-                    textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
-                    fontWeight: '600'
-                  }}>Follow Creator @ron521520</span>
-                  <span style={{ 
-                    fontSize: '14px',
-                    opacity: 0.9
-                  }}>→</span>
-                </motion.a>
+                    gap: designSystem.spacing.md,
+                    paddingTop: designSystem.spacing.xl
+                  }}>
+                    <div style={{
+                      fontSize: '15px',
+                      color: designSystem.colors.textMuted,
+                      fontWeight: '500',
+                      letterSpacing: '0.5px',
+                      textTransform: 'uppercase'
+                    }}>
+                      Support the Creator
+                    </div>
+                    <motion.a
+                      href="https://warpcast.com/ron521520"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.03, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: designSystem.spacing.md,
+                        padding: '14px 28px',
+                        background: designSystem.colors.primary,
+                        backdropFilter: 'blur(10px)',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        borderRadius: designSystem.button.borderRadius,
+                        fontSize: '16px',
+                        fontWeight: '600',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        border: '2px solid ' + designSystem.colors.borderHover,
+                        lineHeight: '1.5',
+                        boxShadow: designSystem.colors.shadowHover,
+                        position: 'relative',
+                        overflow: 'hidden',
+                        width: '100%',
+                        maxWidth: '280px',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      <span style={{ 
+                        textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+                        fontWeight: '600'
+                      }}>Follow @ron521520</span>
+                      <span style={{ 
+                        fontSize: '16px',
+                        opacity: 0.9
+                      }}>→</span>
+                    </motion.a>
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}
@@ -1333,7 +1422,7 @@ export default function NeynarScoreMiniAppV4() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: designSystem.colors.cardBg,
                 borderRadius: designSystem.borderRadius.md,
                 padding: designSystem.card.padding,
                 backdropFilter: 'blur(10px)',
@@ -1450,7 +1539,7 @@ export default function NeynarScoreMiniAppV4() {
                         padding: designSystem.spacing.sm + ' ' + designSystem.spacing.md,
                         borderRadius: designSystem.borderRadius.sm,
                         border: `2px solid ${tipType === amount ? 'rgba(255, 107, 53, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
-                        background: tipType === amount ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.1)',
+                        background: tipType === amount ? 'rgba(255, 107, 53, 0.3)' : designSystem.colors.cardBg,
                         color: '#fff',
                         fontSize: '14px',
                         fontWeight: '600',
@@ -1461,12 +1550,12 @@ export default function NeynarScoreMiniAppV4() {
                       }}
                       onMouseEnter={(e) => {
                         if (tipType !== amount) {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                          e.currentTarget.style.background = designSystem.colors.cardBgHover;
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (tipType !== amount) {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                          e.currentTarget.style.background = designSystem.colors.cardBg;
                         }
                       }}
                     >
@@ -1483,7 +1572,7 @@ export default function NeynarScoreMiniAppV4() {
                       padding: designSystem.spacing.sm + ' ' + designSystem.spacing.md,
                       borderRadius: designSystem.borderRadius.sm,
                       border: `2px solid ${tipType === 'custom' ? 'rgba(255, 107, 53, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
-                      background: tipType === 'custom' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.1)',
+                      background: tipType === 'custom' ? 'rgba(255, 107, 53, 0.3)' : designSystem.colors.cardBg,
                       color: '#fff',
                       fontSize: '14px',
                       fontWeight: '600',
@@ -1542,9 +1631,9 @@ export default function NeynarScoreMiniAppV4() {
                 disabled={isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)}
                 style={{
                   padding: designSystem.button.padding,
-                  background: (tipType === 'custom' && customTipAmount && parseFloat(customTipAmount) > 0) || (tipType !== 'custom' && tipAmount && parseFloat(tipAmount) > 0)
-                    ? 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-                    : 'rgba(255, 255, 255, 0.1)',
+                    background: (tipType === 'custom' && customTipAmount && parseFloat(customTipAmount) > 0) || (tipType !== 'custom' && tipAmount && parseFloat(tipAmount) > 0)
+                    ? designSystem.colors.primary
+                    : designSystem.colors.cardBg,
                   color: '#fff',
                   border: 'none',
                   borderRadius: designSystem.button.borderRadius,
@@ -1556,7 +1645,7 @@ export default function NeynarScoreMiniAppV4() {
                   transition: 'all 0.3s ease',
                   boxShadow: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
                     ? '0 4px 15px rgba(0, 0, 0, 0.2)'
-                    : '0 6px 25px rgba(245, 87, 108, 0.4), 0 2px 10px rgba(240, 147, 251, 0.3)',
+                    : designSystem.colors.shadowHover,
                   opacity: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
                     ? 0.7
                     : 1,
@@ -1646,7 +1735,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                background: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa726 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
@@ -1676,7 +1765,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                background: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa726 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
@@ -1706,7 +1795,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                background: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa726 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
@@ -1736,7 +1825,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                background: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa726 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
