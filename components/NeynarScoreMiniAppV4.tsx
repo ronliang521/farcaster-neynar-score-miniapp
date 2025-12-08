@@ -1203,14 +1203,14 @@ export default function NeynarScoreMiniAppV4() {
               }}
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <div style={{ fontSize: '14px', fontWeight: '600', color: '#fff', marginBottom: '2px', lineHeight: '1.2' }}>
+              <div style={{ fontSize: '18px', fontWeight: '600', color: '#fff', marginBottom: '1px', lineHeight: '1.2' }}>
                 Improve Score
               </div>
               <div style={{
-                fontSize: '10px',
+                fontSize: '13px',
                 color: 'rgba(255, 255, 255, 0.8)',
                 lineHeight: '1.3',
-                marginBottom: '4px'
+                marginBottom: '2px'
               }}>
                 Visit Start on Farcaster to learn more ways to improve your score
               </div>
@@ -1220,16 +1220,16 @@ export default function NeynarScoreMiniAppV4() {
                 rel="noopener noreferrer"
                 style={{
                   display: 'inline-block',
-                  padding: '3px 6px',
+                  padding: '2px 4px',
                   background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                   color: '#fff',
                   textDecoration: 'none',
                   borderRadius: '6px',
                   fontWeight: '600',
-                  fontSize: '10px',
+                  fontSize: '13px',
                   transition: 'all 0.3s ease',
                   boxShadow: '0 4px 15px rgba(245, 87, 108, 0.3)',
-                  marginBottom: '4px',
+                  marginBottom: '2px',
                   lineHeight: '1.3'
                 }}
                   onMouseEnter={(e) => {
