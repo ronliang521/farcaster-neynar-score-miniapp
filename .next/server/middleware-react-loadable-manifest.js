@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{\"../components/NeynarScoreMiniAppV4.tsx -> @farcaster/miniapp-sdk\":{\"id\":\"../components/NeynarScoreMiniAppV4.tsx -> @farcaster/miniapp-sdk\",\"files\":[\"static/chunks/node_modules_farcaster_miniapp-sdk_dist_index_js.js\"]}}"
+self.__REACT_LOADABLE_MANIFEST="{}"
