@@ -1242,23 +1242,29 @@ export default function NeynarScoreMiniAppV4() {
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
                 flex: 1,
                 minHeight: 0,
                 overflow: 'hidden',
                 border: '1px solid ' + designSystem.colors.border,
-                boxShadow: designSystem.colors.shadow
+                boxShadow: designSystem.colors.shadow,
+                width: '100%',
+                maxWidth: '100%',
+                margin: '0 auto'
               }}
             >
               <div style={{ 
                 flex: 1, 
                 display: 'flex', 
                 flexDirection: 'column', 
-                justifyContent: 'flex-start', 
+                justifyContent: 'center', 
+                alignItems: 'center',
                 padding: `${designSystem.spacing.md} ${designSystem.spacing.lg}`,
                 gap: designSystem.spacing.sm,
                 marginTop: '0',
                 width: '100%',
-                maxWidth: '400px',
+                maxWidth: '380px',
                 margin: '0 auto'
               }}>
                 {/* 标题和描述区域 */}
@@ -1348,7 +1354,10 @@ export default function NeynarScoreMiniAppV4() {
                   textAlign: 'center',
                   position: 'relative',
                   width: '100%',
-                  marginTop: designSystem.spacing.lg
+                  marginTop: designSystem.spacing.lg,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
                 }}>
                   <div style={{
                     position: 'absolute',
@@ -1364,8 +1373,12 @@ export default function NeynarScoreMiniAppV4() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     gap: designSystem.spacing.sm,
-                    paddingTop: designSystem.spacing.md
+                    paddingTop: designSystem.spacing.md,
+                    width: '100%',
+                    paddingLeft: designSystem.spacing.md,
+                    paddingRight: designSystem.spacing.md
                   }}>
                     <div style={{
                       fontSize: '13px',
@@ -1403,7 +1416,8 @@ export default function NeynarScoreMiniAppV4() {
                         overflow: 'hidden',
                         width: '100%',
                         maxWidth: '280px',
-                        whiteSpace: 'nowrap'
+                        whiteSpace: 'nowrap',
+                        margin: '0 auto'
                       }}
                     >
                       <span style={{ 
