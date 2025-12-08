@@ -35,6 +35,7 @@ export default function NeynarScoreMiniAppV4() {
   const [tipAmount, setTipAmount] = useState('2');
   const [tipType, setTipType] = useState('2');
   const [customTipAmount, setCustomTipAmount] = useState('');
+  const [tokenType, setTokenType] = useState<'USDC' | 'ETH'>('USDC');
 
   const BASE_NETWORK = {
     name: 'Base',
@@ -169,12 +170,16 @@ export default function NeynarScoreMiniAppV4() {
 
   const connectWallet = async () => {
     try {
-      // First try Farcaster embedded wallet
+      // Only use Farcaster embedded wallet
       const farcasterWalletConnected = await connectFarcasterWallet();
       if (farcasterWalletConnected) {
         return;
       }
 
+      // Try Farcaster SDK wallet connection via window.farcaster
+      // SDK doesn't have connectWallet in actions, use window.farcaster instead
+
+      // Fallback to window.farcaster
       if (window.farcaster) {
         try {
           const farcaster = window.farcaster;
@@ -195,47 +200,13 @@ export default function NeynarScoreMiniAppV4() {
         }
       }
 
-      if (window.ethereum) {
-        try {
-          const ethereum = window.ethereum;
-          if (ethereum && typeof ethereum.request === 'function') {
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            if (accounts && accounts.length > 0) {
-              setWalletAddress(accounts[0]);
-              setIsConnected(true);
-              return;
-            }
-          }
-        } catch (err: any) {
-          if (err?.message?.includes('disconnected port') || err?.message?.includes('Extension context') || err.code === -32002) {
-            console.warn('Extension connection error (ignored):', err.message);
-          } else {
-            throw err;
-          }
-        }
-      }
-
-      if (window.solana) {
-        try {
-          const solana = window.solana;
-          if (solana && solana.connect) {
-            const response = await solana.connect();
-            if (response.publicKey) {
-              setWalletAddress(response.publicKey.toString());
-              setIsConnected(true);
-              return;
-            }
-          }
-        } catch (err) {
-          console.warn('Solana wallet connection error:', err);
-        }
-      }
-
-      setError('Wallet not detected, please install MetaMask, Phantom, or open in Farcaster client');
+      setError('Please open this app in Farcaster client to connect your wallet');
     } catch (err: any) {
       if (err?.message?.includes('disconnected port') || err?.message?.includes('Extension context')) {
         console.error('Wallet connection error:', err);
-        setError('Failed to connect wallet, please try again');
+        setError('Failed to connect Farcaster wallet, please try again');
+      } else {
+        setError('Failed to connect Farcaster wallet. Please open this app in Farcaster client.');
       }
     }
   };
@@ -296,18 +267,37 @@ export default function NeynarScoreMiniAppV4() {
       }
 
       const recipientAddress = '0x684265505B22F9F975fb4fc54b8DEdCdbe289A5a';
-      const amountInWei = BigInt(Math.floor(parseFloat(amount) * Math.pow(10, USDC_TOKEN.decimals)));
-      const recipientAddressPadded = recipientAddress.slice(2).padStart(64, '0');
-      const amountPadded = amountInWei.toString(16).padStart(64, '0');
+      
+      let txHash: string;
+      
+      if (tokenType === 'ETH') {
+        // Send ETH directly
+        const amountInWei = BigInt(Math.floor(parseFloat(amount) * Math.pow(10, 18)));
+        const amountInHex = '0x' + amountInWei.toString(16);
+        
+        txHash = await ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [{
+            from: walletAddress,
+            to: recipientAddress,
+            value: amountInHex
+          }]
+        });
+      } else {
+        // Send USDC via ERC20 transfer
+        const amountInWei = BigInt(Math.floor(parseFloat(amount) * Math.pow(10, USDC_TOKEN.decimals)));
+        const recipientAddressPadded = recipientAddress.slice(2).padStart(64, '0');
+        const amountPadded = amountInWei.toString(16).padStart(64, '0');
 
-      const txHash = await ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [{
-          from: walletAddress,
-          to: USDC_TOKEN.address,
-          data: `0xa9059cbb${recipientAddressPadded}${amountPadded}`
-        }]
-      });
+        txHash = await ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [{
+            from: walletAddress,
+            to: USDC_TOKEN.address,
+            data: `0xa9059cbb${recipientAddressPadded}${amountPadded}`
+          }]
+        });
+      }
 
       alert(`Tip successful! Transaction hash: ${txHash}\nThank you for your support!`);
       setIsTipping(false);
@@ -1503,6 +1493,53 @@ export default function NeynarScoreMiniAppV4() {
               )}
 
               <div style={{ marginBottom: designSystem.spacing.sm, textAlign: 'left', flexShrink: 0 }}>
+                {/* Token Type Selector */}
+                <div style={{
+                  display: 'flex',
+                  gap: designSystem.spacing.xs,
+                  marginBottom: designSystem.spacing.sm,
+                  padding: designSystem.spacing.xs,
+                  borderRadius: designSystem.borderRadius.sm,
+                  background: 'rgba(255, 255, 255, 0.05)'
+                }}>
+                  <button
+                    onClick={() => setTokenType('USDC')}
+                    style={{
+                      flex: 1,
+                      padding: designSystem.spacing.xs + ' ' + designSystem.spacing.sm,
+                      borderRadius: designSystem.borderRadius.sm,
+                      border: `2px solid ${tokenType === 'USDC' ? 'rgba(102, 126, 234, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
+                      background: tokenType === 'USDC' ? 'rgba(102, 126, 234, 0.3)' : designSystem.colors.cardBg,
+                      color: '#fff',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      lineHeight: '1.4'
+                    }}
+                  >
+                    USDC
+                  </button>
+                  <button
+                    onClick={() => setTokenType('ETH')}
+                    style={{
+                      flex: 1,
+                      padding: designSystem.spacing.xs + ' ' + designSystem.spacing.sm,
+                      borderRadius: designSystem.borderRadius.sm,
+                      border: `2px solid ${tokenType === 'ETH' ? 'rgba(102, 126, 234, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
+                      background: tokenType === 'ETH' ? 'rgba(102, 126, 234, 0.3)' : designSystem.colors.cardBg,
+                      color: '#fff',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      lineHeight: '1.4'
+                    }}
+                  >
+                    ETH
+                  </button>
+                </div>
+                
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -1517,7 +1554,7 @@ export default function NeynarScoreMiniAppV4() {
                 }}>
                   <span>Payment</span>
                   <span style={{ fontWeight: '600', color: '#fff' }}>
-                    {tipType === 'custom' ? customTipAmount || '0' : tipAmount} {USDC_TOKEN.symbol}
+                    {tipType === 'custom' ? customTipAmount || '0' : tipAmount} {tokenType}
                   </span>
                 </div>
                 <div style={{
@@ -1640,7 +1677,7 @@ export default function NeynarScoreMiniAppV4() {
                       }}
                     />
                     <div style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.8)', fontWeight: '600', lineHeight: '1.3' }}>
-                      {USDC_TOKEN.symbol}
+                      {tokenType}
                     </div>
                   </div>
                 )}
@@ -1703,7 +1740,7 @@ export default function NeynarScoreMiniAppV4() {
                     Processing...
                   </span>
                 ) : (
-                  `Send ${tipType === 'custom' ? customTipAmount : tipAmount} ${USDC_TOKEN.symbol} 💝`
+                  `Send ${tipType === 'custom' ? customTipAmount : tipAmount} ${tokenType} 💝`
                 )}
               </button>
 
