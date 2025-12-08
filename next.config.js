@@ -19,6 +19,8 @@ const nextConfig = {
       },
     ];
   },
+  // Ensure proper routing
+  trailingSlash: false,
 };
 
 module.exports = nextConfig;
