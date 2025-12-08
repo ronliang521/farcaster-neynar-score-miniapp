@@ -1308,9 +1308,7 @@ export default function NeynarScoreMiniAppV4() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginTop: designSystem.spacing.lg,
-                  paddingTop: designSystem.spacing.md,
-                  paddingLeft: designSystem.spacing.md,
-                  paddingRight: designSystem.spacing.md
+                  paddingTop: designSystem.spacing.md
                 }}>
                   <motion.a
                     href="https://startonfarcaster.xyz/"
@@ -1333,12 +1331,11 @@ export default function NeynarScoreMiniAppV4() {
                       transition: 'all 0.3s ease',
                       boxShadow: designSystem.colors.shadow,
                       lineHeight: '1.5',
-                      width: '100%',
-                      maxWidth: '280px',
+                      minWidth: designSystem.button.minWidth,
+                      margin: '0 auto',
                       position: 'relative',
                       overflow: 'hidden',
-                      whiteSpace: 'nowrap',
-                      margin: '0 auto'
+                      whiteSpace: 'nowrap'
                     }}
                   >
                     <span>Visit Start on Farcaster</span>
@@ -1376,9 +1373,7 @@ export default function NeynarScoreMiniAppV4() {
                     justifyContent: 'center',
                     gap: designSystem.spacing.sm,
                     paddingTop: designSystem.spacing.md,
-                    width: '100%',
-                    paddingLeft: designSystem.spacing.md,
-                    paddingRight: designSystem.spacing.md
+                    width: '100%'
                   }}>
                     <div style={{
                       fontSize: '13px',
@@ -1414,8 +1409,7 @@ export default function NeynarScoreMiniAppV4() {
                         boxShadow: designSystem.colors.shadowHover,
                         position: 'relative',
                         overflow: 'hidden',
-                        width: '100%',
-                        maxWidth: '280px',
+                        minWidth: designSystem.button.minWidth,
                         whiteSpace: 'nowrap',
                         margin: '0 auto'
                       }}
