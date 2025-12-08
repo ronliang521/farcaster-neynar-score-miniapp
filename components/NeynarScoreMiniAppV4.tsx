@@ -601,7 +601,7 @@ export default function NeynarScoreMiniAppV4() {
       padding: '0',
       color: '#fff',
       position: 'relative',
-      overflow: 'auto',
+      overflow: 'hidden',
       height: '100vh',
       boxSizing: 'border-box',
       display: 'flex',
@@ -627,32 +627,32 @@ export default function NeynarScoreMiniAppV4() {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'auto',
-          padding: '16px 14px 35px 14px',
+          overflow: 'hidden',
+          padding: '12px 12px 35px 12px',
           minHeight: 0
         }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '20px', flexShrink: 0 }}>
+        <div style={{ textAlign: 'center', marginBottom: '12px', flexShrink: 0 }}>
           <h2 style={{
-            marginBottom: '8px',
-            fontSize: '28px',
+            marginBottom: '6px',
+            fontSize: '22px',
             fontWeight: '700',
             textAlign: 'center',
             marginTop: 0,
             color: '#fff',
             textShadow: '0 2px 10px rgba(255, 107, 107, 0.3)',
-            lineHeight: '1.3'
+            lineHeight: '1.2'
           }}>
             Neynar Score
           </h2>
           <p style={{
-            marginBottom: '12px',
+            marginBottom: '8px',
             textAlign: 'center',
             opacity: 0.9,
-            fontSize: '15px',
+            fontSize: '13px',
             fontWeight: '400',
             color: 'rgba(255, 255, 255, 0.9)',
-            lineHeight: '1.5'
+            lineHeight: '1.4'
           }}>
             Check your Farcaster reputation score powered by Neynar
           </p>
@@ -836,7 +836,7 @@ export default function NeynarScoreMiniAppV4() {
 
         <div style={{ 
           flex: 1, 
-          overflow: 'auto',
+          overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
           minHeight: 0
@@ -852,7 +852,7 @@ export default function NeynarScoreMiniAppV4() {
                 padding: designSystem.card.padding,
                 backdropFilter: 'blur(10px)',
                 flex: 1,
-                overflow: 'auto',
+                overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: 0
@@ -1101,7 +1101,7 @@ export default function NeynarScoreMiniAppV4() {
               exit={{ opacity: 0, y: -10 }}
               style={{
                 flex: 1,
-                overflow: 'auto',
+                overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: 0
@@ -1237,7 +1237,7 @@ export default function NeynarScoreMiniAppV4() {
               style={{
                 background: designSystem.colors.cardBg,
                 borderRadius: designSystem.borderRadius.lg,
-                padding: designSystem.spacing.lg + ' ' + designSystem.card.padding,
+                padding: designSystem.spacing.md + ' ' + designSystem.spacing.md,
                 backdropFilter: 'blur(15px)',
                 textAlign: 'center',
                 display: 'flex',
@@ -1254,8 +1254,8 @@ export default function NeynarScoreMiniAppV4() {
                 display: 'flex', 
                 flexDirection: 'column', 
                 justifyContent: 'flex-start', 
-                padding: `${designSystem.spacing.md} ${designSystem.spacing.md}`,
-                gap: designSystem.spacing.md,
+                padding: `${designSystem.spacing.xs} ${designSystem.spacing.sm}`,
+                gap: designSystem.spacing.sm,
                 marginTop: '0',
                 width: '100%',
                 maxWidth: '400px',
@@ -1266,12 +1266,12 @@ export default function NeynarScoreMiniAppV4() {
                   display: 'flex', 
                   flexDirection: 'column', 
                   alignItems: 'center',
-                  gap: designSystem.spacing.sm,
+                  gap: designSystem.spacing.xs,
                   textAlign: 'center',
-                  paddingTop: designSystem.spacing.xs
+                  paddingTop: '0'
                 }}>
                   <div style={{ 
-                    fontSize: '22px', 
+                    fontSize: '18px', 
                     fontWeight: '700', 
                     color: '#fff', 
                     lineHeight: '1.2',
@@ -1282,9 +1282,9 @@ export default function NeynarScoreMiniAppV4() {
                     Improve Your Score
                   </div>
                   <div style={{
-                    fontSize: '14px',
+                    fontSize: '12px',
                     color: designSystem.colors.textSecondary,
-                    lineHeight: '1.5',
+                    lineHeight: '1.4',
                     maxWidth: '320px',
                     fontWeight: '400',
                     opacity: 0.95
@@ -1297,10 +1297,10 @@ export default function NeynarScoreMiniAppV4() {
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: designSystem.spacing.sm,
+                  gap: designSystem.spacing.xs,
                   width: '100%',
                   alignItems: 'center',
-                  paddingTop: designSystem.spacing.xs
+                  paddingTop: '0'
                 }}>
                   <motion.a
                     href="https://startonfarcaster.xyz/"
@@ -1337,7 +1337,7 @@ export default function NeynarScoreMiniAppV4() {
 
                 {/* 分隔线和支持创作者区域 */}
                 <div style={{
-                  paddingTop: designSystem.spacing.md,
+                  paddingTop: designSystem.spacing.sm,
                   borderTop: '2px solid ' + designSystem.colors.border,
                   flexShrink: 0,
                   textAlign: 'center',
@@ -1350,7 +1350,7 @@ export default function NeynarScoreMiniAppV4() {
                     top: '-2px',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    width: '60px',
+                    width: '50px',
                     height: '2px',
                     background: designSystem.colors.primary,
                     borderRadius: '2px'
@@ -1359,8 +1359,8 @@ export default function NeynarScoreMiniAppV4() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: designSystem.spacing.sm,
-                    paddingTop: designSystem.spacing.md
+                    gap: designSystem.spacing.xs,
+                    paddingTop: designSystem.spacing.sm
                   }}>
                     <div style={{
                       fontSize: '13px',
