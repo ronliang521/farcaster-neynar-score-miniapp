@@ -489,7 +489,24 @@ export default function NeynarScoreMiniAppV4() {
       // Format share text with app link
       const shareText = `My Neynar Score is ${scoreText}. Check your score! ${appUrl}`;
 
-      // Priority 1: Use Farcaster openCastComposer to open cast page
+      // Priority 1: Use Farcaster Mini App SDK composeCast action
+      try {
+        const { sdk } = await import('@farcaster/miniapp-sdk');
+        
+        if (sdk && sdk.actions && sdk.actions.composeCast) {
+          // Open cast composer with pre-filled text and embed URL
+          await sdk.actions.composeCast({
+            text: shareText,
+            embeds: [appUrl]
+          });
+          setIsSharing(false);
+          return;
+        }
+      } catch (sdkErr) {
+        console.log('SDK composeCast not available, trying fallback methods:', sdkErr);
+      }
+
+      // Priority 2: Use window.farcaster.openCastComposer (legacy)
       if (window.farcaster) {
         const farcaster = window.farcaster;
         

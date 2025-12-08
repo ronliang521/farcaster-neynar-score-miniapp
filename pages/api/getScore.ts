@@ -20,45 +20,25 @@ interface UserData {
 }
 
 async function fetchUserByUsername(username: string) {
-  let res = await fetch(`${API_BASE}/user/by_username?username=${encodeURIComponent(username)}`, {
+  const res = await fetch(`${API_BASE}/user/by_username?username=${encodeURIComponent(username)}`, {
     method: 'GET',
     headers: {
-      api_key: API_KEY,
-      Accept: 'application/json'
+      'x-api-key': API_KEY,
+      'Content-Type': 'application/json'
     }
   });
-
-  if (!res.ok) {
-    res = await fetch(`${API_BASE}/user/by_username?username=${encodeURIComponent(username)}`, {
-      method: 'GET',
-      headers: {
-        'x-api-key': API_KEY,
-        Accept: 'application/json'
-      }
-    });
-  }
 
   return res;
 }
 
 async function fetchUserBulk(fids: number) {
-  let res = await fetch(`${API_BASE}/user/bulk?fids=${fids}`, {
+  const res = await fetch(`${API_BASE}/user/bulk?fids=${fids}`, {
     method: 'GET',
     headers: {
-      api_key: API_KEY,
-      Accept: 'application/json'
+      'x-api-key': API_KEY,
+      'Content-Type': 'application/json'
     }
   });
-
-  if (!res.ok) {
-    res = await fetch(`${API_BASE}/user/bulk?fids=${fids}`, {
-      method: 'GET',
-      headers: {
-        'x-api-key': API_KEY,
-        Accept: 'application/json'
-      }
-    });
-  }
 
   return res;
 }
@@ -66,23 +46,13 @@ async function fetchUserBulk(fids: number) {
 async function fetchFollowers(fid: number): Promise<Follower[]> {
   const followers: Follower[] = [];
   try {
-    let res = await fetch(`${API_BASE}/user/followers?fid=${fid}&limit=10`, {
+    const res = await fetch(`${API_BASE}/user/followers?fid=${fid}&limit=10`, {
       method: 'GET',
       headers: {
-        api_key: API_KEY,
-        Accept: 'application/json'
+        'x-api-key': API_KEY,
+        'Content-Type': 'application/json'
       }
     });
-
-    if (!res.ok) {
-      res = await fetch(`${API_BASE}/user/followers?fid=${fid}&limit=10`, {
-        method: 'GET',
-        headers: {
-          'x-api-key': API_KEY,
-          Accept: 'application/json'
-        }
-      });
-    }
 
     if (res.ok) {
       const data = await res.json();
