@@ -1297,10 +1297,11 @@ export default function NeynarScoreMiniAppV4() {
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: designSystem.spacing.xs,
+                  gap: designSystem.spacing.sm,
                   width: '100%',
                   alignItems: 'center',
-                  paddingTop: '0'
+                  marginTop: designSystem.spacing.lg,
+                  paddingTop: designSystem.spacing.md
                 }}>
                   <motion.a
                     href="https://startonfarcaster.xyz/"
@@ -1313,13 +1314,13 @@ export default function NeynarScoreMiniAppV4() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: designSystem.spacing.sm,
-                      padding: '12px 24px',
+                      padding: designSystem.button.padding,
                       background: designSystem.colors.primary,
                       color: '#fff',
                       textDecoration: 'none',
                       borderRadius: designSystem.button.borderRadius,
-                      fontWeight: '600',
-                      fontSize: '14px',
+                      fontWeight: designSystem.button.fontWeight,
+                      fontSize: designSystem.button.fontSize,
                       transition: 'all 0.3s ease',
                       boxShadow: designSystem.colors.shadow,
                       lineHeight: '1.5',
@@ -1331,19 +1332,19 @@ export default function NeynarScoreMiniAppV4() {
                     }}
                   >
                     <span>Visit Start on Farcaster</span>
-                    <span style={{ fontSize: '14px', opacity: 0.9 }}>→</span>
+                    <span style={{ fontSize: '16px', opacity: 0.9 }}>→</span>
                   </motion.a>
                 </div>
 
                 {/* 分隔线和支持创作者区域 */}
                 <div style={{
-                  paddingTop: designSystem.spacing.sm,
+                  paddingTop: designSystem.spacing.md,
                   borderTop: '2px solid ' + designSystem.colors.border,
                   flexShrink: 0,
                   textAlign: 'center',
                   position: 'relative',
                   width: '100%',
-                  marginTop: designSystem.spacing.xs
+                  marginTop: designSystem.spacing.lg
                 }}>
                   <div style={{
                     position: 'absolute',
@@ -1359,8 +1360,8 @@ export default function NeynarScoreMiniAppV4() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: designSystem.spacing.xs,
-                    paddingTop: designSystem.spacing.sm
+                    gap: designSystem.spacing.sm,
+                    paddingTop: designSystem.spacing.md
                   }}>
                     <div style={{
                       fontSize: '13px',
@@ -1382,14 +1383,14 @@ export default function NeynarScoreMiniAppV4() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: designSystem.spacing.sm,
-                        padding: '12px 24px',
+                        padding: designSystem.button.padding,
                         background: designSystem.colors.primary,
                         backdropFilter: 'blur(10px)',
                         color: '#fff',
                         textDecoration: 'none',
                         borderRadius: designSystem.button.borderRadius,
-                        fontSize: '14px',
-                        fontWeight: '600',
+                        fontSize: designSystem.button.fontSize,
+                        fontWeight: designSystem.button.fontWeight,
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         border: '2px solid ' + designSystem.colors.borderHover,
                         lineHeight: '1.5',
@@ -1406,7 +1407,7 @@ export default function NeynarScoreMiniAppV4() {
                         fontWeight: '600'
                       }}>Follow @ron521520</span>
                       <span style={{ 
-                        fontSize: '14px',
+                        fontSize: '16px',
                         opacity: 0.9
                       }}>→</span>
                     </motion.a>
