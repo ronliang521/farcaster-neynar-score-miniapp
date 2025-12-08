@@ -1312,7 +1312,7 @@ export default function NeynarScoreMiniAppV4() {
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: 0,
-                overflow: 'hidden'
+                overflow: 'auto'
               }}
             >
               <div style={{ fontSize: '16px', fontWeight: '600', color: '#fff', marginBottom: '8px', flexShrink: 0, lineHeight: '1.3' }}>
