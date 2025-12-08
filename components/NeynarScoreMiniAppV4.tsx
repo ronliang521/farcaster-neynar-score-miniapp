@@ -557,7 +557,7 @@ export default function NeynarScoreMiniAppV4() {
       padding: '0',
       color: '#fff',
       position: 'relative',
-      overflow: 'hidden',
+      overflow: 'auto',
       height: '100vh',
       boxSizing: 'border-box',
       display: 'flex',
