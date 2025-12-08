@@ -21,6 +21,10 @@ const nextConfig = {
   },
   // Ensure proper routing
   trailingSlash: false,
+  // Optimize for Vercel deployment
+  swcMinify: true,
+  // Ensure static files are generated correctly
+  generateEtags: true,
 };
 
 module.exports = nextConfig;
