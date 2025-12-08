@@ -1259,9 +1259,11 @@ export default function NeynarScoreMiniAppV4() {
                 padding: `${designSystem.spacing.md} ${designSystem.spacing.lg}`,
                 gap: designSystem.spacing.sm,
                 marginTop: '0',
+                marginBottom: '0',
+                marginLeft: '-10px',
+                marginRight: 'auto',
                 width: '100%',
-                maxWidth: '380px',
-                margin: '0 auto'
+                maxWidth: '380px'
               }}>
                 {/* 标题和描述区域 */}
                 <div style={{ 
