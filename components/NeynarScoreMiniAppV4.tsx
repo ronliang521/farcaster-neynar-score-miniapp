@@ -1254,7 +1254,7 @@ export default function NeynarScoreMiniAppV4() {
                 display: 'flex', 
                 flexDirection: 'column', 
                 justifyContent: 'flex-start', 
-                padding: `${designSystem.spacing.xs} ${designSystem.spacing.sm}`,
+                padding: `${designSystem.spacing.md} ${designSystem.spacing.lg}`,
                 gap: designSystem.spacing.sm,
                 marginTop: '0',
                 width: '100%',
@@ -1300,8 +1300,11 @@ export default function NeynarScoreMiniAppV4() {
                   gap: designSystem.spacing.sm,
                   width: '100%',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   marginTop: designSystem.spacing.lg,
-                  paddingTop: designSystem.spacing.md
+                  paddingTop: designSystem.spacing.md,
+                  paddingLeft: designSystem.spacing.md,
+                  paddingRight: designSystem.spacing.md
                 }}>
                   <motion.a
                     href="https://startonfarcaster.xyz/"
@@ -1325,10 +1328,11 @@ export default function NeynarScoreMiniAppV4() {
                       boxShadow: designSystem.colors.shadow,
                       lineHeight: '1.5',
                       width: '100%',
-                      maxWidth: '320px',
+                      maxWidth: '280px',
                       position: 'relative',
                       overflow: 'hidden',
-                      whiteSpace: 'nowrap'
+                      whiteSpace: 'nowrap',
+                      margin: '0 auto'
                     }}
                   >
                     <span>Visit Start on Farcaster</span>
