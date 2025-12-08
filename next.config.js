@@ -25,6 +25,8 @@ const nextConfig = {
   swcMinify: true,
   // Ensure static files are generated correctly
   generateEtags: true,
+  // Ensure proper output for Vercel
+  output: undefined, // Let Vercel handle the output
 };
 
 module.exports = nextConfig;
