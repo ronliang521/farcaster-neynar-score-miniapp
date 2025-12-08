@@ -48,6 +48,35 @@ export default function NeynarScoreMiniAppV4() {
     symbol: 'USDC'
   };
 
+  // 统一设计系统
+  const designSystem = {
+    spacing: {
+      xs: '4px',
+      sm: '8px',
+      md: '12px',
+      lg: '16px',
+      xl: '20px',
+      xxl: '24px'
+    },
+    borderRadius: {
+      sm: '8px',
+      md: '12px',
+      lg: '16px'
+    },
+    button: {
+      padding: '12px 20px',
+      fontSize: '14px',
+      fontWeight: '600',
+      borderRadius: '12px',
+      minWidth: '140px'
+    },
+    card: {
+      padding: '16px',
+      borderRadius: '12px',
+      marginBottom: '16px'
+    }
+  };
+
   const handleCheckScore = async () => {
     if (!input.trim()) {
       setError('Please enter FID or username');
@@ -675,19 +704,19 @@ export default function NeynarScoreMiniAppV4() {
             whileTap={checkLoading || !input.trim() ? {} : { scale: 0.98 }}
             style={{
               width: '100%',
-              padding: '16px',
-              borderRadius: '14px',
+              padding: designSystem.button.padding,
+              borderRadius: designSystem.button.borderRadius,
               border: 'none',
               background: checkLoading ? 'rgba(255, 255, 255, 0.3)' : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
               color: '#fff',
-              fontSize: '15px',
-              fontWeight: '600',
+              fontSize: designSystem.button.fontSize,
+              fontWeight: designSystem.button.fontWeight,
               cursor: checkLoading || !input.trim() ? 'not-allowed' : 'pointer',
-              marginTop: '14px',
+              marginTop: designSystem.spacing.md,
               boxShadow: checkLoading || !input.trim() ? '0 4px 15px rgba(0, 0, 0, 0.1)' : '0 6px 25px rgba(245, 87, 108, 0.4)',
               opacity: checkLoading || !input.trim() ? 0.6 : 1,
               transition: 'all 0.3s ease',
-              lineHeight: '1.6'
+              lineHeight: '1.5'
             }}
           >
             {checkLoading ? (
@@ -714,11 +743,11 @@ export default function NeynarScoreMiniAppV4() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               style={{
-                padding: '12px 16px',
-                borderRadius: '12px',
+                padding: designSystem.spacing.md + ' ' + designSystem.spacing.lg,
+                borderRadius: designSystem.borderRadius.md,
                 backgroundColor: 'rgba(239, 68, 68, 0.2)',
                 border: '1px solid rgba(239, 68, 68, 0.5)',
-                marginBottom: '18px',
+                marginBottom: designSystem.spacing.lg,
                 color: '#fee2e2',
                 fontSize: '14px',
                 lineHeight: '1.6'
@@ -804,8 +833,8 @@ export default function NeynarScoreMiniAppV4() {
               exit={{ opacity: 0, y: -10 }}
               style={{
                 background: 'rgba(255, 255, 255, 0.1)',
-                borderRadius: '10px',
-                padding: '10px',
+                borderRadius: designSystem.borderRadius.md,
+                padding: designSystem.card.padding,
                 backdropFilter: 'blur(10px)',
                 flex: 1,
                 overflow: 'auto',
@@ -841,17 +870,18 @@ export default function NeynarScoreMiniAppV4() {
                   <button
                     onClick={connectFarcaster}
                     style={{
-                      padding: '8px 16px',
+                      padding: designSystem.button.padding,
                       background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                       color: '#fff',
                       border: 'none',
-                      borderRadius: '8px',
-                      fontWeight: '600',
-                      fontSize: '14px',
+                      borderRadius: designSystem.button.borderRadius,
+                      fontWeight: designSystem.button.fontWeight,
+                      fontSize: designSystem.button.fontSize,
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
                       boxShadow: '0 4px 15px rgba(245, 87, 108, 0.3)',
-                      lineHeight: '1.4'
+                      lineHeight: '1.5',
+                      minWidth: designSystem.button.minWidth
                     }}
                   >
                     Reconnect
@@ -864,9 +894,9 @@ export default function NeynarScoreMiniAppV4() {
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '4px',
-                    marginBottom: '6px',
-                    paddingBottom: '4px',
+                    gap: designSystem.spacing.xs,
+                    marginBottom: designSystem.spacing.sm,
+                    paddingBottom: designSystem.spacing.xs,
                     borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
                     flexShrink: 0
                   }}>
@@ -912,10 +942,10 @@ export default function NeynarScoreMiniAppV4() {
                   <div style={{
                     background: 'rgba(255, 255, 255, 0.15)',
                     backdropFilter: 'blur(10px)',
-                    borderRadius: '10px',
-                    padding: '6px',
+                    borderRadius: designSystem.borderRadius.md,
+                    padding: designSystem.spacing.md,
                     textAlign: 'center',
-                    marginBottom: '6px',
+                    marginBottom: designSystem.spacing.sm,
                     border: '1px solid rgba(255, 255, 255, 0.2)',
                     boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
                     flexShrink: 0
@@ -954,12 +984,12 @@ export default function NeynarScoreMiniAppV4() {
                   {(myFollowerCount !== null || myFollowingCount !== null) && (
                     <div style={{
                       display: 'flex',
-                      gap: '6px',
+                      gap: designSystem.spacing.sm,
                       justifyContent: 'center',
-                      padding: '6px',
+                      padding: designSystem.spacing.sm,
                       background: 'rgba(255, 255, 255, 0.1)',
-                      borderRadius: '8px',
-                      marginBottom: '6px',
+                      borderRadius: designSystem.borderRadius.sm,
+                      marginBottom: designSystem.spacing.sm,
                       flexShrink: 0
                     }}>
                       {myFollowerCount !== null && (
@@ -986,33 +1016,33 @@ export default function NeynarScoreMiniAppV4() {
                   )}
 
                   {isConnected && myScore !== null && (
-                    <div style={{ marginTop: '-32px', textAlign: 'center', flexShrink: 0, paddingTop: '0px' }}>
+                    <div style={{ marginTop: designSystem.spacing.lg, textAlign: 'center', flexShrink: 0, paddingTop: designSystem.spacing.md }}>
                       <motion.button
                         onClick={handleShare}
                         disabled={isSharing}
                         whileHover={!isSharing ? { scale: 1.05, y: -2 } : {}}
                         whileTap={!isSharing ? { scale: 0.98 } : {}}
                         style={{
-                          padding: '8px 16px',
+                          padding: designSystem.button.padding,
                           background: isSharing 
                             ? 'rgba(255, 255, 255, 0.3)' 
                             : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                           color: '#fff',
                           border: 'none',
-                          borderRadius: '12px',
-                          fontWeight: '700',
-                          fontSize: '13px',
+                          borderRadius: designSystem.button.borderRadius,
+                          fontWeight: designSystem.button.fontWeight,
+                          fontSize: designSystem.button.fontSize,
                           cursor: isSharing ? 'not-allowed' : 'pointer',
                           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                           boxShadow: isSharing 
                             ? '0 4px 15px rgba(0, 0, 0, 0.2)' 
                             : '0 6px 25px rgba(245, 87, 108, 0.4), 0 2px 10px rgba(240, 147, 251, 0.3)',
                           opacity: isSharing ? 0.7 : 1,
-                          minWidth: '160px',
+                          minWidth: designSystem.button.minWidth,
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '6px',
+                          gap: designSystem.spacing.sm,
                           margin: '0 auto',
                           lineHeight: '1.5',
                           position: 'relative',
@@ -1065,11 +1095,11 @@ export default function NeynarScoreMiniAppV4() {
               {score !== null ? (
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
                   {username && (
-                    <div style={{
+                    <div                     style={{
                       background: 'rgba(255, 255, 255, 0.1)',
-                      borderRadius: '8px',
-                      padding: '6px',
-                      marginBottom: '6px',
+                      borderRadius: designSystem.borderRadius.sm,
+                      padding: designSystem.spacing.md,
+                      marginBottom: designSystem.spacing.sm,
                       backdropFilter: 'blur(10px)',
                       flexShrink: 0
                     }}>
@@ -1096,9 +1126,9 @@ export default function NeynarScoreMiniAppV4() {
                       {(followerCount !== null || followingCount !== null) && (
                         <div style={{
                           display: 'flex',
-                          gap: '10px',
-                          marginTop: '7px',
-                          paddingTop: '6px',
+                          gap: designSystem.spacing.md,
+                          marginTop: designSystem.spacing.md,
+                          paddingTop: designSystem.spacing.sm,
                           borderTop: '1px solid rgba(255, 255, 255, 0.2)'
                         }}>
                           {followerCount !== null && (
@@ -1129,8 +1159,8 @@ export default function NeynarScoreMiniAppV4() {
                   {followers.length > 0 && (
                     <div style={{
                       background: 'rgba(255, 255, 255, 0.1)',
-                      borderRadius: '8px',
-                      padding: '6px',
+                      borderRadius: designSystem.borderRadius.sm,
+                      padding: designSystem.spacing.md,
                       backdropFilter: 'blur(10px)',
                       flex: 1,
                       display: 'flex',
@@ -1191,8 +1221,8 @@ export default function NeynarScoreMiniAppV4() {
               exit={{ opacity: 0, y: -10 }}
               style={{
                 background: 'rgba(255, 255, 255, 0.1)',
-                borderRadius: '12px',
-                padding: '6px',
+                borderRadius: designSystem.borderRadius.md,
+                padding: designSystem.card.padding,
                 backdropFilter: 'blur(10px)',
                 textAlign: 'center',
                 display: 'flex',
@@ -1202,15 +1232,15 @@ export default function NeynarScoreMiniAppV4() {
                 overflow: 'auto'
               }}
             >
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2px 0' }}>
-              <div style={{ fontSize: '18px', fontWeight: '600', color: '#fff', marginBottom: '0.5px', lineHeight: '1.2' }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: designSystem.spacing.md + ' 0' }}>
+              <div style={{ fontSize: '18px', fontWeight: '600', color: '#fff', marginBottom: designSystem.spacing.sm, lineHeight: '1.3' }}>
                 Improve Score
               </div>
               <div style={{
-                fontSize: '13px',
+                fontSize: '14px',
                 color: 'rgba(255, 255, 255, 0.8)',
-                lineHeight: '1.3',
-                marginBottom: '1px'
+                lineHeight: '1.5',
+                marginBottom: designSystem.spacing.md
               }}>
                 Visit Start on Farcaster to learn more ways to improve your score
               </div>
@@ -1220,17 +1250,18 @@ export default function NeynarScoreMiniAppV4() {
                 rel="noopener noreferrer"
                 style={{
                   display: 'inline-block',
-                  padding: '1px 2px',
+                  padding: designSystem.button.padding,
                   background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                   color: '#fff',
                   textDecoration: 'none',
-                  borderRadius: '6px',
-                  fontWeight: '600',
-                  fontSize: '13px',
+                  borderRadius: designSystem.button.borderRadius,
+                  fontWeight: designSystem.button.fontWeight,
+                  fontSize: designSystem.button.fontSize,
                   transition: 'all 0.3s ease',
                   boxShadow: '0 4px 15px rgba(245, 87, 108, 0.3)',
-                  marginBottom: '1px',
-                  lineHeight: '1.3'
+                  marginBottom: designSystem.spacing.md,
+                  lineHeight: '1.5',
+                  minWidth: designSystem.button.minWidth
                 }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
@@ -1245,8 +1276,8 @@ export default function NeynarScoreMiniAppV4() {
                 </a>
               </div>
               <div style={{
-                marginTop: '-32px',
-                paddingTop: '0px',
+                marginTop: designSystem.spacing.lg,
+                paddingTop: designSystem.spacing.md,
                 borderTop: '1px solid rgba(255, 255, 255, 0.2)',
                 flexShrink: 0,
                 textAlign: 'center'
@@ -1260,22 +1291,22 @@ export default function NeynarScoreMiniAppV4() {
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '6px',
-                    padding: '8px 16px',
+                    gap: designSystem.spacing.sm,
+                    padding: designSystem.button.padding,
                     background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                     backdropFilter: 'blur(10px)',
                     color: '#fff',
                     textDecoration: 'none',
-                    borderRadius: '12px',
-                    fontSize: '13px',
-                    fontWeight: '600',
+                    borderRadius: designSystem.button.borderRadius,
+                    fontSize: designSystem.button.fontSize,
+                    fontWeight: designSystem.button.fontWeight,
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     border: '2px solid rgba(255, 255, 255, 0.3)',
                     lineHeight: '1.5',
                     boxShadow: '0 6px 25px rgba(245, 87, 108, 0.4), 0 2px 10px rgba(240, 147, 251, 0.3)',
                     position: 'relative',
-                    overflow: 'auto',
-                    minWidth: '160px'
+                    overflow: 'hidden',
+                    minWidth: designSystem.button.minWidth
                   }}
                 >
                   <span style={{ 
@@ -1303,8 +1334,8 @@ export default function NeynarScoreMiniAppV4() {
               exit={{ opacity: 0, y: -10 }}
               style={{
                 background: 'rgba(255, 255, 255, 0.1)',
-                borderRadius: '12px',
-                padding: '12px',
+                borderRadius: designSystem.borderRadius.md,
+                padding: designSystem.card.padding,
                 backdropFilter: 'blur(10px)',
                 textAlign: 'center',
                 flex: 1,
@@ -1314,14 +1345,14 @@ export default function NeynarScoreMiniAppV4() {
                 overflow: 'auto'
               }}
             >
-              <div style={{ fontSize: '16px', fontWeight: '600', color: '#fff', marginBottom: '8px', flexShrink: 0, lineHeight: '1.3' }}>
+              <div style={{ fontSize: '16px', fontWeight: '600', color: '#fff', marginBottom: designSystem.spacing.sm, flexShrink: 0, lineHeight: '1.3' }}>
                 💝 Tip Creator
               </div>
               <div style={{
-                fontSize: '11px',
+                fontSize: '13px',
                 color: 'rgba(255, 255, 255, 0.8)',
-                lineHeight: '1.4',
-                marginBottom: '12px',
+                lineHeight: '1.5',
+                marginBottom: designSystem.spacing.md,
                 flexShrink: 0
               }}>
                 Your support is the greatest encouragement to the creator!
@@ -1331,12 +1362,12 @@ export default function NeynarScoreMiniAppV4() {
 
               {isConnected && !walletAddress && (
                 <div style={{
-                  fontSize: '9px',
+                  fontSize: '12px',
                   color: 'rgba(255, 255, 255, 0.7)',
-                  marginBottom: '12px',
-                  padding: '6px',
+                  marginBottom: designSystem.spacing.md,
+                  padding: designSystem.spacing.sm,
                   background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '5px',
+                  borderRadius: designSystem.borderRadius.sm,
                   textAlign: 'center',
                   flexShrink: 0,
                   lineHeight: '1.4'
@@ -1348,12 +1379,12 @@ export default function NeynarScoreMiniAppV4() {
 
               {isConnected && walletAddress && (
                 <div style={{
-                  fontSize: '9px',
+                  fontSize: '12px',
                   color: 'rgba(255, 255, 255, 0.6)',
-                  marginBottom: '12px',
-                  padding: '5px',
+                  marginBottom: designSystem.spacing.md,
+                  padding: designSystem.spacing.sm,
                   background: 'rgba(255, 255, 255, 0.05)',
-                  borderRadius: '5px',
+                  borderRadius: designSystem.borderRadius.sm,
                   wordBreak: 'break-all',
                   flexShrink: 0,
                   lineHeight: '1.4'
@@ -1362,18 +1393,18 @@ export default function NeynarScoreMiniAppV4() {
                 </div>
               )}
 
-              <div style={{ marginBottom: '10px', textAlign: 'left', flexShrink: 0 }}>
+              <div style={{ marginBottom: designSystem.spacing.md, textAlign: 'left', flexShrink: 0 }}>
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '8px',
-                  borderRadius: '6px',
+                  padding: designSystem.spacing.sm,
+                  borderRadius: designSystem.borderRadius.sm,
                   background: 'rgba(255, 255, 255, 0.05)',
                   fontSize: '14px',
                   color: 'rgba(255, 255, 255, 0.8)',
-                  marginBottom: '5px',
-                  lineHeight: '1.4'
+                  marginBottom: designSystem.spacing.xs,
+                  lineHeight: '1.5'
                 }}>
                   <span>Payment</span>
                   <span style={{ fontWeight: '600', color: '#fff' }}>
@@ -1384,15 +1415,15 @@ export default function NeynarScoreMiniAppV4() {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '8px',
-                  borderRadius: '6px',
+                  padding: designSystem.spacing.sm,
+                  borderRadius: designSystem.borderRadius.sm,
                   background: 'rgba(255, 255, 255, 0.05)',
                   fontSize: '14px',
                   color: 'rgba(255, 255, 255, 0.8)',
-                  lineHeight: '1.4'
+                  lineHeight: '1.5'
                 }}>
                   <span>Network</span>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontWeight: '600', color: '#fff' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: designSystem.spacing.xs, fontWeight: '600', color: '#fff' }}>
                     <span style={{
                       width: '10px',
                       height: '10px',
@@ -1404,8 +1435,8 @@ export default function NeynarScoreMiniAppV4() {
                 </div>
               </div>
 
-              <div style={{ marginBottom: '10px', textAlign: 'left', flexShrink: 0 }}>
-                <div style={{ display: 'flex', gap: '5px', marginBottom: '6px' }}>
+              <div style={{ marginBottom: designSystem.spacing.md, textAlign: 'left', flexShrink: 0 }}>
+                <div style={{ display: 'flex', gap: designSystem.spacing.xs, marginBottom: designSystem.spacing.sm }}>
                   {['2', '4', '6'].map((amount) => (
                     <button
                       key={amount}
@@ -1416,8 +1447,8 @@ export default function NeynarScoreMiniAppV4() {
                       }}
                       style={{
                         flex: 1,
-                        padding: '6px 8px',
-                        borderRadius: '5px',
+                        padding: designSystem.spacing.sm + ' ' + designSystem.spacing.md,
+                        borderRadius: designSystem.borderRadius.sm,
                         border: `2px solid ${tipType === amount ? 'rgba(255, 107, 53, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
                         background: tipType === amount ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.1)',
                         color: '#fff',
@@ -1426,7 +1457,7 @@ export default function NeynarScoreMiniAppV4() {
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
                         minWidth: '0',
-                        lineHeight: '1.4'
+                        lineHeight: '1.5'
                       }}
                       onMouseEnter={(e) => {
                         if (tipType !== amount) {
@@ -1449,8 +1480,8 @@ export default function NeynarScoreMiniAppV4() {
                     }}
                     style={{
                       flex: 1,
-                      padding: '6px 8px',
-                      borderRadius: '5px',
+                      padding: designSystem.spacing.sm + ' ' + designSystem.spacing.md,
+                      borderRadius: designSystem.borderRadius.sm,
                       border: `2px solid ${tipType === 'custom' ? 'rgba(255, 107, 53, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
                       background: tipType === 'custom' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 255, 255, 0.1)',
                       color: '#fff',
@@ -1459,7 +1490,7 @@ export default function NeynarScoreMiniAppV4() {
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
                       minWidth: '0',
-                      lineHeight: '1.4'
+                      lineHeight: '1.5'
                     }}
                     onMouseEnter={(e) => {
                       if (tipType !== 'custom') {
@@ -1477,7 +1508,7 @@ export default function NeynarScoreMiniAppV4() {
                 </div>
 
                 {tipType === 'custom' && (
-                  <div style={{ display: 'flex', gap: '5px', alignItems: 'center', marginTop: '5px' }}>
+                  <div style={{ display: 'flex', gap: designSystem.spacing.xs, alignItems: 'center', marginTop: designSystem.spacing.xs }}>
                     <input
                       type="number"
                       value={customTipAmount}
@@ -1489,14 +1520,14 @@ export default function NeynarScoreMiniAppV4() {
                       placeholder="Enter custom amount"
                       style={{
                         flex: 1,
-                        padding: '6px',
-                        borderRadius: '5px',
+                        padding: designSystem.spacing.sm,
+                        borderRadius: designSystem.borderRadius.sm,
                         border: '2px solid rgba(255, 255, 255, 0.3)',
                         background: 'rgba(255, 255, 255, 0.1)',
                         color: '#fff',
-                        fontSize: '11px',
+                        fontSize: '13px',
                         outline: 'none',
-                        lineHeight: '1.4'
+                        lineHeight: '1.5'
                       }}
                     />
                     <div style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.8)', fontWeight: '600', lineHeight: '1.4' }}>
@@ -1510,15 +1541,15 @@ export default function NeynarScoreMiniAppV4() {
                 onClick={handleTip}
                 disabled={isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)}
                 style={{
-                  padding: '8px 16px',
+                  padding: designSystem.button.padding,
                   background: (tipType === 'custom' && customTipAmount && parseFloat(customTipAmount) > 0) || (tipType !== 'custom' && tipAmount && parseFloat(tipAmount) > 0)
                     ? 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
                     : 'rgba(255, 255, 255, 0.1)',
                   color: '#fff',
                   border: 'none',
-                  borderRadius: '12px',
-                  fontWeight: '700',
-                  fontSize: '13px',
+                  borderRadius: designSystem.button.borderRadius,
+                  fontWeight: designSystem.button.fontWeight,
+                  fontSize: designSystem.button.fontSize,
                   cursor: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
                     ? 'not-allowed'
                     : 'pointer',
@@ -1529,7 +1560,7 @@ export default function NeynarScoreMiniAppV4() {
                   opacity: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
                     ? 0.7
                     : 1,
-                  minWidth: '160px',
+                  minWidth: designSystem.button.minWidth,
                   width: '100%',
                   flexShrink: 0,
                   lineHeight: '1.5'
