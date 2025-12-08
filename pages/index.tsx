@@ -21,7 +21,7 @@ export default function Home() {
             overflow: hidden;
           }
           body {
-            background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 25%, #ff8a80 50%, #ffab40 75%, #ffcc02 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #5b86e5 50%, #36d1dc 75%, #4facfe 100%);
             background-attachment: fixed;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -39,7 +39,7 @@ export default function Home() {
       <main style={{
         width: '100%',
         height: '100vh',
-        background: 'linear-gradient(135deg, #ff9a56 0%, #ff6a88 25%, #ff8a80 50%, #ffab40 75%, #ffcc02 100%)',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #5b86e5 50%, #36d1dc 75%, #4facfe 100%)',
         backgroundAttachment: 'fixed',
         padding: '0',
         margin: '0',

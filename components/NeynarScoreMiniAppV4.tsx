@@ -48,7 +48,7 @@ export default function NeynarScoreMiniAppV4() {
     symbol: 'USDC'
   };
 
-  // 统一设计系统 - 暖色调
+  // 统一设计系统 - 冷色调
   const designSystem = {
     spacing: {
       xs: '4px',
@@ -76,10 +76,10 @@ export default function NeynarScoreMiniAppV4() {
       marginBottom: '16px'
     },
     colors: {
-      primary: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa726 100%)',
-      primaryHover: 'linear-gradient(135deg, #ff5252 0%, #ff7043 50%, #ff9800 100%)',
-      secondary: 'linear-gradient(135deg, #ff9800 0%, #ff6b35 100%)',
-      background: 'linear-gradient(135deg, #ff9a56 0%, #ff6a88 25%, #ff8a80 50%, #ffab40 75%, #ffcc02 100%)',
+      primary: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b86e5 100%)',
+      primaryHover: 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 50%, #4c6ef5 100%)',
+      secondary: 'linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%)',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #5b86e5 50%, #36d1dc 75%, #4facfe 100%)',
       cardBg: 'rgba(255, 255, 255, 0.15)',
       cardBgHover: 'rgba(255, 255, 255, 0.25)',
       text: '#fff',
@@ -87,8 +87,8 @@ export default function NeynarScoreMiniAppV4() {
       textMuted: 'rgba(255, 255, 255, 0.7)',
       border: 'rgba(255, 255, 255, 0.3)',
       borderHover: 'rgba(255, 255, 255, 0.5)',
-      shadow: '0 8px 32px rgba(255, 107, 107, 0.3)',
-      shadowHover: '0 12px 40px rgba(255, 107, 107, 0.4)'
+      shadow: '0 8px 32px rgba(102, 126, 234, 0.3)',
+      shadowHover: '0 12px 40px rgba(102, 126, 234, 0.4)'
     }
   };
 
@@ -613,7 +613,7 @@ export default function NeynarScoreMiniAppV4() {
         right: '-50%',
         width: '200%',
         height: '200%',
-        background: 'radial-gradient(circle, rgba(255, 200, 150, 0.15) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%)',
         pointerEvents: 'none'
       }} />
 
@@ -640,7 +640,7 @@ export default function NeynarScoreMiniAppV4() {
             textAlign: 'center',
             marginTop: 0,
             color: '#fff',
-            textShadow: '0 2px 10px rgba(255, 107, 107, 0.3)',
+            textShadow: '0 2px 10px rgba(102, 126, 234, 0.3)',
             lineHeight: '1.2'
           }}>
             Neynar Score
@@ -1279,7 +1279,7 @@ export default function NeynarScoreMiniAppV4() {
                     fontWeight: '700', 
                     color: '#fff', 
                     lineHeight: '1.2',
-                    textShadow: '0 2px 12px rgba(255, 107, 107, 0.4)',
+                    textShadow: '0 2px 12px rgba(102, 126, 234, 0.4)',
                     letterSpacing: '-0.5px',
                     marginBottom: designSystem.spacing.xs
                   }}>
@@ -1541,8 +1541,8 @@ export default function NeynarScoreMiniAppV4() {
                         flex: 1,
                         padding: designSystem.spacing.xs + ' ' + designSystem.spacing.sm,
                         borderRadius: designSystem.borderRadius.sm,
-                        border: `2px solid ${tipType === amount ? 'rgba(255, 107, 53, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
-                        background: tipType === amount ? 'rgba(255, 107, 53, 0.3)' : designSystem.colors.cardBg,
+                        border: `2px solid ${tipType === amount ? 'rgba(102, 126, 234, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
+                        background: tipType === amount ? 'rgba(102, 126, 234, 0.3)' : designSystem.colors.cardBg,
                         color: '#fff',
                         fontSize: '12px',
                         fontWeight: '600',
@@ -1574,8 +1574,8 @@ export default function NeynarScoreMiniAppV4() {
                       flex: 1,
                       padding: designSystem.spacing.xs + ' ' + designSystem.spacing.sm,
                       borderRadius: designSystem.borderRadius.sm,
-                      border: `2px solid ${tipType === 'custom' ? 'rgba(255, 107, 53, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
-                      background: tipType === 'custom' ? 'rgba(255, 107, 53, 0.3)' : designSystem.colors.cardBg,
+                      border: `2px solid ${tipType === 'custom' ? 'rgba(102, 126, 234, 0.8)' : 'rgba(255, 255, 255, 0.3)'}`,
+                      background: tipType === 'custom' ? 'rgba(102, 126, 234, 0.3)' : designSystem.colors.cardBg,
                       color: '#fff',
                       fontSize: '12px',
                       fontWeight: '600',
@@ -1739,7 +1739,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa726 100%)',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b86e5 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
@@ -1769,7 +1769,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa726 100%)',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b86e5 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
@@ -1799,7 +1799,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa726 100%)',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b86e5 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
@@ -1829,7 +1829,7 @@ export default function NeynarScoreMiniAppV4() {
               <div style={{
                 width: '24px',
                 height: '3px',
-                background: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa726 100%)',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b86e5 100%)',
                 borderRadius: '2px',
                 marginTop: '2px'
               }} />
