@@ -583,7 +583,7 @@ export default function NeynarScoreMiniAppV4() {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'hidden',
+          overflow: 'auto',
           padding: '16px 14px 35px 14px',
           minHeight: 0
         }}
@@ -792,7 +792,7 @@ export default function NeynarScoreMiniAppV4() {
 
         <div style={{ 
           flex: 1, 
-          overflow: 'hidden',
+          overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',
           minHeight: 0
@@ -808,7 +808,7 @@ export default function NeynarScoreMiniAppV4() {
                 padding: '10px',
                 backdropFilter: 'blur(10px)',
                 flex: 1,
-                overflow: 'hidden',
+                overflow: 'auto',
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: 0
@@ -993,28 +993,28 @@ export default function NeynarScoreMiniAppV4() {
                         whileHover={!isSharing ? { scale: 1.05, y: -2 } : {}}
                         whileTap={!isSharing ? { scale: 0.98 } : {}}
                         style={{
-                          padding: '5px 12px',
+                          padding: '8px 16px',
                           background: isSharing 
                             ? 'rgba(255, 255, 255, 0.3)' 
                             : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                           color: '#fff',
                           border: 'none',
-                          borderRadius: '10px',
+                          borderRadius: '12px',
                           fontWeight: '700',
-                          fontSize: '11px',
+                          fontSize: '13px',
                           cursor: isSharing ? 'not-allowed' : 'pointer',
                           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                           boxShadow: isSharing 
                             ? '0 4px 15px rgba(0, 0, 0, 0.2)' 
                             : '0 6px 25px rgba(245, 87, 108, 0.4), 0 2px 10px rgba(240, 147, 251, 0.3)',
                           opacity: isSharing ? 0.7 : 1,
-                          minWidth: '140px',
+                          minWidth: '160px',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '3px',
+                          gap: '6px',
                           margin: '0 auto',
-                          lineHeight: '1.4',
+                          lineHeight: '1.5',
                           position: 'relative',
                           overflow: 'hidden'
                         }}
@@ -1037,7 +1037,7 @@ export default function NeynarScoreMiniAppV4() {
                           </>
                         ) : (
                           <>
-                            <span style={{ fontSize: '12px', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))' }}>🚀</span>
+                            <span style={{ fontSize: '16px', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))' }}>🚀</span>
                             <span style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)' }}>Share to Farcaster</span>
                           </>
                         )}
@@ -1056,7 +1056,7 @@ export default function NeynarScoreMiniAppV4() {
               exit={{ opacity: 0, y: -10 }}
               style={{
                 flex: 1,
-                overflow: 'hidden',
+                overflow: 'auto',
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: 0
@@ -1261,25 +1261,26 @@ export default function NeynarScoreMiniAppV4() {
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '3px',
-                    padding: '5px 10px',
+                    gap: '6px',
+                    padding: '8px 16px',
                     background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                     backdropFilter: 'blur(10px)',
                     color: '#fff',
                     textDecoration: 'none',
-                    borderRadius: '10px',
-                    fontSize: '11px',
+                    borderRadius: '12px',
+                    fontSize: '13px',
                     fontWeight: '600',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     border: '2px solid rgba(255, 255, 255, 0.3)',
-                    lineHeight: '1.3',
+                    lineHeight: '1.5',
                     boxShadow: '0 6px 25px rgba(245, 87, 108, 0.4), 0 2px 10px rgba(240, 147, 251, 0.3)',
                     position: 'relative',
-                    overflow: 'hidden'
+                    overflow: 'auto',
+                    minWidth: '160px'
                   }}
                 >
                   <span style={{ 
-                    fontSize: '14px', 
+                    fontSize: '16px', 
                     filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))',
                     display: 'inline-block'
                   }}>👤</span>
@@ -1288,7 +1289,7 @@ export default function NeynarScoreMiniAppV4() {
                     fontWeight: '600'
                   }}>Follow Creator @ron521520</span>
                   <span style={{ 
-                    fontSize: '10px',
+                    fontSize: '14px',
                     opacity: 0.9
                   }}>→</span>
                 </motion.a>
@@ -1516,21 +1517,23 @@ export default function NeynarScoreMiniAppV4() {
                     : 'rgba(255, 255, 255, 0.1)',
                   color: '#fff',
                   border: 'none',
-                  borderRadius: '6px',
-                  fontWeight: '600',
-                  fontSize: '11px',
+                  borderRadius: '12px',
+                  fontWeight: '700',
+                  fontSize: '13px',
                   cursor: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
                     ? 'not-allowed'
                     : 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                  boxShadow: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
+                    ? '0 4px 15px rgba(0, 0, 0, 0.2)'
+                    : '0 6px 25px rgba(245, 87, 108, 0.4), 0 2px 10px rgba(240, 147, 251, 0.3)',
                   opacity: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
                     ? 0.7
                     : 1,
-                  minWidth: '120px',
+                  minWidth: '160px',
                   width: '100%',
                   flexShrink: 0,
-                  lineHeight: '1.4'
+                  lineHeight: '1.5'
                 }}
                 onMouseEnter={(e) => {
                   const isValid = tipType === 'custom' ? customTipAmount && parseFloat(customTipAmount) > 0 : tipAmount && parseFloat(tipAmount) > 0;
@@ -1714,4 +1717,5 @@ export default function NeynarScoreMiniAppV4() {
     </div>
   );
 }
+
 
