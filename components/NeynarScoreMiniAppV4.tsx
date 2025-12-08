@@ -36,6 +36,8 @@ export default function NeynarScoreMiniAppV4() {
   const [tipType, setTipType] = useState('2');
   const [customTipAmount, setCustomTipAmount] = useState('');
   const [tokenType, setTokenType] = useState<'USDC' | 'ETH'>('USDC');
+  const [ethPrice, setEthPrice] = useState<number | null>(null);
+  const [usdcAmountForEth, setUsdcAmountForEth] = useState<string>(''); // 存储用于计算 ETH 的 USDC 金额
 
   const BASE_NETWORK = {
     name: 'Base',
@@ -137,6 +139,72 @@ export default function NeynarScoreMiniAppV4() {
     } finally {
       setCheckLoading(false);
     }
+  };
+
+  // 获取 ETH 价格
+  const fetchEthPrice = async () => {
+    try {
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+      const data = await response.json();
+      if (data.ethereum && data.ethereum.usd) {
+        setEthPrice(data.ethereum.usd);
+        return data.ethereum.usd;
+      }
+    } catch (err) {
+      console.error('Failed to fetch ETH price:', err);
+    }
+    return null;
+  };
+
+  // 计算 ETH 数量（基于 USDC 金额）
+  const calculateEthAmount = (usdcAmount: string, ethPriceUsd: number | null): string => {
+    if (!usdcAmount || parseFloat(usdcAmount) <= 0 || !ethPriceUsd) {
+      return '0';
+    }
+    const ethAmount = parseFloat(usdcAmount) / ethPriceUsd;
+    return ethAmount.toFixed(6); // 保留 6 位小数
+  };
+
+  // 当切换到 ETH 时，保存 USDC 金额并计算 ETH
+  const handleTokenTypeChange = async (newTokenType: 'USDC' | 'ETH') => {
+    if (newTokenType === 'ETH' && tokenType === 'USDC') {
+      // 切换到 ETH：保存当前 USDC 金额，获取价格并计算 ETH
+      const currentUsdcAmount = tipType === 'custom' ? customTipAmount : tipAmount;
+      setUsdcAmountForEth(currentUsdcAmount);
+      
+      let price = ethPrice;
+      if (!price) {
+        price = await fetchEthPrice();
+      }
+      
+      if (price) {
+        const ethAmount = calculateEthAmount(currentUsdcAmount, price);
+        if (tipType === 'custom') {
+          setCustomTipAmount(ethAmount);
+        } else {
+          setTipAmount(ethAmount);
+        }
+      } else {
+        // 如果获取价格失败，使用默认价格 3000
+        const ethAmount = calculateEthAmount(currentUsdcAmount, 3000);
+        if (tipType === 'custom') {
+          setCustomTipAmount(ethAmount);
+        } else {
+          setTipAmount(ethAmount);
+        }
+      }
+    } else if (newTokenType === 'USDC' && tokenType === 'ETH') {
+      // 切换回 USDC：恢复原始 USDC 金额
+      if (usdcAmountForEth) {
+        if (tipType === 'custom') {
+          setCustomTipAmount(usdcAmountForEth);
+        } else {
+          setTipAmount(usdcAmountForEth);
+        }
+        setUsdcAmountForEth('');
+      }
+    }
+    setTokenType(newTokenType);
   };
 
   const connectFarcasterWallet = async () => {
@@ -592,6 +660,13 @@ export default function NeynarScoreMiniAppV4() {
       return () => clearTimeout(timer);
     }
   }, [activeTab, isConnected, myFid, walletAddress]);
+
+  // Fetch ETH price on component mount
+  useEffect(() => {
+    fetchEthPrice().catch((err) => {
+      console.error('Failed to fetch ETH price:', err);
+    });
+  }, []);
 
   const getScoreRating = (score: number) => {
     if (score >= 80) return 'Excellent';
@@ -1503,7 +1578,7 @@ export default function NeynarScoreMiniAppV4() {
                   background: 'rgba(255, 255, 255, 0.05)'
                 }}>
                   <button
-                    onClick={() => setTokenType('USDC')}
+                    onClick={() => handleTokenTypeChange('USDC')}
                     style={{
                       flex: 1,
                       padding: designSystem.spacing.xs + ' ' + designSystem.spacing.sm,
@@ -1521,7 +1596,7 @@ export default function NeynarScoreMiniAppV4() {
                     USDC
                   </button>
                   <button
-                    onClick={() => setTokenType('ETH')}
+                    onClick={() => handleTokenTypeChange('ETH')}
                     style={{
                       flex: 1,
                       padding: designSystem.spacing.xs + ' ' + designSystem.spacing.sm,
@@ -1553,8 +1628,15 @@ export default function NeynarScoreMiniAppV4() {
                   lineHeight: '1.4'
                 }}>
                   <span>Payment</span>
-                  <span style={{ fontWeight: '600', color: '#fff' }}>
-                    {tipType === 'custom' ? customTipAmount || '0' : tipAmount} {tokenType}
+                  <span style={{ fontWeight: '600', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+                    {tokenType === 'ETH' && usdcAmountForEth ? (
+                      <>
+                        <span>{tipType === 'custom' ? customTipAmount || '0' : tipAmount} {tokenType}</span>
+                        <span style={{ fontSize: '10px', opacity: 0.7, fontWeight: '400' }}>≈ {usdcAmountForEth} USDC</span>
+                      </>
+                    ) : (
+                      <span>{tipType === 'custom' ? customTipAmount || '0' : tipAmount} {tokenType}</span>
+                    )}
                   </span>
                 </div>
                 <div style={{
@@ -1586,9 +1668,21 @@ export default function NeynarScoreMiniAppV4() {
                   {['2', '4', '6'].map((amount) => (
                     <button
                       key={amount}
-                      onClick={() => {
+                      onClick={async () => {
                         setTipType(amount);
-                        setTipAmount(amount);
+                        if (tokenType === 'ETH') {
+                          // 如果当前是 ETH 模式，保存 USDC 金额并计算 ETH
+                          setUsdcAmountForEth(amount);
+                          let price = ethPrice;
+                          if (!price) {
+                            price = await fetchEthPrice();
+                          }
+                          const ethAmount = calculateEthAmount(amount, price || 3000);
+                          setTipAmount(ethAmount);
+                        } else {
+                          // USDC 模式，直接设置金额
+                          setTipAmount(amount);
+                        }
                         setCustomTipAmount('');
                       }}
                       style={{
@@ -1616,7 +1710,7 @@ export default function NeynarScoreMiniAppV4() {
                         }
                       }}
                     >
-                      {amount}
+                      {tokenType === 'ETH' ? `${amount} USDC` : amount}
                     </button>
                   ))}
                   <button
@@ -1658,12 +1752,29 @@ export default function NeynarScoreMiniAppV4() {
                     <input
                       type="number"
                       value={customTipAmount}
-                      onChange={(e) => {
-                        setCustomTipAmount(e.target.value);
+                      onChange={async (e) => {
+                        const inputValue = e.target.value;
+                        if (tokenType === 'ETH') {
+                          // 如果当前是 ETH 模式，保存输入的 USDC 金额并计算 ETH
+                          setUsdcAmountForEth(inputValue);
+                          let price = ethPrice;
+                          if (!price && inputValue && parseFloat(inputValue) > 0) {
+                            price = await fetchEthPrice();
+                          }
+                          if (price && inputValue && parseFloat(inputValue) > 0) {
+                            const ethAmount = calculateEthAmount(inputValue, price);
+                            setCustomTipAmount(ethAmount);
+                          } else {
+                            setCustomTipAmount(inputValue);
+                          }
+                        } else {
+                          // USDC 模式，直接设置金额
+                          setCustomTipAmount(inputValue);
+                        }
                       }}
                       min="0"
                       step="0.01"
-                      placeholder="Enter custom amount"
+                      placeholder={tokenType === 'ETH' ? 'Enter USDC amount' : 'Enter custom amount'}
                       style={{
                         flex: 1,
                         padding: designSystem.spacing.xs,
@@ -1676,8 +1787,11 @@ export default function NeynarScoreMiniAppV4() {
                         lineHeight: '1.4'
                       }}
                     />
-                    <div style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.8)', fontWeight: '600', lineHeight: '1.3' }}>
-                      {tokenType}
+                    <div style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.8)', fontWeight: '600', lineHeight: '1.3', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+                      <span>{tokenType}</span>
+                      {tokenType === 'ETH' && usdcAmountForEth && (
+                        <span style={{ fontSize: '8px', opacity: 0.6 }}>≈ {usdcAmountForEth} USDC</span>
+                      )}
                     </div>
                   </div>
                 )}
