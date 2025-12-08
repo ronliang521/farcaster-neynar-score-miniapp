@@ -1235,10 +1235,8 @@ export default function NeynarScoreMiniAppV4() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               style={{
-                background: designSystem.colors.cardBg,
-                borderRadius: designSystem.borderRadius.lg,
-                padding: designSystem.spacing.md + ' ' + designSystem.spacing.md,
-                backdropFilter: 'blur(15px)',
+                background: 'transparent',
+                padding: '0',
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
@@ -1247,8 +1245,6 @@ export default function NeynarScoreMiniAppV4() {
                 flex: 1,
                 minHeight: 0,
                 overflow: 'hidden',
-                border: '1px solid ' + designSystem.colors.border,
-                boxShadow: designSystem.colors.shadow,
                 width: '100%',
                 maxWidth: '100%',
                 margin: '0 auto'
@@ -1293,7 +1289,9 @@ export default function NeynarScoreMiniAppV4() {
                     lineHeight: '1.4',
                     maxWidth: '320px',
                     fontWeight: '400',
-                    opacity: 0.95
+                    opacity: 0.95,
+                    margin: '0 auto',
+                    textAlign: 'center'
                   }}>
                     Discover proven strategies to boost your Farcaster reputation and increase your Neynar Score
                   </div>
@@ -1346,7 +1344,6 @@ export default function NeynarScoreMiniAppV4() {
                 {/* 分隔线和支持创作者区域 */}
                 <div style={{
                   paddingTop: designSystem.spacing.md,
-                  borderTop: '2px solid ' + designSystem.colors.border,
                   flexShrink: 0,
                   textAlign: 'center',
                   position: 'relative',
@@ -1354,18 +1351,9 @@ export default function NeynarScoreMiniAppV4() {
                   marginTop: designSystem.spacing.lg,
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}>
-                  <div style={{
-                    position: 'absolute',
-                    top: '-2px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '50px',
-                    height: '2px',
-                    background: designSystem.colors.primary,
-                    borderRadius: '2px'
-                  }} />
                   <div style={{
                     display: 'flex',
                     flexDirection: 'column',
