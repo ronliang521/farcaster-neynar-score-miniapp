@@ -1199,7 +1199,7 @@ export default function NeynarScoreMiniAppV4() {
                 flexDirection: 'column',
                 flex: 1,
                 minHeight: 0,
-                overflow: 'hidden'
+                overflow: 'auto'
               }}
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
