@@ -177,20 +177,28 @@ export default function NeynarScoreMiniAppV4() {
         price = await fetchEthPrice();
       }
       
-      if (price) {
+      if (price && currentUsdcAmount && parseFloat(currentUsdcAmount) > 0) {
         const ethAmount = calculateEthAmount(currentUsdcAmount, price);
         if (tipType === 'custom') {
+          // custom 模式下，customTipAmount 存储 ETH 数量，usdcAmountForEth 存储 USDC 金额
           setCustomTipAmount(ethAmount);
         } else {
           setTipAmount(ethAmount);
         }
-      } else {
+      } else if (currentUsdcAmount && parseFloat(currentUsdcAmount) > 0) {
         // 如果获取价格失败，使用默认价格 3000
         const ethAmount = calculateEthAmount(currentUsdcAmount, 3000);
         if (tipType === 'custom') {
           setCustomTipAmount(ethAmount);
         } else {
           setTipAmount(ethAmount);
+        }
+      } else {
+        // 如果没有金额，清空
+        if (tipType === 'custom') {
+          setCustomTipAmount('');
+        } else {
+          setTipAmount('');
         }
       }
     } else if (newTokenType === 'USDC' && tokenType === 'ETH') {
@@ -1716,7 +1724,14 @@ export default function NeynarScoreMiniAppV4() {
                   <button
                     onClick={() => {
                       setTipType('custom');
-                      setTipAmount('');
+                      if (tokenType === 'ETH') {
+                        // 如果当前是 ETH 模式，清空 USDC 金额和 ETH 数量
+                        setUsdcAmountForEth('');
+                        setCustomTipAmount('');
+                      } else {
+                        setTipAmount('');
+                        setCustomTipAmount('');
+                      }
                     }}
                     style={{
                       flex: 1,
@@ -1751,12 +1766,13 @@ export default function NeynarScoreMiniAppV4() {
                   <div style={{ display: 'flex', gap: designSystem.spacing.xs, alignItems: 'center', marginTop: designSystem.spacing.xs }}>
                     <input
                       type="number"
-                      value={customTipAmount}
+                      value={tokenType === 'ETH' ? (usdcAmountForEth || '') : customTipAmount}
                       onChange={async (e) => {
                         const inputValue = e.target.value;
                         if (tokenType === 'ETH') {
-                          // 如果当前是 ETH 模式，保存输入的 USDC 金额并计算 ETH
+                          // 如果当前是 ETH 模式，输入框直接编辑 USDC 金额
                           setUsdcAmountForEth(inputValue);
+                          // 然后计算对应的 ETH 数量
                           let price = ethPrice;
                           if (!price && inputValue && parseFloat(inputValue) > 0) {
                             price = await fetchEthPrice();
@@ -1765,7 +1781,8 @@ export default function NeynarScoreMiniAppV4() {
                             const ethAmount = calculateEthAmount(inputValue, price);
                             setCustomTipAmount(ethAmount);
                           } else {
-                            setCustomTipAmount(inputValue);
+                            // 如果价格未获取或输入为空，清空 ETH 数量
+                            setCustomTipAmount('');
                           }
                         } else {
                           // USDC 模式，直接设置金额
@@ -1799,10 +1816,18 @@ export default function NeynarScoreMiniAppV4() {
 
               <button
                 onClick={handleTip}
-                disabled={isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)}
+                disabled={isTipping || (tipType === 'custom' 
+                  ? (tokenType === 'ETH' 
+                      ? (!usdcAmountForEth || parseFloat(usdcAmountForEth) <= 0 || !customTipAmount || parseFloat(customTipAmount) <= 0)
+                      : (!customTipAmount || parseFloat(customTipAmount) <= 0))
+                  : (!tipAmount || parseFloat(tipAmount) <= 0))}
                 style={{
                   padding: '12px 20px',
-                    background: (tipType === 'custom' && customTipAmount && parseFloat(customTipAmount) > 0) || (tipType !== 'custom' && tipAmount && parseFloat(tipAmount) > 0)
+                    background: (tipType === 'custom' 
+                      ? (tokenType === 'ETH' 
+                          ? (usdcAmountForEth && parseFloat(usdcAmountForEth) > 0 && customTipAmount && parseFloat(customTipAmount) > 0)
+                          : (customTipAmount && parseFloat(customTipAmount) > 0))
+                      : (tipAmount && parseFloat(tipAmount) > 0))
                     ? designSystem.colors.primary
                     : designSystem.colors.cardBg,
                   color: '#fff',
@@ -1810,14 +1835,26 @@ export default function NeynarScoreMiniAppV4() {
                   borderRadius: designSystem.button.borderRadius,
                   fontWeight: '600',
                   fontSize: '13px',
-                  cursor: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
+                  cursor: isTipping || (tipType === 'custom' 
+                    ? (tokenType === 'ETH' 
+                        ? (!usdcAmountForEth || parseFloat(usdcAmountForEth) <= 0 || !customTipAmount || parseFloat(customTipAmount) <= 0)
+                        : (!customTipAmount || parseFloat(customTipAmount) <= 0))
+                    : (!tipAmount || parseFloat(tipAmount) <= 0))
                     ? 'not-allowed'
                     : 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
+                  boxShadow: isTipping || (tipType === 'custom' 
+                    ? (tokenType === 'ETH' 
+                        ? (!usdcAmountForEth || parseFloat(usdcAmountForEth) <= 0 || !customTipAmount || parseFloat(customTipAmount) <= 0)
+                        : (!customTipAmount || parseFloat(customTipAmount) <= 0))
+                    : (!tipAmount || parseFloat(tipAmount) <= 0))
                     ? '0 4px 15px rgba(0, 0, 0, 0.2)'
                     : designSystem.colors.shadowHover,
-                  opacity: isTipping || (tipType === 'custom' ? !customTipAmount || parseFloat(customTipAmount) <= 0 : !tipAmount || parseFloat(tipAmount) <= 0)
+                  opacity: isTipping || (tipType === 'custom' 
+                    ? (tokenType === 'ETH' 
+                        ? (!usdcAmountForEth || parseFloat(usdcAmountForEth) <= 0 || !customTipAmount || parseFloat(customTipAmount) <= 0)
+                        : (!customTipAmount || parseFloat(customTipAmount) <= 0))
+                    : (!tipAmount || parseFloat(tipAmount) <= 0))
                     ? 0.7
                     : 1,
                   minWidth: designSystem.button.minWidth,
@@ -1827,14 +1864,22 @@ export default function NeynarScoreMiniAppV4() {
                   marginTop: designSystem.spacing.xs
                 }}
                 onMouseEnter={(e) => {
-                  const isValid = tipType === 'custom' ? customTipAmount && parseFloat(customTipAmount) > 0 : tipAmount && parseFloat(tipAmount) > 0;
+                  const isValid = tipType === 'custom' 
+                    ? (tokenType === 'ETH' 
+                        ? (usdcAmountForEth && parseFloat(usdcAmountForEth) > 0 && customTipAmount && parseFloat(customTipAmount) > 0)
+                        : (customTipAmount && parseFloat(customTipAmount) > 0))
+                    : (tipAmount && parseFloat(tipAmount) > 0);
                   if (!isTipping && isValid) {
                     e.currentTarget.style.transform = 'translateY(-2px)';
                     e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  const isValid = tipType === 'custom' ? customTipAmount && parseFloat(customTipAmount) > 0 : tipAmount && parseFloat(tipAmount) > 0;
+                  const isValid = tipType === 'custom' 
+                    ? (tokenType === 'ETH' 
+                        ? (usdcAmountForEth && parseFloat(usdcAmountForEth) > 0 && customTipAmount && parseFloat(customTipAmount) > 0)
+                        : (customTipAmount && parseFloat(customTipAmount) > 0))
+                    : (tipAmount && parseFloat(tipAmount) > 0);
                   if (!isTipping && isValid) {
                     e.currentTarget.style.transform = 'translateY(0)';
                     e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
@@ -1854,7 +1899,7 @@ export default function NeynarScoreMiniAppV4() {
                     Processing...
                   </span>
                 ) : (
-                  `Send ${tipType === 'custom' ? customTipAmount : tipAmount} ${tokenType} 💝`
+                  `Send ${tipType === 'custom' ? (tokenType === 'ETH' ? customTipAmount : customTipAmount) : tipAmount} ${tokenType} 💝`
                 )}
               </button>
 
