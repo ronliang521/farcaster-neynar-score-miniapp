@@ -646,6 +646,40 @@ export default function NeynarScoreMiniAppV4() {
   };
 
   useEffect(() => {
+    // Call sdk.actions.ready() to hide splash screen
+    // This must be called when the app is ready to display
+    const initializeSDK = async () => {
+      try {
+        const { sdk } = await import('@farcaster/miniapp-sdk');
+        if (sdk && sdk.actions && sdk.actions.ready) {
+          // Call ready() to signal that the app is loaded and ready
+          await sdk.actions.ready();
+          console.log('✅ SDK ready() called - splash screen should be hidden');
+        }
+      } catch (err) {
+        console.warn('Failed to call sdk.actions.ready():', err);
+        // Even if SDK is not available, try to call ready if window.farcaster exists
+        if (typeof window !== 'undefined' && (window as any).farcaster) {
+          try {
+            const farcaster = (window as any).farcaster;
+            if (farcaster.ready) {
+              await farcaster.ready();
+              console.log('✅ Called window.farcaster.ready() as fallback');
+            }
+          } catch (fallbackErr) {
+            console.warn('Fallback ready() call also failed:', fallbackErr);
+          }
+        }
+      }
+    };
+
+    // Initialize SDK immediately when component mounts
+    // This ensures the splash screen is hidden as soon as possible
+    initializeSDK().catch((err) => {
+      console.error('SDK initialization error:', err);
+    });
+
+    // Also connect Farcaster after a short delay
     const timer = setTimeout(() => {
       connectFarcaster().catch((err) => {
         console.error('Failed to connect Farcaster:', err);

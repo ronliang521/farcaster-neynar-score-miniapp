@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST='{"../components/NeynarScoreMiniAppV4.tsx -> @farcaster/miniapp-sdk":{"id":1379,"files":["static/chunks/8015bd09.e5b32cdd09e08f00.js","static/chunks/197.60cb26156e8dfa20.js","static/chunks/601.6dac09bcbef5036f.js"]}}';
+self.__REACT_LOADABLE_MANIFEST="{\"../components/NeynarScoreMiniAppV4.tsx -> @farcaster/miniapp-sdk\":{\"id\":\"../components/NeynarScoreMiniAppV4.tsx -> @farcaster/miniapp-sdk\",\"files\":[\"static/chunks/node_modules_farcaster_miniapp-sdk_dist_index_js.js\"]}}"
