@@ -25,8 +25,10 @@ const nextConfig = {
   swcMinify: true,
   // Ensure static files are generated correctly
   generateEtags: true,
-  // Ensure proper output for Vercel
-  output: undefined, // Let Vercel handle the output
+  // Disable static optimization for dynamic content
+  experimental: {
+    forceSwcTransforms: true,
+  },
 };
 
 module.exports = nextConfig;
