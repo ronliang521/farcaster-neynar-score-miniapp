@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- 圆角矩形背景 - 紫色 -->
+  <rect width="512" height="512" rx="120" ry="120" fill="#9333ea"/>
+  
+  <!-- 带环的行星图形 -->
+  <g transform="translate(256, 180)">
+    <!-- 行星主体 -->
+    <circle cx="0" cy="0" r="50" fill="white" opacity="0.95"/>
+    <!-- 行星环 -->
+    <ellipse cx="0" cy="0" rx="70" ry="20" fill="none" stroke="white" stroke-width="8" opacity="0.95"/>
+  </g>
+  
+  <!-- 小写 "i" 符号 -->
+  <g transform="translate(320, 140)">
+    <!-- "i" 的点 -->
+    <circle cx="0" cy="0" r="8" fill="white"/>
+    <!-- "i" 的竖线 -->
+    <line x1="0" y1="8" x2="0" y2="28" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  
+  <!-- "Neynar Score" 文字 -->
+  <text x="256" y="320" font-family="Arial, sans-serif" font-size="48" font-weight="600" fill="white" text-anchor="middle">Neynar</text>
+  <text x="256" y="370" font-family="Arial, sans-serif" font-size="48" font-weight="600" fill="white" text-anchor="middle">Score</text>
+</svg>
