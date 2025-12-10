@@ -1,0 +1,21 @@
+#!/bin/bash
+# 查找 Vercel 部署的图片 URL 脚本
+
+echo "🔍 查找图片 URL 的方法："
+echo ""
+echo "1️⃣  通过 Vercel 控制台："
+echo "   - 访问: https://vercel.com/dashboard"
+echo "   - 找到项目: farcaster-neynar-score-miniapp"
+echo "   - 查看部署 URL（通常在页面顶部）"
+echo ""
+echo "2️⃣  图片 URL 格式："
+echo "   PNG: https://您的域名/neynar-score-icon.png"
+echo "   SVG: https://您的域名/neynar-score-icon.svg"
+echo ""
+echo "3️⃣  检查 GitHub 仓库："
+echo "   https://github.com/ronliang521/farcaster-neynar-score-miniapp"
+echo ""
+echo "4️⃣  如果已安装 Vercel CLI："
+echo "   cd $(pwd)"
+echo "   vercel ls"
+echo ""
