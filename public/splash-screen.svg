@@ -1,0 +1,33 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 - 紫色渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9333ea;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6d28d9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 圆角矩形背景 -->
+  <rect width="1024" height="1024" rx="120" ry="120" fill="url(#bgGradient)"/>
+  
+  <!-- 带环的行星图形 - 放大版 -->
+  <g transform="translate(512, 360)">
+    <!-- 行星主体 -->
+    <circle cx="0" cy="0" r="100" fill="white" opacity="0.95"/>
+    <!-- 行星环 -->
+    <ellipse cx="0" cy="0" rx="140" ry="40" fill="none" stroke="white" stroke-width="16" opacity="0.95"/>
+  </g>
+  
+  <!-- 小写 "i" 符号 - 放大版 -->
+  <g transform="translate(640, 280)">
+    <!-- "i" 的点 -->
+    <circle cx="0" cy="0" r="16" fill="white"/>
+    <!-- "i" 的竖线 -->
+    <line x1="0" y1="16" x2="0" y2="56" stroke="white" stroke-width="12" stroke-linecap="round"/>
+  </g>
+  
+  <!-- "Neynar Score" 文字 - 放大版 -->
+  <text x="512" y="640" font-family="Arial, sans-serif" font-size="96" font-weight="700" fill="white" text-anchor="middle">Neynar</text>
+  <text x="512" y="740" font-family="Arial, sans-serif" font-size="96" font-weight="700" fill="white" text-anchor="middle">Score</text>
+</svg>
