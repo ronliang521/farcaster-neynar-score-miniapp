@@ -2,13 +2,13 @@
   "frame": {
     "name": "farcaster-neynar-score",
     "version": "1",
-    "iconUrl": "https://farcaster-neynar-score-miniapp.vercel.app/neynar-score-icon-1024.png",
+    "iconUrl": "https://farcaster-neynar-score-miniapp.vercel.app/neynar-score-icon-1024-noalpha.png",
     "homeUrl": "https://farcaster-neynar-score-miniapp.vercel.app/",
     "primaryCategory": "social",
     "subtitle": "Check user score instantly",
     "description": "A simple mini app for checking any Farcaster user's Neynar Score.",
     "splashBackgroundColor": "#9333ea",
-    "splashImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen-200.png",
+    "splashImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen-200-noalpha.png",
     "tags": [
       "neynar",
       "score",
@@ -21,7 +21,7 @@
     "ogTitle": "Neynar Score Checker - User",
     "ogDescription": "Quickly view Neynar Scores, engagement metrics, and identity insights for any Farcaster user.",
     "ogImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen.png",
-    "castShareUrl": "https://warpcast.com/~/compose?text=Check+your+Neynar+Score+here:+https://farcaster-neynar-score-miniapp.vercel.app/"
+    "castShareUrl": "https://farcaster-neynar-score-miniapp.vercel.app/"
   },
   "accountAssociation": {
     "header": "eyJmaWQiOjU2NjQxMCwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDY4NDI2NTUwNUIyMkY5Rjk3NWZiNGZjNTRiOERFZENkYmUyODlBNWEifQ",
@@ -29,3 +29,4 @@
     "signature": "7PuO1Tp3dJY95YPnbnrUlazYNQUFkK64ax4KxI0htjdGB/ZC3fIPFBIGKtJQ4ZOH74ipLAIok4LkRxHrkQb5dBw="
   }
 }
+
