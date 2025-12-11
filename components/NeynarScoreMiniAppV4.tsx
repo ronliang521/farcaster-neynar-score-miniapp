@@ -31,6 +31,7 @@ export default function NeynarScoreMiniAppV4() {
   const [myFollowerCount, setMyFollowerCount] = useState<number | null>(null);
   const [myFollowingCount, setMyFollowingCount] = useState<number | null>(null);
   const [myFid, setMyFid] = useState<number | null>(null);
+  const [myFollowers, setMyFollowers] = useState<Follower[]>([]); // Store followers for @ mentions
   const [isSharing, setIsSharing] = useState(false);
   const [tipAmount, setTipAmount] = useState('2');
   const [tipType, setTipType] = useState('2');
@@ -496,6 +497,7 @@ export default function NeynarScoreMiniAppV4() {
         setMyDisplayName(data.displayName ?? null);
         setMyFollowerCount(data.followerCount ?? null);
         setMyFollowingCount(data.followingCount ?? null);
+        setMyFollowers(data.followers ?? []); // Store followers for @ mentions
         
         // Save user's score to server for notification tracking (async, non-blocking)
         // This helps initialize the score history when user first queries
@@ -684,8 +686,25 @@ export default function NeynarScoreMiniAppV4() {
       const appUrl = window.location.origin;
       const displayName = myDisplayName || myUsername || 'User';
       
-      // Format share text with app link
-      const shareText = `My Neynar Score is ${scoreText}. Check your score! ${appUrl}`;
+      // Randomly select 3 followers to @ mention
+      let mentionsText = '';
+      if (myFollowers && myFollowers.length > 0) {
+        // Shuffle array using Fisher-Yates algorithm for better randomness
+        const shuffled = [...myFollowers];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        // Take first 3 (or less if not enough followers)
+        const selectedFollowers = shuffled.slice(0, Math.min(3, shuffled.length));
+        const mentions = selectedFollowers.map(f => `@${f.username}`).join(' ');
+        if (mentions) {
+          mentionsText = ` ${mentions}`;
+        }
+      }
+      
+      // Format share text with app link and random @ mentions
+      const shareText = `My Neynar Score is ${scoreText}. Check your score!${mentionsText} ${appUrl}`;
 
       // Priority 1: Use Farcaster Mini App SDK composeCast action
       try {
