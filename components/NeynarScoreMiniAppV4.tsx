@@ -263,6 +263,22 @@ export default function NeynarScoreMiniAppV4() {
               console.log('✅ Auto-connected to Farcaster embedded wallet via window.farcaster:', wallet);
               setWalletAddress(wallet);
               setIsConnected(true);
+              
+              // Try to get ethereum provider from SDK if available
+              // This is important for desktop compatibility
+              try {
+                const { sdk } = await import('@farcaster/miniapp-sdk');
+                if (sdk?.wallet?.getEthereumProvider) {
+                  const ethereumProvider = await sdk.wallet.getEthereumProvider();
+                  if (ethereumProvider) {
+                    (window as any).ethereum = ethereumProvider;
+                    console.log('✅ Set window.ethereum from SDK provider');
+                  }
+                }
+              } catch (sdkErr) {
+                console.log('Could not set SDK provider (non-critical):', sdkErr);
+              }
+              
               return true;
             }
           } catch (err: any) {
@@ -289,12 +305,40 @@ export default function NeynarScoreMiniAppV4() {
       // Only use Farcaster embedded wallet
       const farcasterWalletConnected = await connectFarcasterWallet();
       if (farcasterWalletConnected) {
+        // Ensure window.ethereum is properly set before proceeding
+        // On desktop, the provider might need a moment to initialize
+        let retries = 0;
+        const maxRetries = 10;
+        while (!window.ethereum && retries < maxRetries) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+          retries++;
+        }
+        
+        if (!window.ethereum) {
+          console.error('window.ethereum not available after connection');
+          setIsConnecting(false);
+          setError('Wallet provider not ready. Please try again.');
+          return;
+        }
+        
+        // Verify the provider is working
+        try {
+          await window.ethereum.request({ method: 'eth_accounts' });
+        } catch (verifyErr) {
+          console.error('Provider verification failed:', verifyErr);
+          setIsConnecting(false);
+          setError('Wallet connection verified but provider not ready. Please try again.');
+          return;
+        }
+        
         setIsConnecting(false);
-        // After successful connection, continue with the tip transaction
-        // Call handleTip again to proceed with the transaction
+        console.log('✅ Wallet connected and verified, proceeding with transaction');
+        
+        // After successful connection and verification, continue with the tip transaction
+        // Use a small delay to ensure UI state is updated
         setTimeout(() => {
           handleTip();
-        }, 100);
+        }, 200);
         return;
       }
 
@@ -361,8 +405,28 @@ export default function NeynarScoreMiniAppV4() {
     setError(null);
 
     try {
-      if (!window.ethereum) throw new Error('Wallet not detected');
+      // Ensure window.ethereum is available and working
+      if (!window.ethereum) {
+        // Try to reconnect if window.ethereum is missing
+        console.warn('window.ethereum not found, attempting to reconnect...');
+        const reconnected = await connectFarcasterWallet();
+        if (!reconnected || !window.ethereum) {
+          throw new Error('Wallet not detected. Please reconnect your wallet.');
+        }
+      }
+      
       const ethereum = window.ethereum;
+      
+      // Verify provider is working before proceeding
+      try {
+        const accounts = await ethereum.request({ method: 'eth_accounts' });
+        if (!accounts || accounts.length === 0) {
+          throw new Error('No accounts found. Please reconnect your wallet.');
+        }
+      } catch (verifyErr: any) {
+        console.error('Provider verification error:', verifyErr);
+        throw new Error('Wallet provider not ready. Please try again.');
+      }
 
       await switchToBaseNetwork();
 
