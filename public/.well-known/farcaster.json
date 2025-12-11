@@ -2,13 +2,13 @@
   "frame": {
     "name": "farcaster-neynar-score",
     "version": "1",
-    "iconUrl": "https://farcaster-neynar-score-miniapp.vercel.app/neynar-score-icon.png",
+    "iconUrl": "https://farcaster-neynar-score-miniapp.vercel.app/neynar-score-icon-1024.png",
     "homeUrl": "https://farcaster-neynar-score-miniapp.vercel.app/",
     "primaryCategory": "social",
     "subtitle": "Check user score instantly",
     "description": "A simple mini app for checking any Farcaster user's Neynar Score.",
     "splashBackgroundColor": "#9333ea",
-    "splashImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen.png",
+    "splashImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen-200.png",
     "tags": [
       "neynar",
       "score",
