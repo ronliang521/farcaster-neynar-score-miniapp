@@ -217,22 +217,28 @@ export default function NeynarScoreMiniAppV4() {
 
   const connectFarcasterWallet = async () => {
     try {
-      // Priority 1: Use Farcaster Mini App SDK wallet provider
+      // Priority 1: Use Farcaster Mini App SDK wallet provider (Official Method)
       try {
         const { sdk } = await import('@farcaster/miniapp-sdk');
         if (sdk && sdk.wallet && sdk.wallet.getEthereumProvider) {
           const ethereumProvider = sdk.wallet.getEthereumProvider();
           if (ethereumProvider) {
-            // Request accounts from the provider
-            const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
-            if (accounts && accounts.length > 0) {
-              const walletAddress = accounts[0];
-              console.log('✅ Connected to Farcaster embedded wallet via SDK:', walletAddress);
-              setWalletAddress(walletAddress);
-              setIsConnected(true);
-              // Set window.ethereum to the SDK provider for transaction handling
-              (window as any).ethereum = ethereumProvider;
-              return true;
+            try {
+              // Request accounts - this will automatically connect if user has wallet
+              const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
+              if (accounts && accounts.length > 0) {
+                const walletAddress = accounts[0];
+                console.log('✅ Auto-connected to Farcaster embedded wallet via SDK:', walletAddress);
+                setWalletAddress(walletAddress);
+                setIsConnected(true);
+                // Set window.ethereum to the SDK provider for transaction handling
+                (window as any).ethereum = ethereumProvider;
+                return true;
+              }
+            } catch (requestErr: any) {
+              // If user rejects or wallet not available, this is expected
+              console.log('Wallet connection request:', requestErr.message);
+              return false;
             }
           }
         }
@@ -247,7 +253,7 @@ export default function NeynarScoreMiniAppV4() {
           try {
             const wallet = await farcaster.connectWallet();
             if (wallet) {
-              console.log('✅ Connected to Farcaster embedded wallet via window.farcaster:', wallet);
+              console.log('✅ Auto-connected to Farcaster embedded wallet via window.farcaster:', wallet);
               setWalletAddress(wallet);
               setIsConnected(true);
               return true;
@@ -256,14 +262,14 @@ export default function NeynarScoreMiniAppV4() {
             if (err?.message?.includes('disconnected port') || err?.message?.includes('Extension context')) {
               console.warn('Extension connection error (ignored):', err.message);
             } else {
-              console.warn('Farcaster wallet connection error:', err.message);
+              console.log('Farcaster wallet connection:', err.message);
             }
           }
         }
       }
       return false;
     } catch (err: any) {
-      console.warn('Failed to connect Farcaster wallet:', err);
+      console.log('Wallet connection attempt:', err.message);
       return false;
     }
   };
@@ -440,12 +446,11 @@ export default function NeynarScoreMiniAppV4() {
             setMyFid(fid);
             setIsConnected(true);
             await fetchUserScore(fid);
-            // Auto-connect Farcaster embedded wallet
-            setTimeout(() => {
-              connectFarcasterWallet().catch(err => {
-                console.log('Auto wallet connection skipped:', err);
-              });
-            }, 1000);
+            // Auto-connect Farcaster embedded wallet immediately (no delay)
+            // This uses SDK's wallet provider which automatically connects
+            connectFarcasterWallet().catch(err => {
+              console.log('Auto wallet connection attempt:', err.message);
+            });
             setLoading(false);
             return;
           }
@@ -465,12 +470,10 @@ export default function NeynarScoreMiniAppV4() {
               setMyFid(fid);
               setIsConnected(true);
               await fetchUserScore(fid);
-              // Auto-connect Farcaster embedded wallet
-              setTimeout(() => {
-                connectFarcasterWallet().catch(err => {
-                  console.log('Auto wallet connection skipped:', err);
-                });
-              }, 1000);
+              // Auto-connect Farcaster embedded wallet immediately
+              connectFarcasterWallet().catch(err => {
+                console.log('Auto wallet connection attempt:', err.message);
+              });
               setLoading(false);
               return;
             }
@@ -482,12 +485,10 @@ export default function NeynarScoreMiniAppV4() {
               setMyFid(user.fid);
               setIsConnected(true);
               await fetchUserScore(user.fid);
-              // Auto-connect Farcaster embedded wallet
-              setTimeout(() => {
-                connectFarcasterWallet().catch(err => {
-                  console.log('Auto wallet connection skipped:', err);
-                });
-              }, 1000);
+              // Auto-connect Farcaster embedded wallet immediately
+              connectFarcasterWallet().catch(err => {
+                console.log('Auto wallet connection attempt:', err.message);
+              });
               setLoading(false);
               return;
             }
