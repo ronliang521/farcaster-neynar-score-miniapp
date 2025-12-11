@@ -38,6 +38,9 @@ export default function NeynarScoreMiniAppV4() {
   const [tokenType, setTokenType] = useState<'USDC' | 'ETH'>('USDC');
   const [ethPrice, setEthPrice] = useState<number | null>(null);
   const [usdcAmountForEth, setUsdcAmountForEth] = useState<string>(''); // 存储用于计算 ETH 的 USDC 金额
+  const [showAddToFarcasterPrompt, setShowAddToFarcasterPrompt] = useState(false);
+  const [addToFarcasterEnabled, setAddToFarcasterEnabled] = useState(false);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   const BASE_NETWORK = {
     name: 'Base',
@@ -425,6 +428,15 @@ export default function NeynarScoreMiniAppV4() {
         setMyDisplayName(data.displayName ?? null);
         setMyFollowerCount(data.followerCount ?? null);
         setMyFollowingCount(data.followingCount ?? null);
+        
+        // Show "Add to Farcaster" prompt after score is displayed
+        // Check if user has already dismissed the prompt
+        const hasSeenPrompt = localStorage.getItem('farcaster_add_prompt_dismissed');
+        if (!hasSeenPrompt) {
+          setTimeout(() => {
+            setShowAddToFarcasterPrompt(true);
+          }, 1000); // Show after 1 second delay
+        }
       }
     } catch (err) {
       console.error('Failed to fetch user score:', err);
@@ -1234,6 +1246,313 @@ export default function NeynarScoreMiniAppV4() {
                 </div>
               )}
             </motion.div>
+          )}
+
+          {/* Add to Farcaster Prompt Modal */}
+          {showAddToFarcasterPrompt && (
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: 'rgba(0, 0, 0, 0.8)',
+                  backdropFilter: 'blur(8px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10000,
+                  padding: designSystem.spacing.lg
+                }}
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) {
+                    setShowAddToFarcasterPrompt(false);
+                    localStorage.setItem('farcaster_add_prompt_dismissed', 'true');
+                  }
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                  style={{
+                    background: 'linear-gradient(135deg, #1a0b2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #7c3aed 100%)',
+                    borderRadius: designSystem.borderRadius.lg,
+                    padding: designSystem.spacing.xl,
+                    maxWidth: '400px',
+                    width: '100%',
+                    border: '2px solid rgba(255, 255, 255, 0.2)',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
+                    position: 'relative'
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* App Icon with Add Overlay */}
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: designSystem.spacing.lg,
+                    position: 'relative'
+                  }}>
+                    <div style={{
+                      width: '80px',
+                      height: '80px',
+                      borderRadius: '18px',
+                      background: 'rgba(168, 85, 247, 0.3)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: '2px solid rgba(168, 85, 247, 0.5)',
+                      position: 'relative'
+                    }}>
+                      <img
+                        src="/neynar-score-icon-1024-noalpha.png"
+                        alt="Neynar Score"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '16px',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                      {/* Add overlay icon */}
+                      <div style={{
+                        position: 'absolute',
+                        top: '-8px',
+                        right: '-8px',
+                        width: '28px',
+                        height: '28px',
+                        borderRadius: '50%',
+                        background: '#fff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        border: '2px solid rgba(168, 85, 247, 0.8)',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                      }}>
+                        <span style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          color: '#a855f7',
+                          lineHeight: '1'
+                        }}>+</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Title */}
+                  <h2 style={{
+                    fontSize: '20px',
+                    fontWeight: '700',
+                    color: '#fff',
+                    textAlign: 'center',
+                    marginBottom: designSystem.spacing.lg,
+                    lineHeight: '1.3'
+                  }}>
+                    Add Neynar Score to Farcaster
+                  </h2>
+
+                  {/* Options */}
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: designSystem.borderRadius.md,
+                    padding: designSystem.spacing.md,
+                    marginBottom: designSystem.spacing.lg,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: designSystem.spacing.sm
+                  }}>
+                    {/* Add to Farcaster option */}
+                    <div
+                      onClick={() => setAddToFarcasterEnabled(!addToFarcasterEnabled)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: designSystem.spacing.sm,
+                        cursor: 'pointer',
+                        padding: designSystem.spacing.xs,
+                        borderRadius: designSystem.borderRadius.sm,
+                        transition: 'background 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                      }}
+                    >
+                      <div style={{
+                        width: '24px',
+                        height: '24px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '18px'
+                      }}>
+                        🖥️
+                      </div>
+                      <span style={{
+                        fontSize: '14px',
+                        color: '#fff',
+                        fontWeight: '500',
+                        flex: 1
+                      }}>
+                        Add to Farcaster
+                      </span>
+                      <div style={{
+                        width: '20px',
+                        height: '20px',
+                        borderRadius: '4px',
+                        border: `2px solid ${addToFarcasterEnabled ? '#a855f7' : 'rgba(255, 255, 255, 0.3)'}`,
+                        background: addToFarcasterEnabled ? '#a855f7' : 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        {addToFarcasterEnabled && (
+                          <span style={{ color: '#fff', fontSize: '12px', fontWeight: '700' }}>✓</span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Enable notifications option */}
+                    <div
+                      onClick={() => setNotificationsEnabled(!notificationsEnabled)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: designSystem.spacing.sm,
+                        cursor: 'pointer',
+                        padding: designSystem.spacing.xs,
+                        borderRadius: designSystem.borderRadius.sm,
+                        transition: 'background 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                      }}
+                    >
+                      <div style={{
+                        width: '24px',
+                        height: '24px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '18px',
+                        position: 'relative'
+                      }}>
+                        🔔
+                        {notificationsEnabled && (
+                          <div style={{
+                            position: 'absolute',
+                            top: '-2px',
+                            right: '-2px',
+                            width: '8px',
+                            height: '8px',
+                            borderRadius: '50%',
+                            background: '#ec4899',
+                            border: '2px solid #1a0b2e'
+                          }} />
+                        )}
+                      </div>
+                      <span style={{
+                        fontSize: '14px',
+                        color: '#fff',
+                        fontWeight: '500',
+                        flex: 1
+                      }}>
+                        Enable notifications
+                      </span>
+                      <div style={{
+                        width: '20px',
+                        height: '20px',
+                        borderRadius: '4px',
+                        border: `2px solid ${notificationsEnabled ? '#a855f7' : 'rgba(255, 255, 255, 0.3)'}`,
+                        background: notificationsEnabled ? '#a855f7' : 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        {notificationsEnabled && (
+                          <span style={{ color: '#fff', fontSize: '12px', fontWeight: '700' }}>✓</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div style={{
+                    display: 'flex',
+                    gap: designSystem.spacing.sm
+                  }}>
+                    <motion.button
+                      onClick={() => {
+                        setShowAddToFarcasterPrompt(false);
+                        localStorage.setItem('farcaster_add_prompt_dismissed', 'true');
+                      }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      style={{
+                        flex: 1,
+                        padding: designSystem.spacing.md,
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        borderRadius: designSystem.borderRadius.md,
+                        color: '#fff',
+                        fontSize: '15px',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      Not now
+                    </motion.button>
+                    <motion.button
+                      onClick={() => {
+                        // Handle add action
+                        if (addToFarcasterEnabled) {
+                          // Add to Farcaster logic here
+                          console.log('Adding to Farcaster...');
+                        }
+                        if (notificationsEnabled) {
+                          // Enable notifications logic here
+                          console.log('Enabling notifications...');
+                        }
+                        setShowAddToFarcasterPrompt(false);
+                        localStorage.setItem('farcaster_add_prompt_dismissed', 'true');
+                      }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      style={{
+                        flex: 1,
+                        padding: designSystem.spacing.md,
+                        background: designSystem.colors.primary,
+                        border: 'none',
+                        borderRadius: designSystem.borderRadius.md,
+                        color: '#fff',
+                        fontSize: '15px',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        boxShadow: designSystem.colors.shadow
+                      }}
+                    >
+                      Add
+                    </motion.button>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
           )}
 
           {activeTab === 'check' && (
