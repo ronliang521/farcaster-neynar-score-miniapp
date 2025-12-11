@@ -217,13 +217,37 @@ export default function NeynarScoreMiniAppV4() {
 
   const connectFarcasterWallet = async () => {
     try {
+      // Priority 1: Use Farcaster Mini App SDK wallet provider
+      try {
+        const { sdk } = await import('@farcaster/miniapp-sdk');
+        if (sdk && sdk.wallet && sdk.wallet.getEthereumProvider) {
+          const ethereumProvider = sdk.wallet.getEthereumProvider();
+          if (ethereumProvider) {
+            // Request accounts from the provider
+            const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
+            if (accounts && accounts.length > 0) {
+              const walletAddress = accounts[0];
+              console.log('✅ Connected to Farcaster embedded wallet via SDK:', walletAddress);
+              setWalletAddress(walletAddress);
+              setIsConnected(true);
+              // Set window.ethereum to the SDK provider for transaction handling
+              (window as any).ethereum = ethereumProvider;
+              return true;
+            }
+          }
+        }
+      } catch (sdkErr: any) {
+        console.log('SDK wallet provider not available, trying fallback:', sdkErr.message);
+      }
+
+      // Priority 2: Fallback to window.farcaster.connectWallet
       if (window.farcaster) {
         const farcaster = window.farcaster;
         if (farcaster && farcaster.connectWallet) {
           try {
             const wallet = await farcaster.connectWallet();
             if (wallet) {
-              console.log('✅ Connected to Farcaster embedded wallet:', wallet);
+              console.log('✅ Connected to Farcaster embedded wallet via window.farcaster:', wallet);
               setWalletAddress(wallet);
               setIsConnected(true);
               return true;
@@ -246,42 +270,28 @@ export default function NeynarScoreMiniAppV4() {
 
   const connectWallet = async () => {
     try {
+      setIsConnecting(true);
+      setError(null);
+      
       // Only use Farcaster embedded wallet
       const farcasterWalletConnected = await connectFarcasterWallet();
       if (farcasterWalletConnected) {
+        setIsConnecting(false);
         return;
       }
 
-      // Try Farcaster SDK wallet connection via window.farcaster
-      // SDK doesn't have connectWallet in actions, use window.farcaster instead
-
-      // Fallback to window.farcaster
-      if (window.farcaster) {
-        try {
-          const farcaster = window.farcaster;
-          if (farcaster && farcaster.connectWallet) {
-            const wallet = await farcaster.connectWallet();
-            if (wallet) {
-              setWalletAddress(wallet);
-              setIsConnected(true);
-              return;
-            }
-          }
-        } catch (err: any) {
-          if (err?.message?.includes('disconnected port') || err?.message?.includes('Extension context')) {
-            console.warn('Extension connection error (ignored):', err.message);
-          } else {
-            throw err;
-          }
-        }
-      }
-
+      // If SDK wallet provider is not available, try window.farcaster as fallback
+      // This is already handled in connectFarcasterWallet, so if we reach here,
+      // it means connection failed
+      setIsConnecting(false);
       setError('Please open this app in Farcaster client to connect your wallet');
     } catch (err: any) {
+      setIsConnecting(false);
       if (err?.message?.includes('disconnected port') || err?.message?.includes('Extension context')) {
         console.error('Wallet connection error:', err);
         setError('Failed to connect Farcaster wallet, please try again');
       } else {
+        console.error('Wallet connection error:', err);
         setError('Failed to connect Farcaster wallet. Please open this app in Farcaster client.');
       }
     }
@@ -361,18 +371,18 @@ export default function NeynarScoreMiniAppV4() {
         });
       } else {
         // Send USDC via ERC20 transfer
-        const amountInWei = BigInt(Math.floor(parseFloat(amount) * Math.pow(10, USDC_TOKEN.decimals)));
-        const recipientAddressPadded = recipientAddress.slice(2).padStart(64, '0');
-        const amountPadded = amountInWei.toString(16).padStart(64, '0');
+      const amountInWei = BigInt(Math.floor(parseFloat(amount) * Math.pow(10, USDC_TOKEN.decimals)));
+      const recipientAddressPadded = recipientAddress.slice(2).padStart(64, '0');
+      const amountPadded = amountInWei.toString(16).padStart(64, '0');
 
         txHash = await ethereum.request({
-          method: 'eth_sendTransaction',
-          params: [{
-            from: walletAddress,
-            to: USDC_TOKEN.address,
-            data: `0xa9059cbb${recipientAddressPadded}${amountPadded}`
-          }]
-        });
+        method: 'eth_sendTransaction',
+        params: [{
+          from: walletAddress,
+          to: USDC_TOKEN.address,
+          data: `0xa9059cbb${recipientAddressPadded}${amountPadded}`
+        }]
+      });
       }
 
       alert(`Tip successful! Transaction hash: ${txHash}\nThank you for your support!`);
@@ -1408,8 +1418,8 @@ export default function NeynarScoreMiniAppV4() {
                     marginBottom: designSystem.spacing.xs
                   }}>
                     Improve Your Score
-                  </div>
-                  <div style={{
+              </div>
+              <div style={{
                     fontSize: '12px',
                     color: designSystem.colors.textSecondary,
                     lineHeight: '1.4',
@@ -1418,9 +1428,9 @@ export default function NeynarScoreMiniAppV4() {
                     opacity: 0.95,
                     margin: '0 auto',
                     textAlign: 'center'
-                  }}>
+              }}>
                     Discover proven strategies to boost your Farcaster reputation and increase your Neynar Score
-                  </div>
+              </div>
                 </div>
 
                 {/* 主要按钮区域 */}
@@ -1435,24 +1445,24 @@ export default function NeynarScoreMiniAppV4() {
                   paddingTop: designSystem.spacing.md
                 }}>
                   <motion.a
-                    href="https://startonfarcaster.xyz/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                href="https://startonfarcaster.xyz/"
+                target="_blank"
+                rel="noopener noreferrer"
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    style={{
+                style={{
                       display: 'inline-flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: designSystem.spacing.sm,
                       padding: designSystem.button.padding,
                       background: designSystem.colors.primary,
-                      color: '#fff',
-                      textDecoration: 'none',
+                  color: '#fff',
+                  textDecoration: 'none',
                       borderRadius: designSystem.button.borderRadius,
                       fontWeight: designSystem.button.fontWeight,
                       fontSize: designSystem.button.fontSize,
-                      transition: 'all 0.3s ease',
+                  transition: 'all 0.3s ease',
                       boxShadow: designSystem.colors.shadow,
                       lineHeight: '1.5',
                       minWidth: designSystem.button.minWidth,
@@ -1460,17 +1470,17 @@ export default function NeynarScoreMiniAppV4() {
                       position: 'relative',
                       overflow: 'hidden',
                       whiteSpace: 'nowrap'
-                    }}
-                  >
+                  }}
+                >
                     <span>Visit Start on Farcaster</span>
                     <span style={{ fontSize: '16px', opacity: 0.9 }}>→</span>
                   </motion.a>
-                </div>
+              </div>
 
                 {/* 分隔线和支持创作者区域 */}
-                <div style={{
+              <div style={{
                   paddingTop: designSystem.spacing.md,
-                  flexShrink: 0,
+                flexShrink: 0,
                   textAlign: 'center',
                   position: 'relative',
                   width: '100%',
@@ -1498,45 +1508,45 @@ export default function NeynarScoreMiniAppV4() {
                     }}>
                       Support the Creator
                     </div>
-                    <motion.a
-                      href="https://warpcast.com/ron521520"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                <motion.a
+                  href="https://warpcast.com/ron521520"
+                  target="_blank"
+                  rel="noopener noreferrer"
                       whileHover={{ scale: 1.03, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
+                  whileTap={{ scale: 0.98 }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
                         justifyContent: 'center',
                         gap: designSystem.spacing.sm,
                         padding: designSystem.button.padding,
                         background: designSystem.colors.primary,
-                        backdropFilter: 'blur(10px)',
-                        color: '#fff',
-                        textDecoration: 'none',
+                    backdropFilter: 'blur(10px)',
+                    color: '#fff',
+                    textDecoration: 'none',
                         borderRadius: designSystem.button.borderRadius,
                         fontSize: designSystem.button.fontSize,
                         fontWeight: designSystem.button.fontWeight,
-                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         border: '2px solid ' + designSystem.colors.borderHover,
-                        lineHeight: '1.5',
+                    lineHeight: '1.5',
                         boxShadow: designSystem.colors.shadowHover,
-                        position: 'relative',
+                    position: 'relative',
                         overflow: 'hidden',
                         minWidth: designSystem.button.minWidth,
                         whiteSpace: 'nowrap',
                         margin: '0 auto'
                       }}
                     >
-                      <span style={{ 
-                        textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
-                        fontWeight: '600'
+                  <span style={{ 
+                    textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+                    fontWeight: '600'
                       }}>Follow @ron521520</span>
-                      <span style={{ 
+                  <span style={{ 
                         fontSize: '16px',
-                        opacity: 0.9
-                      }}>→</span>
-                    </motion.a>
+                    opacity: 0.9
+                  }}>→</span>
+                </motion.a>
                   </div>
                 </div>
               </div>
@@ -1723,7 +1733,7 @@ export default function NeynarScoreMiniAppV4() {
                           setTipAmount(ethAmount);
                         } else {
                           // USDC 模式，直接设置金额
-                          setTipAmount(amount);
+                        setTipAmount(amount);
                         }
                         setCustomTipAmount('');
                       }}
@@ -1763,7 +1773,7 @@ export default function NeynarScoreMiniAppV4() {
                         setUsdcAmountForEth('');
                         setCustomTipAmount('');
                       } else {
-                        setTipAmount('');
+                      setTipAmount('');
                         setCustomTipAmount('');
                       }
                     }}
