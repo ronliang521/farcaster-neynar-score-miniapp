@@ -1,9 +1,16 @@
 {
-  "name": "Neynar Score Mini App",
-  "description": "Check your Farcaster Neynar Score and improve your social presence",
-  "version": "1.0.0",
-  "iconUrl": "https://farcaster-neynar-score-miniapp.vercel.app/neynar-score-icon.png",
-  "splashImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen.png",
-  "splashBackgroundColor": "#9333ea",
-  "url": "https://farcaster-neynar-score-miniapp.vercel.app"
+  "accountAssociation": {
+    "type": "custodyAddress"
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "Neynar Score Mini App",
+    "description": "Check your Farcaster Neynar Score and improve your social presence",
+    "homeUrl": "https://farcaster-neynar-score-miniapp.vercel.app",
+    "iconUrl": "https://farcaster-neynar-score-miniapp.vercel.app/neynar-score-icon.png",
+    "splashImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen.png",
+    "splashBackgroundColor": "#9333ea",
+    "primaryCategory": "social",
+    "tags": ["social", "farcaster", "neynar", "score", "analytics"]
+  }
 }
