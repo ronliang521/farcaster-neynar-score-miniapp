@@ -431,11 +431,32 @@ export default function NeynarScoreMiniAppV4() {
         
         // Show "Add to Farcaster" prompt after score is displayed
         // Check if user has already dismissed the prompt
-        const hasSeenPrompt = localStorage.getItem('farcaster_add_prompt_dismissed');
-        if (!hasSeenPrompt) {
+        try {
+          if (typeof window !== 'undefined' && window.localStorage) {
+            const hasSeenPrompt = window.localStorage.getItem('farcaster_add_prompt_dismissed');
+            console.log('🔍 Checking prompt status:', { hasSeenPrompt, score: data.score });
+            if (!hasSeenPrompt) {
+              // Show prompt after a short delay to ensure UI is ready
+              console.log('⏰ Scheduling Add to Farcaster prompt...');
+              setTimeout(() => {
+                console.log('✅ Showing Add to Farcaster prompt now');
+                setShowAddToFarcasterPrompt(true);
+              }, 2000); // Show after 2 second delay
+            } else {
+              console.log('ℹ️ Add to Farcaster prompt already dismissed by user');
+            }
+          } else {
+            // If localStorage is not available, show prompt anyway
+            console.log('⚠️ LocalStorage not available, showing prompt anyway');
+            setTimeout(() => {
+              setShowAddToFarcasterPrompt(true);
+            }, 2000);
+          }
+        } catch (storageErr) {
+          console.warn('LocalStorage error, showing prompt anyway:', storageErr);
           setTimeout(() => {
             setShowAddToFarcasterPrompt(true);
-          }, 1000); // Show after 1 second delay
+          }, 2000);
         }
       }
     } catch (err) {
