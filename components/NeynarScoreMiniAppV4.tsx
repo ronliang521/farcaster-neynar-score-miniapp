@@ -497,7 +497,10 @@ export default function NeynarScoreMiniAppV4() {
         setMyDisplayName(data.displayName ?? null);
         setMyFollowerCount(data.followerCount ?? null);
         setMyFollowingCount(data.followingCount ?? null);
-        setMyFollowers(data.followers ?? []); // Store followers for @ mentions
+        // Store followers for @ mentions
+        const followers = data.followers ?? [];
+        setMyFollowers(followers);
+        console.log('📊 Followers loaded:', followers.length, followers);
         
         // Save user's score to server for notification tracking (async, non-blocking)
         // This helps initialize the score history when user first queries
@@ -688,6 +691,12 @@ export default function NeynarScoreMiniAppV4() {
       
       // Randomly select 3 followers to @ mention
       let mentionsText = '';
+      console.log('🔍 Checking followers for @ mentions:', { 
+        myFollowers, 
+        length: myFollowers?.length,
+        hasFollowers: myFollowers && myFollowers.length > 0 
+      });
+      
       if (myFollowers && myFollowers.length > 0) {
         // Shuffle array using Fisher-Yates algorithm for better randomness
         const shuffled = [...myFollowers];
@@ -698,13 +707,17 @@ export default function NeynarScoreMiniAppV4() {
         // Take first 3 (or less if not enough followers)
         const selectedFollowers = shuffled.slice(0, Math.min(3, shuffled.length));
         const mentions = selectedFollowers.map(f => `@${f.username}`).join(' ');
+        console.log('✅ Selected followers for @ mentions:', selectedFollowers, 'Mentions:', mentions);
         if (mentions) {
           mentionsText = ` ${mentions}`;
         }
+      } else {
+        console.warn('⚠️ No followers available for @ mentions');
       }
       
       // Format share text with app link and random @ mentions
       const shareText = `My Neynar Score is ${scoreText}. Check your score!${mentionsText} ${appUrl}`;
+      console.log('📝 Final share text:', shareText);
 
       // Priority 1: Use Farcaster Mini App SDK composeCast action
       try {

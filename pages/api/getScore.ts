@@ -46,7 +46,8 @@ async function fetchUserBulk(fids: number) {
 async function fetchFollowers(fid: number): Promise<Follower[]> {
   const followers: Follower[] = [];
   try {
-    const res = await fetch(`${API_BASE}/user/followers?fid=${fid}&limit=10`, {
+    // Increase limit to get more followers for better @ mention selection
+    const res = await fetch(`${API_BASE}/user/followers?fid=${fid}&limit=50`, {
       method: 'GET',
       headers: {
         'x-api-key': API_KEY,
@@ -58,11 +59,17 @@ async function fetchFollowers(fid: number): Promise<Follower[]> {
       const data = await res.json();
       const users = data.result?.users || data.users || [];
       users.forEach((user: any) => {
-        followers.push({
-          fid: user.fid?.toString() || '',
-          username: user.username || `fid-${user.fid}`
-        });
+        // Only add users with valid usernames
+        if (user.username) {
+          followers.push({
+            fid: user.fid?.toString() || '',
+            username: user.username
+          });
+        }
       });
+      console.log(`✅ Fetched ${followers.length} followers for FID ${fid}`);
+    } else {
+      console.warn(`⚠️ Failed to fetch followers for FID ${fid}: ${res.statusText}`);
     }
   } catch (err) {
     console.error('Error fetching followers:', err);
@@ -173,20 +180,22 @@ export default async function handler(
     const followerCount = user.follower_count || 0;
     const followingCount = user.following_count || 0;
     
-    // Fetch followers in parallel (non-blocking for critical data)
-    // Return immediately with user data, followers can be optional
-    const followersPromise = fetchFollowers(userFid);
-    
-    // Wait for followers but with timeout
+    // Fetch followers - important for @ mentions feature
+    // Increase timeout to ensure we get followers
     let followers: Follower[] = [];
     try {
       followers = await Promise.race([
-        followersPromise,
-        new Promise<Follower[]>((resolve) => setTimeout(() => resolve([]), 2000)) // 2s timeout
+        fetchFollowers(userFid),
+        new Promise<Follower[]>((resolve) => setTimeout(() => {
+          console.warn(`⚠️ Followers fetch timeout for FID ${userFid}`);
+          resolve([]);
+        }, 5000)) // 5s timeout to allow more time
       ]);
     } catch (err) {
       console.warn('Followers fetch failed or timed out, continuing without:', err);
     }
+    
+    console.log(`📊 Returning ${followers.length} followers for FID ${userFid}`);
 
     return res.status(200).json({
       score,
