@@ -21,7 +21,8 @@
     "ogTitle": "Neynar Score Checker - User",
     "ogDescription": "Quickly view Neynar Scores, engagement metrics, and identity insights for any Farcaster user.",
     "ogImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen.png",
-    "castShareUrl": "https://farcaster-neynar-score-miniapp.vercel.app/"
+    "castShareUrl": "https://farcaster-neynar-score-miniapp.vercel.app/",
+    "webhookUrl": "https://farcaster-neynar-score-miniapp.vercel.app/api/webhook"
   },
   "accountAssociation": {
     "header": "eyJmaWQiOjU2NjQxMCwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDY4NDI2NTUwNUIyMkY5Rjk3NWZiNGZjNTRiOERFZENkYmUyODlBNWEifQ",

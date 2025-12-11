@@ -19,6 +19,12 @@
       "source": "/api/:path*",
       "destination": "/api/:path*"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/checkScoreUpdates",
+      "schedule": "0 */6 * * *"
+    }
   ]
 }
 

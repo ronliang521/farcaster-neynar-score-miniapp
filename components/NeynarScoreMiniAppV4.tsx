@@ -429,6 +429,27 @@ export default function NeynarScoreMiniAppV4() {
         setMyFollowerCount(data.followerCount ?? null);
         setMyFollowingCount(data.followingCount ?? null);
         
+        // Save user's score to server for notification tracking
+        // This helps initialize the score history when user first queries
+        try {
+          if (fid && data.score !== null && data.score !== undefined) {
+            // Send initial score to server (if user has notifications enabled)
+            // The server will use this as baseline for future comparisons
+            fetch('/api/saveUserScore', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                fid,
+                score: data.score,
+              }),
+            }).catch(err => {
+              console.log('Failed to save score to server (non-critical):', err);
+            });
+          }
+        } catch (err) {
+          console.log('Error saving score (non-critical):', err);
+        }
+        
         // Show "Add to Farcaster" prompt after score is displayed
         // Check if user has already dismissed the prompt
         try {

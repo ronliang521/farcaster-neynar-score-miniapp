@@ -1,0 +1,32 @@
+{
+  "frame": {
+    "name": "farcaster-neynar-score",
+    "version": "1",
+    "iconUrl": "https://farcaster-neynar-score-miniapp.vercel.app/neynar-score-icon-1024-noalpha.png",
+    "homeUrl": "https://farcaster-neynar-score-miniapp.vercel.app/",
+    "primaryCategory": "social",
+    "subtitle": "Check user score instantly",
+    "description": "A simple mini app for checking any Farcaster user's Neynar Score.",
+    "splashBackgroundColor": "#9333ea",
+    "splashImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen-200-noalpha.png",
+    "tags": [
+      "neynar",
+      "score",
+      "analytics",
+      "profile",
+      "utility"
+    ],
+    "tagline": "Check any user's Neynar Score",
+    "buttonTitle": "Check Score Now",
+    "ogTitle": "Neynar Score Checker - User",
+    "ogDescription": "Quickly view Neynar Scores, engagement metrics, and identity insights for any Farcaster user.",
+    "ogImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen.png",
+    "castShareUrl": "https://warpcast.com/~/compose?text=Check+your+Neynar+Score+here:+https://farcaster-neynar-score-miniapp.vercel.app/"
+  },
+  "accountAssociation": {
+    "header": "请从 Neynar 复制新的 header",
+    "payload": "请从 Neynar 复制新的 payload（必须包含域名）",
+    "signature": "请从 Neynar 复制新的 signature"
+  }
+}
+
