@@ -166,12 +166,27 @@ export default async function handler(
     console.log('Calculated score:', score, 'Type:', typeof score);
 
     const userFid = user.fid;
-    const followers = await fetchFollowers(userFid);
+    // Optimize: Extract user data in parallel with fetching followers
     const username = user.username || '';
     const avatarUrl = user.pfp_url || user.pfp?.url || user.avatar_url || '';
     const displayName = user.display_name || user.displayName || username;
     const followerCount = user.follower_count || 0;
     const followingCount = user.following_count || 0;
+    
+    // Fetch followers in parallel (non-blocking for critical data)
+    // Return immediately with user data, followers can be optional
+    const followersPromise = fetchFollowers(userFid);
+    
+    // Wait for followers but with timeout
+    let followers: Follower[] = [];
+    try {
+      followers = await Promise.race([
+        followersPromise,
+        new Promise<Follower[]>((resolve) => setTimeout(() => resolve([]), 2000)) // 2s timeout
+      ]);
+    } catch (err) {
+      console.warn('Followers fetch failed or timed out, continuing without:', err);
+    }
 
     return res.status(200).json({
       score,

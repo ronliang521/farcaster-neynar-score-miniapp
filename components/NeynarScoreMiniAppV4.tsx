@@ -118,7 +118,11 @@ export default function NeynarScoreMiniAppV4() {
     setActiveTab('check');
 
     try {
-      const res = await fetch(`/api/getScore?fid=${encodeURIComponent(input.trim())}`);
+      // Optimize: Add cache-busting query param for fresh data, but allow browser caching
+      const cacheKey = `score_${input.trim()}`;
+      const res = await fetch(`/api/getScore?fid=${encodeURIComponent(input.trim())}&_t=${Date.now()}`, {
+        cache: 'no-store' // Ensure fresh data
+      });
       const data = await res.json();
 
       if (data.error) {
@@ -429,25 +433,20 @@ export default function NeynarScoreMiniAppV4() {
         setMyFollowerCount(data.followerCount ?? null);
         setMyFollowingCount(data.followingCount ?? null);
         
-        // Save user's score to server for notification tracking
+        // Save user's score to server for notification tracking (async, non-blocking)
         // This helps initialize the score history when user first queries
-        try {
-          if (fid && data.score !== null && data.score !== undefined) {
-            // Send initial score to server (if user has notifications enabled)
-            // The server will use this as baseline for future comparisons
-            fetch('/api/saveUserScore', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                fid,
-                score: data.score,
-              }),
-            }).catch(err => {
-              console.log('Failed to save score to server (non-critical):', err);
-            });
-          }
-        } catch (err) {
-          console.log('Error saving score (non-critical):', err);
+        if (fid && data.score !== null && data.score !== undefined) {
+          // Fire and forget - don't wait for response
+          fetch('/api/saveUserScore', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              fid,
+              score: data.score,
+            }),
+          }).catch(() => {
+            // Silently fail - this is non-critical
+          });
         }
         
         // Show "Add to Farcaster" prompt after score is displayed
@@ -491,11 +490,8 @@ export default function NeynarScoreMiniAppV4() {
     try {
       setLoading(true);
       try {
-        const { sdk } = await Promise.all([
-          import('@farcaster/miniapp-sdk'),
-          import('@farcaster/miniapp-sdk'),
-          import('@farcaster/miniapp-sdk')
-        ]).then((modules) => modules[0]);
+        // Optimize: Single import instead of 3 redundant imports
+        const { sdk } = await import('@farcaster/miniapp-sdk');
 
         const context = await sdk.context;
         if (context && context.user) {
@@ -505,12 +501,13 @@ export default function NeynarScoreMiniAppV4() {
             console.log('✅ Got user info via SDK:', fid);
             setMyFid(fid);
             setIsConnected(true);
-            await fetchUserScore(fid);
+            // Parallelize: Fetch score and wallet connection simultaneously
+            const [scorePromise] = [fetchUserScore(fid)];
             // Auto-connect Farcaster embedded wallet immediately (no delay)
-            // This uses SDK's wallet provider which automatically connects
             connectFarcasterWallet().catch(err => {
               console.log('Auto wallet connection attempt:', err.message);
             });
+            await scorePromise;
             setLoading(false);
             return;
           }
@@ -723,28 +720,35 @@ export default function NeynarScoreMiniAppV4() {
         const { sdk } = await import('@farcaster/miniapp-sdk');
         
         // Step 1: Call ready() to hide splash screen
-        if (sdk && sdk.actions && sdk.actions.ready) {
-          await sdk.actions.ready();
+        // Optimize: Call ready() immediately, don't wait for it
+        const readyPromise = sdk?.actions?.ready ? sdk.actions.ready().then(() => {
           console.log('✅ SDK ready() called - splash screen should be hidden');
-        }
+        }).catch(() => {
+          // Silently fail
+        }) : Promise.resolve();
 
-        // Step 2: Auto-connect user context (get FID, username, etc.)
+        // Step 2: Auto-connect user context (get FID, username, etc.) in parallel
         // Note: We do NOT auto-connect wallet here - only when user clicks Send button
-        try {
-          const context = await sdk.context;
-          if (context && context.user) {
-            const user = context.user;
-            const fid = user.fid;
-            if (fid) {
-              console.log('✅ Auto-connected user via SDK:', fid);
-              setMyFid(fid);
-              setIsConnected(true);
-              await fetchUserScore(fid);
+        const contextPromise = (async () => {
+          try {
+            const context = await sdk.context;
+            if (context && context.user) {
+              const user = context.user;
+              const fid = user.fid;
+              if (fid) {
+                console.log('✅ Auto-connected user via SDK:', fid);
+                setMyFid(fid);
+                setIsConnected(true);
+                await fetchUserScore(fid);
+              }
             }
+          } catch (userErr: any) {
+            console.log('User context not available:', userErr.message);
           }
-        } catch (userErr: any) {
-          console.log('User context not available:', userErr.message);
-        }
+        })();
+
+        // Wait for both in parallel
+        await Promise.all([readyPromise, contextPromise]);
       } catch (err) {
         console.warn('SDK initialization error:', err);
         // Fallback: try window.farcaster

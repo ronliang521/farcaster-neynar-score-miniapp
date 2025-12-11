@@ -136,93 +136,105 @@ export default async function handler(
 
   console.log(`🔍 Checking score updates for ${fids.length} users...`);
 
-  for (const fid of fids) {
-    const userData = userNotifications[fid];
-    
-    if (!userData.enabled) {
-      results.push({
-        fid,
-        success: true,
-        message: 'Notifications disabled',
-        scoreChanged: false,
-      });
-      continue;
-    }
+  // Optimize: Process users in parallel batches (max 10 concurrent)
+  const BATCH_SIZE = 10;
+  const batches: number[][] = [];
+  for (let i = 0; i < fids.length; i += BATCH_SIZE) {
+    batches.push(fids.slice(i, i + BATCH_SIZE));
+  }
 
-    try {
-      const currentScore = await fetchUserScore(fid);
+  for (const batch of batches) {
+    const batchPromises = batch.map(async (fid) => {
+      const userData = userNotifications[fid];
       
-      if (currentScore === null) {
-        results.push({
-          fid,
-          success: false,
-          message: 'Failed to fetch score',
-        });
-        continue;
-      }
-
-      const lastScore = userData.lastScore || 0;
-      const scoreChanged = currentScore !== lastScore;
-
-      if (scoreChanged && lastScore > 0) {
-        // Score has changed, send notification
-        const notificationSent = await sendNotification(
-          userData.notificationUrl,
-          userData.notificationToken,
-          fid,
-          lastScore,
-          currentScore
-        );
-
-        if (notificationSent) {
-          // Update stored score
-          userData.lastScore = currentScore;
-          userData.lastChecked = new Date();
-          
-          results.push({
-            fid,
-            success: true,
-            message: 'Notification sent',
-            scoreChanged: true,
-            oldScore: lastScore,
-            newScore: currentScore,
-          });
-        } else {
-          results.push({
-            fid,
-            success: false,
-            message: 'Failed to send notification',
-            scoreChanged: true,
-            oldScore: lastScore,
-            newScore: currentScore,
-          });
-        }
-      } else {
-        // Update stored score even if no change (for first-time check)
-        if (lastScore === 0) {
-          userData.lastScore = currentScore;
-          userData.lastChecked = new Date();
-        }
-        
-        results.push({
+      if (!userData.enabled) {
+        return {
           fid,
           success: true,
-          message: scoreChanged ? 'Score changed but notification not sent (first check)' : 'No score change',
-          scoreChanged: scoreChanged && lastScore > 0,
-          oldScore: lastScore,
-          newScore: currentScore,
-        });
+          message: 'Notifications disabled',
+          scoreChanged: false,
+        };
       }
 
-      // Add delay to avoid rate limiting
-      await new Promise(resolve => setTimeout(resolve, 100));
-    } catch (err) {
-      console.error(`Error processing FID ${fid}:`, err);
-      results.push({
-        fid,
-        success: false,
-        message: err instanceof Error ? err.message : 'Unknown error',
-      });
+      try {
+        const currentScore = await fetchUserScore(fid);
+        
+        if (currentScore === null) {
+          return {
+            fid,
+            success: false,
+            message: 'Failed to fetch score',
+          };
+        }
+
+        const lastScore = userData.lastScore || 0;
+        const scoreChanged = currentScore !== lastScore;
+
+        if (scoreChanged && lastScore > 0) {
+          // Score has changed, send notification
+          const notificationSent = await sendNotification(
+            userData.notificationUrl,
+            userData.notificationToken,
+            fid,
+            lastScore,
+            currentScore
+          );
+
+          if (notificationSent) {
+            // Update stored score
+            userData.lastScore = currentScore;
+            userData.lastChecked = new Date();
+            
+            return {
+              fid,
+              success: true,
+              message: 'Notification sent',
+              scoreChanged: true,
+              oldScore: lastScore,
+              newScore: currentScore,
+            };
+          } else {
+            return {
+              fid,
+              success: false,
+              message: 'Failed to send notification',
+              scoreChanged: true,
+              oldScore: lastScore,
+              newScore: currentScore,
+            };
+          }
+        } else {
+          // Update stored score even if no change (for first-time check)
+          if (lastScore === 0) {
+            userData.lastScore = currentScore;
+            userData.lastChecked = new Date();
+          }
+          
+          return {
+            fid,
+            success: true,
+            message: scoreChanged ? 'Score changed but notification not sent (first check)' : 'No score change',
+            scoreChanged: scoreChanged && lastScore > 0,
+            oldScore: lastScore,
+            newScore: currentScore,
+          };
+        }
+      } catch (err) {
+        console.error(`Error processing FID ${fid}:`, err);
+        return {
+          fid,
+          success: false,
+          message: err instanceof Error ? err.message : 'Unknown error',
+        };
+      }
+    });
+
+    const batchResults = await Promise.all(batchPromises);
+    results.push(...batchResults);
+    
+    // Small delay between batches to avoid overwhelming the API
+    if (batches.length > 1) {
+      await new Promise(resolve => setTimeout(resolve, 200));
     }
   }
 
