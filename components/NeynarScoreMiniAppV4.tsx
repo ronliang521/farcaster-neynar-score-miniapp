@@ -221,12 +221,12 @@ export default function NeynarScoreMiniAppV4() {
       try {
         const { sdk } = await import('@farcaster/miniapp-sdk');
         if (sdk && sdk.wallet && sdk.wallet.getEthereumProvider) {
-          const ethereumProvider = sdk.wallet.getEthereumProvider();
+          const ethereumProvider = await sdk.wallet.getEthereumProvider();
           if (ethereumProvider) {
             try {
               // Request accounts - this will automatically connect if user has wallet
-              const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
-              if (accounts && accounts.length > 0) {
+              const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' }) as string[];
+              if (accounts && Array.isArray(accounts) && accounts.length > 0) {
                 const walletAddress = accounts[0];
                 console.log('✅ Auto-connected to Farcaster embedded wallet via SDK:', walletAddress);
                 setWalletAddress(walletAddress);
@@ -657,19 +657,59 @@ export default function NeynarScoreMiniAppV4() {
   };
 
   useEffect(() => {
-    // Call sdk.actions.ready() to hide splash screen
-    // This must be called when the app is ready to display
-    const initializeSDK = async () => {
+    // Initialize SDK and auto-connect user and wallet
+    const initializeApp = async () => {
       try {
         const { sdk } = await import('@farcaster/miniapp-sdk');
+        
+        // Step 1: Call ready() to hide splash screen
         if (sdk && sdk.actions && sdk.actions.ready) {
-          // Call ready() to signal that the app is loaded and ready
           await sdk.actions.ready();
           console.log('✅ SDK ready() called - splash screen should be hidden');
         }
+
+        // Step 2: Auto-connect user context (get FID, username, etc.)
+        try {
+          const context = await sdk.context;
+          if (context && context.user) {
+            const user = context.user;
+            const fid = user.fid;
+            if (fid) {
+              console.log('✅ Auto-connected user via SDK:', fid);
+              setMyFid(fid);
+              setIsConnected(true);
+              await fetchUserScore(fid);
+            }
+          }
+        } catch (userErr: any) {
+          console.log('User context not available:', userErr.message);
+        }
+
+        // Step 3: Auto-connect wallet using SDK wallet provider
+        // This is the official method according to Farcaster docs
+        if (sdk && sdk.wallet && sdk.wallet.getEthereumProvider) {
+          try {
+            const ethereumProvider = await sdk.wallet.getEthereumProvider();
+            if (ethereumProvider) {
+              // Request accounts - this automatically connects if user has wallet
+              const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' }) as string[];
+              if (accounts && Array.isArray(accounts) && accounts.length > 0) {
+                const walletAddress = accounts[0];
+                console.log('✅ Auto-connected wallet via SDK:', walletAddress);
+                setWalletAddress(walletAddress);
+                setIsConnected(true);
+                // Set window.ethereum to SDK provider for transactions
+                (window as any).ethereum = ethereumProvider;
+              }
+            }
+          } catch (walletErr: any) {
+            // User may not have wallet or rejected connection - this is expected
+            console.log('Wallet auto-connect attempt:', walletErr.message);
+          }
+        }
       } catch (err) {
-        console.warn('Failed to call sdk.actions.ready():', err);
-        // Even if SDK is not available, try to call ready if window.farcaster exists
+        console.warn('SDK initialization error:', err);
+        // Fallback: try window.farcaster
         if (typeof window !== 'undefined' && (window as any).farcaster) {
           try {
             const farcaster = (window as any).farcaster;
@@ -677,27 +717,21 @@ export default function NeynarScoreMiniAppV4() {
               await farcaster.ready();
               console.log('✅ Called window.farcaster.ready() as fallback');
             }
+            // Try to connect user and wallet via window.farcaster
+            connectFarcaster().catch((err) => {
+              console.log('Fallback Farcaster connection:', err.message);
+            });
           } catch (fallbackErr) {
-            console.warn('Fallback ready() call also failed:', fallbackErr);
+            console.warn('Fallback initialization failed:', fallbackErr);
           }
         }
       }
     };
 
-    // Initialize SDK immediately when component mounts
-    // This ensures the splash screen is hidden as soon as possible
-    initializeSDK().catch((err) => {
-      console.error('SDK initialization error:', err);
+    // Initialize immediately when component mounts
+    initializeApp().catch((err) => {
+      console.error('App initialization error:', err);
     });
-
-    // Also connect Farcaster after a short delay
-    const timer = setTimeout(() => {
-      connectFarcaster().catch((err) => {
-        console.error('Failed to connect Farcaster:', err);
-      });
-    }, 500);
-
-    return () => clearTimeout(timer);
   }, []);
 
   // Auto-connect wallet when switching to Tip tab and Farcaster is connected
