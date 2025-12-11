@@ -1518,18 +1518,43 @@ export default function NeynarScoreMiniAppV4() {
                       Not now
                     </motion.button>
                     <motion.button
-                      onClick={() => {
-                        // Handle add action
-                        if (addToFarcasterEnabled) {
-                          // Add to Farcaster logic here
-                          console.log('Adding to Farcaster...');
+                      onClick={async () => {
+                        try {
+                          // Handle add action using Farcaster SDK
+                          if (addToFarcasterEnabled) {
+                            try {
+                              const { sdk } = await import('@farcaster/miniapp-sdk');
+                              if (sdk && sdk.actions && sdk.actions.addMiniApp) {
+                                await sdk.actions.addMiniApp();
+                                console.log('✅ Mini App added to Farcaster successfully');
+                              } else {
+                                console.warn('addMiniApp action not available');
+                              }
+                            } catch (addErr: any) {
+                              console.error('Failed to add Mini App:', addErr);
+                              if (addErr.name === 'RejectedByUser') {
+                                console.log('User declined to add the Mini App');
+                              } else if (addErr.name === 'InvalidDomainManifestJson') {
+                                console.error('Invalid or missing farcaster.json manifest');
+                              }
+                            }
+                          }
+                          
+                          // Handle notifications (if SDK supports it in the future)
+                          if (notificationsEnabled) {
+                            // Note: Farcaster SDK doesn't currently have a direct notification API
+                            // This is a placeholder for future functionality
+                            console.log('Notifications enabled (placeholder)');
+                          }
+                          
+                          setShowAddToFarcasterPrompt(false);
+                          localStorage.setItem('farcaster_add_prompt_dismissed', 'true');
+                        } catch (err: any) {
+                          console.error('Error in Add button:', err);
+                          // Still close the prompt even if there's an error
+                          setShowAddToFarcasterPrompt(false);
+                          localStorage.setItem('farcaster_add_prompt_dismissed', 'true');
                         }
-                        if (notificationsEnabled) {
-                          // Enable notifications logic here
-                          console.log('Enabling notifications...');
-                        }
-                        setShowAddToFarcasterPrompt(false);
-                        localStorage.setItem('farcaster_add_prompt_dismissed', 'true');
                       }}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
