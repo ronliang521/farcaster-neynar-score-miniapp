@@ -172,3 +172,4 @@ curl https://farcaster-neynar-score-miniapp.vercel.app/.well-known/farcaster.jso
 }
 ```
 
+

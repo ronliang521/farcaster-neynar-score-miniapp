@@ -118,3 +118,4 @@ https://您的项目名.vercel.app/neynar-score-icon.svg
 - 文件路径不需要包含 `/public` 前缀
 - 确保 Vercel 项目已连接到正确的 GitHub 仓库
 - 如果修改了文件，需要重新推送到 GitHub 才会触发新的部署
+

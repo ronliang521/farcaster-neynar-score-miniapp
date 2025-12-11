@@ -159,3 +159,4 @@ echo "您的payload" | base64 -d
 如果您：
 - ✅ 已经生成了新的 accountAssociation → 告诉我，我会立即更新 manifest
 - ❌ 仍然无法生成 → 告诉我具体遇到了什么问题，我会提供更详细的帮助
+

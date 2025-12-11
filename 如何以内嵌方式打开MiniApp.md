@@ -164,3 +164,4 @@ const context = await sdk.context;
    - 确认应用在内嵌模式下正常工作
    - 确认可以获取用户信息
    - 确认所有功能正常
+

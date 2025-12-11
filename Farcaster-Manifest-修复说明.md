@@ -146,3 +146,4 @@ curl -I https://您的域名/splash-screen.png
 # 验证 JSON 格式
 node -e "const fs = require('fs'); JSON.parse(fs.readFileSync('public/.well-known/farcaster.json', 'utf8')); console.log('✅ JSON 格式正确');"
 ```
+

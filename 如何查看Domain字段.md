@@ -153,3 +153,4 @@ echo "Domain: farcaster-neynar-score-miniapp.vercel.app"
 
 **重要提示：** 只填写域名部分，不要包含 `https://` 和路径！
 
+

@@ -93,3 +93,4 @@ https://farcaster-neynar-score-miniapp.vercel.app/splash-screen.svg
 3. **检查图片是否可访问**：
    在浏览器中直接打开图片 URL，应该能看到紫色背景的启动画面图片
 
+

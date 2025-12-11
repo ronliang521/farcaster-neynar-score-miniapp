@@ -30,3 +30,4 @@ console.log(`   Domain: ${DOMAIN}`);
 // 更新 warpcast.json
 fs.writeFileSync(warpcastPath, JSON.stringify(manifest, null, 2));
 console.log(`✅ Updated ${warpcastPath}`);
+

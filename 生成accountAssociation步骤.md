@@ -106,3 +106,4 @@ echo "YOUR_PAYLOAD" | base64 -d
 2. 等待 Vercel 部署
 3. 在 Farcaster Developer Tools 中点击 "Refresh"
 4. 所有错误应该都消失，显示 ✅
+

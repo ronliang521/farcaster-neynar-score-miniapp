@@ -139,3 +139,4 @@ echo "YOUR_PAYLOAD" | base64 -d
 2. 等待 Vercel 部署完成
 3. 在 Base Build Preview Tool 中重新验证
 4. 所有三个检查项应该都显示 ✅
+

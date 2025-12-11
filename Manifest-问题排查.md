@@ -137,3 +137,4 @@ curl -I https://farcaster-neynar-score-miniapp.vercel.app/splash-screen.png
 4. **重新提交**
 
 如果仍然失败，请提供具体的错误信息，以便进一步排查。
+
