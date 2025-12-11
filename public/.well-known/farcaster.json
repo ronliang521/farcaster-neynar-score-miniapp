@@ -17,9 +17,9 @@
       "utility",
       "farcaster"
     ],
-    "tagline": "Check any user's Neynar Score ",
+    "tagline": "Check any user's Neynar Score",
     "buttonTitle": "Check Score Now",
-    "ogTitle": "Neynar Score Checker –User ",
+    "ogTitle": "Neynar Score Checker - User",
     "ogDescription": "Quickly view Neynar Scores, engagement metrics, and identity insights for any Farcaster user.",
     "ogImageUrl": "https://farcaster-neynar-score-miniapp.vercel.app/splash-screen.png",
     "castShareUrl": "https://warpcast.com/~/compose?text=Check+your+Neynar+Score+here:+https://farcaster-neynar-score-miniapp.vercel.app/"
