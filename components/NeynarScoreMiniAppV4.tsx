@@ -283,6 +283,11 @@ export default function NeynarScoreMiniAppV4() {
       const farcasterWalletConnected = await connectFarcasterWallet();
       if (farcasterWalletConnected) {
         setIsConnecting(false);
+        // After successful connection, continue with the tip transaction
+        // Call handleTip again to proceed with the transaction
+        setTimeout(() => {
+          handleTip();
+        }, 100);
         return;
       }
 
@@ -333,6 +338,7 @@ export default function NeynarScoreMiniAppV4() {
   };
 
   const handleTip = async () => {
+    // Only connect wallet when user clicks Send button
     if (!isConnected || !walletAddress) {
       await connectWallet();
       return;
@@ -669,6 +675,7 @@ export default function NeynarScoreMiniAppV4() {
         }
 
         // Step 2: Auto-connect user context (get FID, username, etc.)
+        // Note: We do NOT auto-connect wallet here - only when user clicks Send button
         try {
           const context = await sdk.context;
           if (context && context.user) {
@@ -683,29 +690,6 @@ export default function NeynarScoreMiniAppV4() {
           }
         } catch (userErr: any) {
           console.log('User context not available:', userErr.message);
-        }
-
-        // Step 3: Auto-connect wallet using SDK wallet provider
-        // This is the official method according to Farcaster docs
-        if (sdk && sdk.wallet && sdk.wallet.getEthereumProvider) {
-          try {
-            const ethereumProvider = await sdk.wallet.getEthereumProvider();
-            if (ethereumProvider) {
-              // Request accounts - this automatically connects if user has wallet
-              const accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' }) as string[];
-              if (accounts && Array.isArray(accounts) && accounts.length > 0) {
-                const walletAddress = accounts[0];
-                console.log('✅ Auto-connected wallet via SDK:', walletAddress);
-                setWalletAddress(walletAddress);
-                setIsConnected(true);
-                // Set window.ethereum to SDK provider for transactions
-                (window as any).ethereum = ethereumProvider;
-              }
-            }
-          } catch (walletErr: any) {
-            // User may not have wallet or rejected connection - this is expected
-            console.log('Wallet auto-connect attempt:', walletErr.message);
-          }
         }
       } catch (err) {
         console.warn('SDK initialization error:', err);
@@ -734,19 +718,8 @@ export default function NeynarScoreMiniAppV4() {
     });
   }, []);
 
-  // Auto-connect wallet when switching to Tip tab and Farcaster is connected
-  useEffect(() => {
-    if (activeTab === 'tip' && isConnected && myFid !== null && !walletAddress) {
-      // Wait a bit for the tab to render, then auto-connect wallet
-      const timer = setTimeout(() => {
-        console.log('🔄 Auto-connecting Farcaster wallet in Tip tab...');
-        connectFarcasterWallet().catch((err) => {
-          console.log('Auto wallet connection skipped:', err);
-        });
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [activeTab, isConnected, myFid, walletAddress]);
+  // Removed auto-connect wallet when switching to Tip tab
+  // Wallet will only be connected when user clicks Send button
 
   // Fetch ETH price on component mount
   useEffect(() => {
@@ -1621,22 +1594,7 @@ export default function NeynarScoreMiniAppV4() {
                 Tip will be sent to @ron521520
               </div>
 
-              {isConnected && !walletAddress && (
-                <div style={{
-                  fontSize: '11px',
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  marginBottom: designSystem.spacing.sm,
-                  padding: designSystem.spacing.xs,
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: designSystem.borderRadius.sm,
-                  textAlign: 'center',
-                  flexShrink: 0,
-                  lineHeight: '1.3'
-                }}>
-                  <div style={{ marginBottom: '2px' }}>🔗 Connecting to Farcaster wallet...</div>
-                  <div style={{ fontSize: '8px', opacity: 0.8, lineHeight: '1.2' }}>Please wait while we connect your wallet</div>
-                </div>
-              )}
+              {/* Removed auto-connecting wallet message - wallet will only connect when user clicks Send button */}
 
               {isConnected && walletAddress && (
                 <div style={{
